@@ -1,0 +1,73 @@
+{
+    "mysql": {
+        "development": {
+            "port": "3306",
+            "read": {
+                "node1": {
+                    "host": "103.218.122.181",
+                    "username": "admin"
+                },
+                "node2": {
+                    "host": "103.218.122.181",
+                    "username": "admin"
+                }
+            },
+            "write": {
+                "host": "103.218.122.181",
+                "username": "admin"
+            }
+        },
+        "staging": {
+            "port": "3306",
+            "read": {
+                "node1": {
+                    "host": "103.218.122.181",
+                    "username": "admin",
+                    "port": "3306"
+                },
+                "node2": {
+                    "host": "103.218.122.181",
+                    "username": "admin"
+                }
+            },
+            "write": {
+                "host": "103.218.122.181",
+                "username": "admin"
+            }
+        },
+        "production": {
+            "port": "3306",
+            "read": {
+                "node1": {
+                    "host": "103.218.122.181",
+                    "username": "admin"
+                },
+                "node2": {
+                    "host": "103.218.122.181",
+                    "username": "admin"
+                }
+            },
+            "write": {
+                "host": "103.218.122.181",
+                "username": "admin"
+            }
+        }
+    },
+    "redis": {
+        "development": {
+            "node1": "redis://103.218.122.181:7001",
+            "node2": "redis://103.218.122.181:7003",
+            "node3": "redis://103.218.122.181:7005"
+        },
+        "staging": {
+            "node1": "redis://103.218.122.181:7001",
+            "node2": "redis://103.218.122.181:7003",
+            "node3": "redis://103.218.122.181:7005"
+        },
+        "production": {
+            "node1": "redis://103.218.122.181:7001",
+            "node2": "redis://103.218.122.181:7003",
+            "node3": "redis://103.218.122.181:7005"
+        }
+    }
+}

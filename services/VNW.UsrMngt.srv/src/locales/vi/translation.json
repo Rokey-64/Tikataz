@@ -1,0 +1,48 @@
+{
+    "missing_field": "Yêu cầu không hợp lệ, vui lòng kiểm tra lại",
+    "server_error": "Chúng tôi gặp sự cố khi xử lý yêu cầu của bạn. Vui lòng thử lại sau",
+    "password_not_match": "Mật khẩu và xác nhận mật khẩu không khớp",
+    "password_too_week": "Mật khẩu phải chứa ít nhất 8 ký tự bao gồm ký tự thường, ký tự hoa, ký tự số và ký tự đặc biệt",
+    "password_not_space": "Mật khẩu không được chứa khoảng trắng",
+    "password_not_use_again": "Mật khẩu mới không được trùng với mật khẩu đã sử dụng",
+    "password_or_loginName_not_empty": "Tên đăng nhập và mật khẩu không được để trống",
+    "password_or_LoginName_not_valid": "Tên đăng nhập hoặc mật khẩu không hợp lệ",
+    "password_incorrect": "Mật khẩu không chính xác",
+    "password_updated": "Mật khẩu đã được cập nhật, vui lòng đang nhập lại để tiếp tục sử dụng",
+    "password_not_empty": "Mật khẩu không được để trống",
+    "user_name_not_empty": "Tên người dùng không được để trống",
+    "user_not_found": "Không tìm thấy người dùng",
+    "email_invalid": "Định dạng email không hợp lệ",
+    "email_in_use": "Email đã được sử dụng",
+    "email_in_waiting": "Email đang chờ xác thực",
+    "address_empty": "Email hoặc số điện thoại không được để trống",
+
+    "auths_mail_failed": "Không thể xác thực email của bạn. Vui lòng kiểm tra lại",
+    "email_send_failed": "Không thể gửi email. Vui lòng thử lại sau",
+    
+
+    "token_invalid": "Mã xác thực không hợp lệ",
+    "token_valid": "Mã xác thực hợp lệ",
+    "token_not_found": "Không tìm thấy mã xác thực",
+    "token_expired": "Mã xác thực đã hết hạn",
+    "token_refreshed": "Mã xác thực đã được làm mới",
+    "token_verified": "Xác thực thành công",
+    "token_not_verified": "Xác thực không thành công",
+
+    "otp_invalid": "Mã OTP không hợp lệ",
+    "otp_sent": "Mã OTP đã được gửi đến email của bạn, vui lòng kiểm tra email",
+    "otp_not_sent": "Không thể gửi mã OTP",
+    "otp_verified": "Xác thực OTP thành công",
+    "otp_not_verified": "Xác thực OTP không thành công",
+    "otp_expired": "Mã OTP đã hết hạn",
+    "otp_not_found": "Không tìm thấy mã OTP",
+    "otp_resend": "Mã OTP đã được gửi lại",
+
+    "logout_success": "Đăng xuất thành công",
+    "login_success": "Đăng nhập thành công",
+    "link_sent_to_confirm": "Một liên kết xác nhận đã được gửi đến email của bạn, vui lòng kiểm tra email",
+    "cannot_signup": "Thông tin đăng ký không hợp lệ",
+    "account_created": "Tài khoản của bạn đã được tạo thành công, vui lòng đăng nhập để tiếp tục",
+
+    "invalid": "Có một số trường không hợp lệ"
+}

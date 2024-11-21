@@ -1,0 +1,15 @@
+.main_div{
+    @apply flex h-20 justify-center items-center max-w-96 min-w-96
+}
+
+.main_div_1{
+    @apply flex items-center ml-10
+}
+
+.span_title{
+    @apply text-[#007AFF] font-black text-5xl
+}
+
+.img_logo{
+    @apply w-20 h-16
+}

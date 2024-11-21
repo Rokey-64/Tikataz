@@ -1,0 +1,52 @@
+
+.text_case{
+    @apply 
+    flex absolute justify-center
+    top-[19.5rem] sm:top-[5rem] left-[45%] transform -translate-x-1/2 -translate-y-1/2  z-10 
+    font-semibold  text-[#817777] sm:text-[#777981] text-xl 
+    w-72
+}
+
+.top{
+    @apply relative w-72 md:w-96 h-[26rem]
+}
+
+.main_dev{
+    @apply 
+    flex absolute
+    top-[20rem] sm:top-[18rem] left-[40%] transform -translate-x-1/2 -translate-y-1/2  z-10
+}
+
+.main_dev_1{
+    @apply flex flex-col items-center w-80
+}
+
+.main_dev_1a{
+    @apply flex justify-center w-80
+}
+
+.main_dev_1b{
+    @apply h-14
+}
+
+.main_dev_1c{
+    @apply grid grid-cols-3 grid-flow-col w-80
+}
+
+.img_0{
+    @apply w-auto h-20 mx-14
+}
+
+.img_1{
+    @apply w-auto h-20
+}
+
+.img_2{
+    @apply w-auto h-20 ml-8
+}
+
+.div_catche{
+    @apply h-4
+}
+
+

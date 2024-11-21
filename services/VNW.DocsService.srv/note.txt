@@ -1,0 +1,8 @@
+pip install fastapi[all]
+pip3 install "unicorn[standard]"
+uvicorn main:app --reload --port 8000
+pip install sqlalchemy
+pip install mysqlclient
+pip install "unicorn[standard]"
+scp -r D:/TIKATAZ/VNR.Docs/server_blogs root@103.218.122.181:/home/downloads
+59Ts9m8nyU

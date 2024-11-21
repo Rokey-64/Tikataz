@@ -1,0 +1,16 @@
+export const menuDataTest = {
+    'companyName':'Công ty TNHH Tikataz',
+    'hostLine':'Công ty TNHH Tikataz',
+    'adress':'Hẻm 52,Tổ 17a, KP2, P.Bình Đa, TP.Biên Hòa, Đồng nai',
+    'phoneNumber':'0333-462-905',
+    'email':'cskh@tikataz.com',
+    'inChargeContentPerson':'Hoàng Nhật Linh',
+    'inChargeContentEmail':'hotro@tikataz.com',
+    'copyRight':'© 2025',
+    'bussinessLicence': '0013143181',
+    'licenceBy': 'ở KH & ĐT Đồng Nai',
+    'licenceDate': '01/03/2025',
+    'ecomerceLicent': '238/GP-BTTTT',
+    'ecomerceLicentBy': 'Bộ Thông Tin và Truyền Thông',
+    'ecomerceLicentDate': '05/05/2025',
+}

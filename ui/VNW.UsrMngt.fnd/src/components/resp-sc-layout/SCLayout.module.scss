@@ -1,0 +1,41 @@
+.top-bg-sc{
+    @apply
+    bg-gradient-to-t from-[#1F5EBC] from-[10%] via-[#F2EAE2] to-[#F2EAE2]
+    h-full
+    max-w-none
+    w-[40rem]
+    min-h-svh
+
+}
+
+.main_div{
+    @apply relative flex justify-center w-screen
+}
+
+.main_div_1{
+    @apply top-bg-sc flex justify-center
+}
+
+.main_div_1a{
+    @apply mt-[27rem]
+}
+
+.main_div_2a{
+    @apply absolute -top-20 left-1/2 z-10 transform -translate-x-1/2 w-svw 
+}
+
+.main_div_2b{
+    @apply absolute top-36 left-1/2 z-10 transform -translate-x-1/2 -translate-y-1/2 w-72 
+}
+
+.main_div_2c{
+    @apply absolute top-52 left-[60%] transform -translate-x-1/2 -translate-y-1/2 z-20
+}
+
+.img_0{
+    @apply w-svw  h-96
+}
+
+.img_1{
+    @apply w-72
+}

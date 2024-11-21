@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.din-class{
+    @apply
+    bg-green-300;
+}
+
+.grecaptcha-badge { 
+    //visibility: hidden;
+    @apply
+    invisible
+    inset-y-0
+    z-20
+}

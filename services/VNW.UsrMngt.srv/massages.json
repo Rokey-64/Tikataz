@@ -1,0 +1,98 @@
+{
+    "1001":{
+        "en":"your email address was registered.",
+         "vn":"Địa chỉ email đã được đăng ký."
+    },
+    "1002":{
+        "en":"cannot use the email address.", 
+        "vn":"Không thể dùng địa chỉ email này để đăng ký."
+    },
+    "1003":{
+        "en":"your email address is not valid.",
+        "vn":"Địa chỉ email không hợp lệ."
+    },
+    "1004":{
+        "en":"Password must have at least one uppercase character, one lowercase character, and one special character.",
+        "vn":"password phải chứa ít nhất một ký tự hoa, một ký tự thường và một chử số."
+    },
+    "1005":{
+        "en":"Password must have at least 8 characters.", 
+        "vn":"Password phải có ít nhất tám ký tự."
+    },
+    "1006":{
+        "en":"Password cannot contain space.",
+        "vn":"Password không thể chứa khoảng trắng."
+    },
+    "1007":{
+        "en":"Password and confirm password do not match.",
+        "vn":"Password và confirm password không khớp."
+    },
+    "1008":{
+        "en":"Sorry, we are unable to create your account at this time. Please try again later.",
+         "vn":"Rất tiếc, không thể tạo tài khoản của bạn vào lúc này. Vui lòng thử lại sau."
+    },
+    "1009":{
+        "en":"A link has been sent to your email, please check and confirm.",
+         "vn":"Đã có một liên kết gửi đến địa chỉ email này, vui lòng kiểm tra và xác nhận."
+    },
+    "1010":{
+        "en":"The link has been previously verified, please log in instead.",
+         "vn":"Liên kết đã được xác nhận trước đó, vui lòng đăng nhập để sử dụng."
+    },
+    "1011":{
+        "en":"The link has expired. Please request a new link.",
+        "vn":"Liên kết đã hết hạn. Vui lòng yêu cầu một liên kết mới."
+    },
+    "1012":{
+        "en":"The link is invalid. Please request a new link.",
+        "vn":"Liên kết không hợp lệ. Vui lòng yêu cầu một liên kết mới."
+    },
+    "1013":{
+        "en":"User name cannot be empty.",
+        "vn":"Tên người dùng không được để trống."
+    },
+    "1014":{
+        "en":"Cannot send confirmation email. Please try again later.",
+        "vn":"Không thể gửi mail xác nhận. Vui lòng thử lại sau."
+    },
+    "1015":{
+        "en":"Cannot find the user account.",
+        "vn":"Không thể tìm thấy tài khoản người dùng."
+    },
+    "1016":{
+        "en":"The password or username is incorrect.",
+        "vn":"Mật khẩu hoặc tên đăng nhập không chính xác."
+    },
+    "1017":{
+        "en":"The OTP is expired or incorrect.",
+        "vn":"Mã OTP đã hết hạn hoặc không chính xác."
+    },
+    "1018":{
+        "en":"Token is expired.",
+        "vn":"Mã token đã hết hạn."
+    },
+    "2001":{
+        "en":"A link has just been sent to your email. Please check to complete the process. The link will expire after one hour.",
+        "vn":"Một liên kết đã được gửi tới địa chỉ mail của bạn. Vui lòng kiểm tra để hoàn tất quá trình. Liên kết sẽ hết hạn sau một giờ."
+    },
+    "2002":{
+        "en":"Your account has been activated. You can now log in.",
+        "vn":"Đăng ký tài khoản thành công, vui lòng đăng nhập để sử dụng."
+    },
+    "9001":{
+        "en":"there have been errors in the verification process. We will check the system. Please try again later.",
+        "vn":"Có lỗi xãy ra trong quá trình xác nhận. Chúng tôi sẽ tiến hành kiểm tra hệ thống. Vui lòng thử lại sau."
+    },
+    "9002":{
+        "en":"The link will be actived in 3 seconds. Please try again later.",
+        "vn":"Liên kết chỉ hiệu lực sau 3 giây. Vui lòng thử lại sau."
+    },
+    "9003":{
+        "en":"There was an error in the data transfer process. Please try again later.",
+        "vn":"Có lỗi xãy ra trong quá trình chuyển gửi dữ liệu. Vui lòng thử lại sau."
+    },
+    "9004":{
+        "en":"Cannot send confirmation email at this time. Please try again later.",
+        "vn":"Không thể gửi mail xác nhận lúc này. Vui lòng thử lại sau."
+    }
+}

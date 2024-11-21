@@ -1,0 +1,31 @@
+.main_dev{
+    @apply w-[95%] max-w-[20rem] min-w-full
+}
+
+.main_dev_1{
+    @apply flex justify-center mt-2
+}
+
+.main_dev_1a{
+    @apply w-64
+}
+
+.main_dev_1a1{
+    @apply text-sm
+}
+
+.main_dev_2{
+    @apply text-right my-4 flex justify-center
+}
+
+.main_dev_3{
+    @apply grid grid-flow-col
+}
+
+.main_dev_3a{
+    @apply mr-5 mb-4
+}
+
+.link_1{
+    @apply text-blue-500 hover:text-blue-700 underline font-light text-base
+}

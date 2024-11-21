@@ -1,0 +1,11 @@
+.main_div{
+    @apply flex items-center bg-[#FAFAFA] border  text-black px-4 py-3 rounded relative
+}
+
+.circle{
+    @apply text-green-500 w-6 h-6 mr-2
+}
+
+.span{
+    @apply block sm:inline
+}

@@ -1,0 +1,12 @@
+.main_div{
+    @apply flex ml-4 my-16;
+
+    .text{
+        @apply text-xs text-[#acacac] font-normal
+    };
+
+    .strong{
+        @apply text-[#212121]
+    };
+}
+

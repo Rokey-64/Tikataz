@@ -1,0 +1,38 @@
+// @tailwind base;
+// @tailwind components;
+// @tailwind utilities;
+
+.input-text {
+    @apply 
+    bg-transparent
+    text-[#A1A0A0]
+    text-sm
+    focus:outline-none
+    font-semibold
+    w-full;
+
+    color: #A1A0A0 !important;
+ }
+
+ .input-text-div{
+    @apply 
+    bg-[#FFFF] 
+    text-[#A1A0A0] 
+    text-base
+    border
+    border-[#ebe8e8] 
+    rounded-[1.5rem]
+    text-left
+    drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)]
+    h-10
+    grid
+    max-h-10
+    mt-3
+    px-5
+    w-full;
+
+    background-color: #FFFF !important;
+    color: #A1A0A0 !important;
+    border-color: #ebe8e8 !important;
+ }
+

@@ -1,0 +1,7 @@
+.main_div{
+    @apply grid grid-flow-row grid-cols-2 md:grid-cols-4 gap-x-1 md:gap-x-10 ml-5 md:ml-10 opacity-85
+}
+
+.h2{
+    @apply font-bold text-xl my-4
+}

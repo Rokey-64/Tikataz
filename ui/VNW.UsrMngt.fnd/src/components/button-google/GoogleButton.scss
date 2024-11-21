@@ -1,0 +1,24 @@
+.google-button{
+    @apply
+    text-black 
+    text-sm
+    bg-[#D0CACA]
+    hover:bg-[#fffefe]
+    focus:ring-0
+    focus:bg-[#cecece]
+    font-medium 
+    rounded-lg
+    h-8 
+    focus:outline-none
+    flex items-center justify-center
+    px-4
+}
+
+.google-main-dev{
+    @apply flex
+}
+
+.google-img{
+    @apply w-8 h-8 mr-2
+    
+}
