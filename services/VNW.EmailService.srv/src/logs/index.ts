@@ -1,119 +1,42 @@
-import fluend from 'fluent-logger';
-import file from 'fs';
-import 'dotenv/config.js'
+import axios from 'axios';
 
-const env = process.env.NODE_ENV || 'development';
-const tag = 'vnw.sms';//
-const [host, port] = [process.env.FLUENTD_HOST || 'localhost', process.env.FLUENTD_PORT || 24224];
-const option:fluend.Options = {
-    host: process.env.FLUENTD_HOST || 'localhost',
-    port: process.env?.FLUENTD_PORT ? parseInt(process.env.FLUENTD_PORT) : 24224,
-    timeout: 3.0,
-    reconnectInterval: 100000 // 1 minute
-}
+const env: string = process.env.NODE_ENV || 'development';
+const FLUENTD_HOST: string = 'http://103.218.122.181:24230/vnw.users';
 
-/**
-|--------------------------------------------------
-| Define the log levels
-|--------------------------------------------------
-*/
+const emitLog = async (
+    level: string, 
+    tag: any, 
+    message: string, 
+    file: any, 
+    line: any
+): Promise<void> => {
+    try {
+        const payload = {
+            level: level,
+            tag: "vnw.users",
+            message: message,
+            file: file,
+            line: line,
+        };
+
+        await axios.post(`${FLUENTD_HOST}`, payload);
+    } catch (error: any) { // Dùng `any` cho các trường hợp lỗi chưa xác định rõ kiểu.
+        console.error('Error sending log:', error.message);
+    }
+};
+
 export const level = {
     INFO: 'info',
     ERROR: 'error',
     WARN: 'warn',
     DB_ERROR: 'dbErr',
-};
+} as const; // Sử dụng `as const` để bảo toàn kiểu giá trị không đổi.
 
-/**
-|--------------------------------------------------
-| Configure the fluentd logger
-|--------------------------------------------------
-*/
-fluend.configure(tag, option);
-
-/**
-|--------------------------------------------------
-| Handle the exit event
-|--------------------------------------------------
-*/
-process.on('exit', function () {
-    fluend.end('Exit event triggered',undefined, ()=>{
-        throw new Error('Fluentd logger has been closed');
-    });
-});
-
-/**
-|--------------------------------------------------
-| Handle uncaught exceptions
-|--------------------------------------------------
-*/
-process.on('uncaughtException', function (err) {
-    fluend.end('Exit event triggered',undefined, ()=>{
-        throw new Error('Fluentd logger has been closed');
-    });
-});
-
-fluend.on('error', function (err) {
-    /**
-     * Logs combination
-     */
-    let error = `\n Fluentd::: >>>> Error:::  ${err} >>>> Date::: ${(new Date()).toString()}`;
-
-    /**
-     * Write to logs.txt
-     */
-    file.appendFile('logs.txt', error, function (err) {
-        if (err) throw err;
-        console.log('Saved!');
-    });
-});
-
-/**
- * call log in development mode
- * @param  {...any} messages 
- */
-export const showMessage = (...messages: any[]) => {
+export const showMessage = (...messages: any[]): void => { // `any[]` để chấp nhận nhiều kiểu dữ liệu khác nhau.
     if (env === 'development') {
-        console.log(messages);
+        console.log(...messages);
     }
 };
 
-/**
- * this function emit log to fluentd (level, Time, Message, Address, RequestID, Metadata) 
- * @param {*} level 
- * @param {*} requestId 
- * @param {*} message 
- * @param {*} address 
- * @param {*} metadata 
- * @returns 
- */
-export const emitLog =  (level:string, requestId: string | null,  message: any, address:any, metadata:any) => {
-    return new Promise((resolve, reject) => {
-        /**
-         * Define the log object
-         */
-        const log = {
-            requestId: requestId || '00000000-0000-0000-0000-000000000000',
-            message: message,
-            address: address,
-            metadata: metadata || {}
-        }
-
-        /**
-         * Log the message to the console if the environment is development
-         */
-        showMessage(message);
-
-        /**
-         * Emit the log to the fluentd
-         */
-        fluend.emit(level, log, (err) => {
-            if (err) {
-                reject(err);
-            }
-            resolve(null);
-        });
-    })
-};
 
 export default emitLog;

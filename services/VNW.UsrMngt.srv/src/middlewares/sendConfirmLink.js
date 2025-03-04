@@ -80,7 +80,7 @@ const sendConfirmLink = async (req, res, next) => {
             throw new Error(resulf.error.message);
         }
     } catch (error) {
-        emitLog(level.ERROR, req.id, error.message, 'Middleware|sendOTP|sendMail', { prevReqID: model.id, userID: user.userID });
+        emitLog(level.ERROR, req.id, error.message, 'Middleware|sendOTP|sendMail', { prevReqID: model.id, userID: model.userID });
         return res.status(500).json(
             setFeedback(
                 req.feedback,

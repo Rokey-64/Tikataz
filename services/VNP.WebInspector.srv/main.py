@@ -49,13 +49,12 @@ async def main():
         print('start')
         while True:
             browser, context = await restart_browser(browser, context, p)
-            if index > 25000:
-                break
 
             start = datetime.now()
-            urls = geturls(index)
-            if not urls:
-                break
+            # urls = geturls(index)
+            # if not urls:
+            #     break
+            urls = ['https://123flower.vn/', ]
             for domain, id in urls:
                 try:
                     
@@ -72,7 +71,7 @@ async def main():
                     if not tag or tag.is_null():
                         continue
 
-                    insert_tag(tag.to_dict())
+                    # insert_tag(tag.to_dict())
                     index = id + 1
                 except Exception as e:
                     print(rf'Error: {e}', domain, id)

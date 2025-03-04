@@ -1,21 +1,19 @@
-const setSesion = (session, data) => {
-    session.data = data;
-    session.save();
-}
+/**
+ * This service is responsible for managing the user session.
+ */
+const sessionService = {
+    setUserSession: async (session, key, value) => {
+      session[key] = value;
+      await session.save(); 
+    },
+  
+    getUserSession: async (session, key) => {
+      return session[key];
+    },
+  
+    destroySession: async (session) => {
+      await session.destroy();
+    }
+  };
 
-const getSession = (session) => {
-    return session.data;
-}
-
-const destroySession = (session) => {
-    session.destroy();
-}
-
-
-const sessionControl = {
-    setSesion,
-    getSession,
-    destroySession
-}
-
-export default sessionControl
+export default sessionService;

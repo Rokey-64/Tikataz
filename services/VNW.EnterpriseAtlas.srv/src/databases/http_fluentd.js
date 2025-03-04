@@ -1,27 +1,23 @@
-import { FluentClient } from '@fluent-org/logger';
+import axios from 'axios';
 const env = process.env.NODE_ENV || 'development';
-
-const logger = new FluentClient('vnw.atlas', {
-    socket: {
-        host: '103.218.122.181',
-        port: 24230, 
-        timeout: 3000, // 3 seconds
-    }
-});
+const FLUENTD_HOST = 'http://103.218.122.181:24230/vnw.atlas'; 
 
 export const emitLog = async (level, tag, message, file, line) => {
-    showMessage('Emitlog:::', message);
-    
-    await logger.emit("text thử", {
-        level: level,
-        tag: tag,
-        message: message,
-        file: file,
-        line: line
-    });
+    try {
+        const payload = {
+            level: level,
+            tag: "vnw.atlas",
+            message: message,
+            file: file,
+            line: line,
+        };
 
-    
-}
+        await axios.post(`${FLUENTD_HOST}`, payload);
+    } catch (error) {
+        console.error('Error sending log:', error.message);
+    }
+};
+
 
 export const level = {
     INFO: 'info',

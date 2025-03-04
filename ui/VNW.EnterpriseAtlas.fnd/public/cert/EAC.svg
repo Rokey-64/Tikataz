@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32.5 32.5">
+  <defs>
+    <style>
+      .cls-1 {
+        font-family: Roboto-Black, Roboto;
+        font-size: 3.54px;
+        font-weight: 800;
+      }
+
+      .cls-2 {
+        letter-spacing: 0em;
+      }
+
+      .cls-3 {
+        letter-spacing: -.01em;
+      }
+
+      .cls-4 {
+        letter-spacing: .02em;
+      }
+    </style>
+  </defs>
+  <g>
+    <polygon points="7.86 21.38 10.22 21.38 10.22 23.74 5.57 23.74 5.57 2.75 10.22 2.75 10.22 5.11 7.89 5.11 7.89 12.03 10.22 12.03 10.22 14.36 7.89 14.36 7.86 21.38"/>
+    <polygon points="24.35 21.38 26.7 21.38 26.7 23.74 22.02 23.74 22.02 2.75 26.7 2.75 26.7 5.02 24.36 5.02 24.35 21.38"/>
+    <path d="M12.55,2.75v20.99h2.38v-9.43l2.41-.03v9.46h2.22V2.75h-7.01ZM17.18,11.99h-2.25v-7.1h2.25v7.1Z"/>
+  </g>
+  <text class="cls-1" transform="translate(2.45 28.79)"><tspan x="0" y="0">E</tspan><tspan class="cls-3" x="1.98" y="0">A</tspan><tspan x="4.36" y="0">C Ce</tspan><tspan class="cls-4" x="11.82" y="0">r</tspan><tspan class="cls-2" x="13.25" y="0">tification</tspan></text>
+</svg>

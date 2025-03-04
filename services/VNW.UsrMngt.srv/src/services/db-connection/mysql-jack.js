@@ -30,7 +30,6 @@ const password = process.env.READ_MYSQL_PW || '';
 const dbname = process.env.DB_NAME || '';
 let port = '';
 
-
 await (
     async () => {
         const mysqlc = dbc[dialect][env];

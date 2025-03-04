@@ -1,0 +1,5 @@
+
+.button{
+    @apply 
+    flex items-center justify-center w-5 sm:w-10 h-5 sm:h-10 bg-white mt-3 sm:mt-5 mr-2 sm:mr-5  rounded-3xl shadow-[0px_1px_2px_rgba(0,0,0,0.3)] hover:bg-cyan-200;
+}

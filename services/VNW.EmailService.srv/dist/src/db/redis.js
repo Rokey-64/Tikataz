@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import redis from 'ioredis';
 import 'dotenv/config';
 import url from 'url';
-import dbc from './dbc.json'  assert { type: "json" };
+import dbc from './dbc.json' assert { type: "json" };
 import emitLog, { level, showMessage } from '../logs/index.js';
 const TIME_OUT = 15000;
 const env = process.env.NODE_ENV || 'development';

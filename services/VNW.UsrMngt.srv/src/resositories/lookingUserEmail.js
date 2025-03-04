@@ -9,6 +9,7 @@ import { QueryTypes } from 'sequelize';
 /**
  * Looking for the input email in the database
  * @param {*} loginName
+ * @returns isUse bool, isSpam bool
  */
 const lookingUserEmail = async (email) => {
     return await mysqlConn.query("call SPUserSignupInspector(:input_email)", {

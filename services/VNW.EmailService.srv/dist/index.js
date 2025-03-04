@@ -6,11 +6,9 @@ import { v4 as uuidv4 } from 'uuid';
 import 'dotenv/config';
 import sender from "./src/controllers/sender.js";
 import { cluster } from './src/db/redis.js';
-import emitLog, {level} from './src/logs/index.js';
-
+import emitLog, { level } from './src/logs/index.js';
 const app = express();
 const TIMEOUT_DURATION = 10000; // 10s
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const sessionOptions = {
@@ -24,9 +22,8 @@ app.use((req, res, next) => {
     req.id = uuidv4();
     next();
 });
-
 /**
- * @description Middleware to set feedback object
+ * @description Middleware to set feedback object for request
  */
 app.use((req, res, next) => {
     req.feedback = {
@@ -39,7 +36,6 @@ app.use((req, res, next) => {
     };
     next();
 });
-
 /**
  * @description Middleware to set timeout for request
  */
@@ -48,18 +44,14 @@ app.use((req, res, next) => {
         emitLog(level.WARN, req.id, `Request timeout: ${req.id}`, req.ip, req.feedback);
         res.status(408).send('Request Timeout'); // Gửi mã lỗi 408 khi hết thời gian
     }, TIMEOUT_DURATION);
-
     res.on('finish', () => clearTimeout(timeout));
     res.on('close', () => clearTimeout(timeout));
-
     next();
 });
-
 app.use('/', sender);
 app.use('/', (req, res, next) => {
     return res.json(req.feedback);
 });
-
 const port = process.env.PORT || 5001;
 const listener = app.listen(port, () => {
     const address = listener.address();

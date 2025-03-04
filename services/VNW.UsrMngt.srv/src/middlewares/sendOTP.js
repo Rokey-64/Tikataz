@@ -32,22 +32,7 @@ const sendOTP = async (req, res, next) => {
         const EMAIL_SEND_FAILED = 1001;
         const mailConfig = await createMailTemplate(templateType.otp, req.id, user.destination, user.otp.otp, model.lang);
         const resulf = mailSender(mailConfig);
-
-        // if (resulf.status === 'failed') {
-        //     if (resulf.error.code === EMAIL_SEND_FAILED) {
-        //         return res.status(400).json(
-        //             setFeedback(
-        //                 req.feedback,
-        //                 false,
-        //                 resulf.error.message,
-        //                 {
-        //                     prevID: req.id,
-        //                     userNotification: req.t('auths_mail_failed')
-        //                 }
-        //         ));
-        //     }
-        //     throw new Error(resulf.error.message);
-        // }
+        
     } catch (error) {
         emitLog(level.ERROR, req.id, error.message || 'send mail faild', 'Login/createOTP | sendMail', { prevReqID: model.id, userID: user.userID });
         return res.status(500).json(
