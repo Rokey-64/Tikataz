@@ -11,8 +11,22 @@ import { QueryTypes } from "sequelize";
  * @returns 
  */
 const loadingInitialDataMiddleware = async (req, res, next) => {
+    const CARDS_LIMMIT = 3;
     const model = getModelService(req);
-    const userID = "dkebsheu1sed55a8wwd5+";
+
+    /**
+    * If there is no new card request, pass it
+    */
+    if (model.st !== 'n') {
+
+        // not update or create
+        if (model.st !== 'u')
+            return req.status(400).json(setFeedback(req.feedback, false));
+
+        return next();
+    }
+
+    
 
     const payload = {
         address: [],
@@ -27,7 +41,7 @@ const loadingInitialDataMiddleware = async (req, res, next) => {
             {
                 type: QueryTypes.RAW,
                 replacements: {
-                    gUserID: userID
+                    gUserID: req.userID
                 }
             });
 
@@ -35,7 +49,7 @@ const loadingInitialDataMiddleware = async (req, res, next) => {
             const data = result[i];
             payload.address.push(data['address']);
 
-            if (data['email'] && !payload.email) 
+            if (data['email'] && !payload.email)
                 payload.email = data['email'];
 
             if (data['phone_number'] && !payload.phone)
@@ -48,7 +62,8 @@ const loadingInitialDataMiddleware = async (req, res, next) => {
         model.payload = payload;
     }
     catch (err) {
-        return res.status(500).json(setFeedback(req.feedback, false, err.message, {}));
+        // ⛔ TODO: Log the error here
+        return res.status(500).json(setFeedback(req.feedback, false));
     }
 
     next();

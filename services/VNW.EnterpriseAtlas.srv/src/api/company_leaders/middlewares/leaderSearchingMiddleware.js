@@ -2,9 +2,8 @@ import { Op, QueryTypes } from "sequelize";
 import setFeedback from "../../../services/setFeedback.js";
 import mysqlConn from "../../../databases/mysql-jack.js";
 import getModelService from "../../../services/getModelService.js";
-import createBranchModel from "../../../models/branchModel.js";
-import createMailListModel from "../../../models/mailListModel.js";
-import createPhoneListModel from "../../../models/phoneListModel.js";
+import createShortLinkRedis from "../../../services/createShortLinkRedis.js";
+import initContainerCliAzure from "../../../services/initializeContainerClientAzure.js";
 
 /**
  * This middleware is used to search the branch of the company
@@ -14,7 +13,8 @@ import createPhoneListModel from "../../../models/phoneListModel.js";
  */
 const LeaderSeachingMiddleware = async (req, res, next) => {
     const model = getModelService(req);
-    const userID = "dkebsheu1sed55a8wwd5+";
+    const containerClient = initContainerCliAzure("images");
+    
     const leaders = [];
 
     try {
@@ -29,19 +29,21 @@ const LeaderSeachingMiddleware = async (req, res, next) => {
             {
                 type: QueryTypes.RAW,
                 replacements: {
-                    gUserID: userID
+                    gUserID: req.userID
                 }
             });
 
         if (result[0].length === 0) {
-            setFeedback(model, 404, "No data found", {});
-            return res.status(model.status).json(model);
+            return res.status(404).json(setFeedback(model, false));
         }
 
         /**
          * Create the branch template that suits the response
          */
-        result.forEach((item) => {
+        for(const item of result){
+            const blobKey = `${item.id}_avatar`;
+            const shortLink = await createShortLinkRedis(blobKey, containerClient);
+
             leaders.push({
                 id: item.id,
                 name: item.name,
@@ -50,13 +52,12 @@ const LeaderSeachingMiddleware = async (req, res, next) => {
                 phone: item.phone_number,
                 email: item.email,
                 slogan: item.slogan,
-                logo: item.logo_index,
+                logo: shortLink,
             });
-        });
-
+        }
     }
     catch (err) {
-        return res.status(model.status).json(setFeedback(model, 500, "Internal server error", err));
+        return res.status(500).json(setFeedback(model, false));
     }
 
     model.leaders = leaders;

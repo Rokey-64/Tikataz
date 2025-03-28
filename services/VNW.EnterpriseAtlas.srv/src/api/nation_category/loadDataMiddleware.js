@@ -18,8 +18,8 @@ const LoadDataMiddleware = async (req, res, next) => {
     model.nation = data;
     next();
   } catch (error) {
-    const feedback = setFeedback(req.feedback, false, error.message, {});
-    return res.status(500).json(feedback);
+    // ⛔ TODO: Log the error here
+    return res.status(500).json(setFeedback(req.feedback, false));
   }
 };
 

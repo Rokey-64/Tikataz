@@ -6,7 +6,7 @@ import { addStatus, updateStatus, clearStatus } from "../../../redux/status_slic
 import { addIndex } from "../../../redux/tagIndex_slice";
 import { addTag, clearTag } from "../../../redux/tags_slice";
 import SubLayout from "./sublayout";
-import LeftMenu from "../menu/leftMenu";
+import LeftMenu from "../menu/LeftMenu";
 import defaultTag from "../../../api/tag";
 import findTagByMajor from "../../../api/tagByMajor";
 import TagRender, { TagRerennder } from "../../../services/tag-handler";

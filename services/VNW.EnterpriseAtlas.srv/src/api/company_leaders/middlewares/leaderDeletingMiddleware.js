@@ -11,10 +11,9 @@ import setFeedback from "../../../services/setFeedback.js";
  */
 const LeaderDeletingMiddleware = async (req, res, next) => {
     const model = getModelService(req);
-    const userID = "dkebsheu1sed55a8wwd5+";
 
     if (!model?.id?.trim()) {
-        return res.status(400).json(setFeedback(req.feedback, false, "Missing required fields", {}));
+        return res.status(400).json(setFeedback(req.feedback, false));
     }
 
     try {
@@ -26,20 +25,22 @@ const LeaderDeletingMiddleware = async (req, res, next) => {
          * 
          * @returns {Array} - ref: branchModel.js
          */
-        const result = await mysqlConn.query(`call spDeleteLeader(:gid)`,
+        const result = await mysqlConn.query(`call spDeleteLeader(:gUserID, :gid)`,
             {
                 type: QueryTypes.RAW,
                 replacements: {
+                    gUserID: req.userID,
                     gid: model.id
                 }
             });
 
         if (result[0].status === 0) {
-            return res.status(400).json(setFeedback(req.feedback, false, result[0].message, {}));
+            return res.status(400).json(setFeedback(req.feedback, false));
         }
     }
     catch (err) {
-        return res.status(500).json(setFeedback(req.feedback, false, err.message, {}));
+        // ⛔ TODO: Log the error here
+        return res.status(500).json(setFeedback(req.feedback, false));
     }
 
     next();

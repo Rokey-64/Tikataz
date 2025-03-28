@@ -18,8 +18,8 @@ const LoadDataMiddleware = async (req, res, next) => {
       model.timezone = data;
       
     } catch (error) {
-      const feedback = setFeedback(req.feedback, false, error.message, {});
-      return res.status(500).json(feedback);
+      // ⛔ TODO: Add a logger for the error
+      return res.status(500).json(setFeedback(req.feedback, false));
     }
 
     next();

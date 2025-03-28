@@ -13,6 +13,10 @@ const sessionService = {
   
     destroySession: async (session) => {
       await session.destroy();
+    },
+    deleteSession: async (session, key) => {
+      delete session[key];
+      await session.save();
     }
   };
 

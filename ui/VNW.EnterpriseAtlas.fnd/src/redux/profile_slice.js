@@ -16,7 +16,7 @@ const slice = createSlice({
             fax: "",
             vision: "",
             mission: "",
-            logo: "/logo.svg",
+            logo: "/placeholder.jpg",
             businessField: ""
         },
     reducers: {

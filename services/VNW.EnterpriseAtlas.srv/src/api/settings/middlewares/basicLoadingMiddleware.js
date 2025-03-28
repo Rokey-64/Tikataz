@@ -5,7 +5,6 @@ import setFeedback from "../../../services/setFeedback.js";
 
 const BasicLoadingMiddleware = async (req, res, next) => {
     const model = getModelService(req);
-    const userID = "dkebsheu1sed55a8wwd5+";
     
     try{
         /**
@@ -24,17 +23,17 @@ const BasicLoadingMiddleware = async (req, res, next) => {
         const result = await mysqlConn.query(`CALL spGetSettingsBasic(:gUserID)`, {
             type: QueryTypes.RAW,
             replacements: {
-                gUserID: userID
+                gUserID: req.userID
             }
         });
         if(result[0].length === 0){
-            return res.status(400).json(setFeedback(req.feedback, false, result[0].message, {}));
+            return res.status(400).json(setFeedback(req.feedback, false));
         }
 
         model.basicData = result[0];
        
     } catch (error) {
-        return res.status(500).json(setFeedback(req.feedback, false, error.message, {}));
+        return res.status(500).json(setFeedback(req.feedback, false));
     }
 
     next();

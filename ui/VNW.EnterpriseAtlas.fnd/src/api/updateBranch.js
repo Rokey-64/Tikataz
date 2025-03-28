@@ -11,7 +11,9 @@ const UpdateBranches = async (data) => {
     try {
         const res = await axios.post(apiUrl, data,
             {
-                headers: { "Content-Type": "application/json" }
+                headers: { "Content-Type": "application/json" },
+                timeout: 10000,
+                withCredentials: true,
             }
         );
         

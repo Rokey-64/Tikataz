@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import StudioHeader from "../header/studioHeader";
+import StudioHeader from "../StudioHeader";
 import "./index.css";
 
 import { Tooltip } from 'react-tooltip';
-import LeftMenu from "../left_bar/leftMenu";
+import LeftMenu from "../LeftMenu";
 import { Outlet } from "react-router-dom";
 
 const StudioLayout = () => {

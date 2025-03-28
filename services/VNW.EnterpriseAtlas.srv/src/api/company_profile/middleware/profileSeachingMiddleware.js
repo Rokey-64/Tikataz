@@ -2,6 +2,8 @@ import getModelService from "../../../services/getModelService.js";
 import setFeedback from "../../../services/setFeedback.js";
 import mysqlConn from "../../../databases/mysql-jack.js";
 import { QueryTypes } from "sequelize";
+import createShortLinkRedis from "../../../services/createShortLinkRedis.js";
+import initContainerCliAzure from "../../../services/initializeContainerClientAzure.js";
 
 /**
  * This middleware is used to get the profile of the company
@@ -14,7 +16,7 @@ const ProfileSeachingMiddleware = async (req, res, next) => {
     const model = getModelService(req);
     const userID = model?.id || "dkebsheu1sed55a8wwd5+";
     const data = {
-        logo: "/logo.svg", nation:{value:"", id:""}, name: "", taxCode: "",
+        logo: "", nation:{value:"", id:""}, name: "", taxCode: "",
         date: "", address: "", businessField: "", phone: "",
         fax: "", email: "", vision: "", mission: "", id: ""
     };
@@ -43,8 +45,14 @@ const ProfileSeachingMiddleware = async (req, res, next) => {
         }
     }
     catch(err){
-        return res.status(500).json(setFeedback(req.feedback, false, err.message, {}));
+        // ⛔ TODO: Log the error here
+        return res.status(500).json(setFeedback(req.feedback, false));
     }
+
+    const containerClient = initContainerCliAzure("images");
+    const blobKey = `${req.userID}_company_logo`;
+    const shortLink = await createShortLinkRedis(blobKey, containerClient);
+    data.logo = shortLink;
 
     model.profile = data;
     next();

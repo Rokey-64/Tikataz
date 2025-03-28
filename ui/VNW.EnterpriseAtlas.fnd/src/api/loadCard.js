@@ -6,9 +6,9 @@ const API_HOST = process.env.REACT_APP_API_HOST;
  * Get the card data from the server
  * @returns 
  */
-const loadCard = async () => {
+const loadCard = async (cardId, cardStatus) => {
     try {
-        const res = await axios.get(`${API_HOST}vmw/me/card/init`);
+        const res = await axios.get(`${API_HOST}vmw/me/card/init?id=${cardId}&st=${cardStatus}`);
         
         if (res.status !== 200) 
             return null;

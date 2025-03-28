@@ -3,11 +3,8 @@ import session from "express-session";
 import RedisStore from "connect-redis";
 import {v4 as uuidv4 } from 'uuid';
 import { now } from "sequelize/lib/utils";
-import multer from "multer";
 import {cluster} from './src/databases/redis-jack.js';
 import './src/databases/mysql-jack.js';
-// import i18nInit from './src/locales/i18n.js';
-import i18nextMiddleware from 'i18next-express-middleware';
 import cors from 'cors';
 import 'dotenv/config';
 import helmet from 'helmet';
@@ -17,7 +14,6 @@ import rateLimit from 'express-rate-limit';
 
 import "./src/databases/mongo.js"
 import tagRouter from "./src/api/atlas/tabControler.js";
-import azureContainer from "./src/api/azure_storage/azure_connector.js";
 import nationRouter from "./src/api/nation_category/nationCategoryController.js";
 import timezonesRouter from "./src/api/timezone_category/timezoneController.js";
 import languagesRouter from "./src/api/languages_category/languageCategoryController.js";
@@ -30,7 +26,6 @@ import cardsRouter from "./src/api/cards/controllers/index.js";
 
 
 const app = express();
-app.use(cors());
 const serviceID = process.env.SERVICE_ID;
 
 app.use(express.json());
@@ -42,17 +37,16 @@ app.use(hpp());
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 200 // limit each IP to 100 requests per windowMs
+  max: 200 // Limit each IP to 100 requests per windowMs
 });
 
 app.use(limiter);
 
-
 // Initialize the CORS middleware for handling cross-origin requests
 app.use(cors(
     {
-        origin: ['http://localhost:3000', 'http://192.168.1.7:3000/'],
-        methods: ['GET', 'POST'],
+        origin: ['http://localhost:3000', 'http://172.21.176.1:3000'],
+        methods: ['GET', 'POST', 'DELETE', 'PUT'],
         allowedHeaders: ['Content-Type', 'Authorization', 'cross-origin-embedder-policy'],
         credentials: true
     }
@@ -64,6 +58,14 @@ const sessionOptions = {
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    cookie: {
+        secure: false,
+        httpOnly: true,
+        maxAge: 1000 * 60 * 8,
+        sameSite: 'lax',
+        path: '/',
+        // domain: 'localhost'
+    }
 };
 app.use(session(sessionOptions));
 
@@ -72,6 +74,7 @@ app.use(session(sessionOptions));
 
 app.use((req, res, next) => {
     req.id = uuidv4();
+    req.userID = "dkebsheu1sed55a8wwd5+";
     next();
 });
 
@@ -88,7 +91,6 @@ app.use((req, res, next) => {
 });
 
 app.use('/', tagRouter);
-app.use('/', azureContainer);
 app.use('/', nationRouter);
 app.use('/', timezonesRouter);
 app.use('/', languagesRouter);
@@ -98,7 +100,6 @@ app.use('/', leadersRouter);
 app.use('/', settingsRouter);
 app.use('/', feedbackRouter);
 app.use('/', cardsRouter);
-
 
 const PORT = 3160;
 app.listen(PORT, () => {

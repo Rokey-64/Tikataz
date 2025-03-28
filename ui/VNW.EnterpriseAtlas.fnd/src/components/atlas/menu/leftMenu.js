@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import './leftMenu.css';
-import ExpandLeftMenu from "./expandLeftMenu";
+import ExpandLeftMenu from "./ExpandLeftMenu";
 
 import { CgMenuGridR } from "react-icons/cg";
 import { IoCloseCircleSharp } from "react-icons/io5";

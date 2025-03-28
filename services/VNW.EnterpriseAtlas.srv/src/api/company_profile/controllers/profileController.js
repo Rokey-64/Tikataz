@@ -1,10 +1,14 @@
 import { Router } from "express";
+import multer from "multer";
 import ProfileSeachingMiddleware from "../middleware/profileSeachingMiddleware.js";
 import getModelService from "../../../services/getModelService.js";
 import setFeedback from "../../../services/setFeedback.js";
 import ProfileSavingMiddleware from "../middleware/profileSavingMiddleware.js";
+import uploadLogoMiddleware from "../middleware/uploadLogoMiddleware.js";
+import checkFieldRequestMiddleware from "../middleware/checkFieldRequestMiddleware.js";
 
 const router = Router();
+const upload = multer({ storage: multer.memoryStorage() });
 
 router.get("/vmw/atlas/profile/find", ProfileSeachingMiddleware, async (req, res) => {
     /**
@@ -24,12 +28,12 @@ router.get("/vmw/atlas/profile/find", ProfileSeachingMiddleware, async (req, res
      * */
     const model = getModelService(req);
 
-    setFeedback(req.feedback, true, 'success', {"profile" : model.profile, "_id" : req.id});
+    ;
     
-    res.status(200).json(req.feedback);
+    res.status(200).json(setFeedback(req.feedback, true, 'success', {"profile" : model.profile, "_id" : req.id}));
 });
 
-router.post("/vmw/atlas/profile/update",ProfileSavingMiddleware, async (req, res) => {
+router.post("/vmw/atlas/profile/update", upload.any(), checkFieldRequestMiddleware, uploadLogoMiddleware, ProfileSavingMiddleware, async (req, res) => {
     /**
      * This route creates a new profile and updates the database
      * 
@@ -46,10 +50,9 @@ router.post("/vmw/atlas/profile/update",ProfileSavingMiddleware, async (req, res
      * /
      * */
     const model = getModelService(req);
-
-    setFeedback(req.feedback, true, 'success', {"_id" : model._id});
     
-    res.status(200).json(req.feedback);
+    res.status(200).json(setFeedback(req.feedback, true, 'success', {"_id" : req.id}));
 });
+
 
 export default router;

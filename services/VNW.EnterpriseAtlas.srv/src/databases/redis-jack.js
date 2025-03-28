@@ -101,7 +101,7 @@ const setRedisKey = async (key, value, expiresIn) => {
  * inport a key value pair to the Redis client
  * @param {string} key 
  * @param {*} value 
- * @param {number} expiresIn - the time to live for the key in seconds
+ * @param {number} expiresIn - the time to live for the key in seconds, if not provided, the key will not expire
  */
 const setRedisKeyOveride = async (key, value, expiresIn) => {
     try {
@@ -144,7 +144,6 @@ const deleteRedisKey = async (key) => {
     try {
         await cluster.del(key);
     } catch (error) {
-        console.log(error);
         throw error;
     }
 }

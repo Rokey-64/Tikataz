@@ -37,5 +37,5 @@ const mongo_schema = new mongoose.Schema({
     }
 })
 
-const tagModel = mongoose.model("cards", mongo_schema);
+const tagModel = mongoose.model("raw_cards", mongo_schema);
 export default tagModel

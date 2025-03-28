@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import StudioHeader from "../header/studioHeader";
+import StudioHeader from "../StudioHeader";
 import "./index.css";
 
 import { Tooltip } from 'react-tooltip';

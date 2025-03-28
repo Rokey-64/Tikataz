@@ -38,7 +38,8 @@ router.get("/vmw/atlas/language/find", async (req, res) => {
         });
         model.languages = data;
     } catch (error) {
-        return res.status(500).json(setFeedback(req.feedback, false, error.message, {}));
+        // ⛔ TODO: Log the error here
+        return res.status(500).json(setFeedback(req.feedback, false));
     }
     
     res.status(200).json(setFeedback(req.feedback, true, 'success', {"languages" : model.languages}));

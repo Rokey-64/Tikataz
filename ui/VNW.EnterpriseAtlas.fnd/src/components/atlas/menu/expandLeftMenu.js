@@ -1,5 +1,5 @@
 import './leftMenu.css';
-import React, { useState} from "react";
+import React, { useState } from "react";
 import findTagByMajor from "../../../api/tagByMajor";
 import defaultTag from "../../../api/tag";
 
@@ -9,6 +9,7 @@ import { GiSewingNeedle, GiElectricalResistance, GiBuyCard, GiSandsOfTime, GiChe
 import { SiIobroker, SiPug } from "react-icons/si";
 import { RiServiceLine, RiPriceTag3Fill } from "react-icons/ri";
 import { FcCustomerSupport } from "react-icons/fc";
+import { VscLaw } from "react-icons/vsc";
 import { PiPottedPlantFill, PiEyedropperSample } from "react-icons/pi";
 import { IoFastFoodSharp } from "react-icons/io5";
 import { MdLocalPharmacy } from "react-icons/md";
@@ -22,36 +23,51 @@ import { clearAndUpdateStatus } from "../../../redux/status_slice";
 import { addIndex } from "../../../redux/tagIndex_slice";
 import TagRender from "../../../services/tag-handler";
 
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+
 const ExpandLeftMenu = () => {
+    const { t } = useTranslation();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [selectedItem, setSelectedItem] = useState(null);
 
-    const menuItems = [
-        { major: null, icon: <PiEyedropperSample className="size-6 mr-4" />, label: 'Xây dựng mô hình' },
-        { major: null, icon: <GiBuyCard className="size-6 mr-4" />, label: 'Đặt hàng gia công' },
-        { major: null, icon: <GiSandsOfTime className="size-6 mr-4" />, label: 'Đơn hàng chờ' },
-        { major: null, icon: <RiPriceTag3Fill className="size-6 mr-4" />, label: 'Yêu cầu báo giá' }
+    const workPlantItems = [
+        { major: null, icon: <PiEyedropperSample className="size-6 mr-4" />, label: t("atlas_menu_build_model") },
+        { major: null, icon: <GiBuyCard className="size-6 mr-4" />, label: t("atlas_menu_order_outsourcing") },
+        { major: null, icon: <GiSandsOfTime className="size-6 mr-4" />, label: t("atlas_menu_waiting_order") },
+        { major: null, icon: <RiPriceTag3Fill className="size-6 mr-4" />, label: t("atlas_menu_RFQ") }
+
+
     ];
 
+    const rofItems = [
+        { major: null, icon: <RiPriceTag3Fill className="size-6 mr-4" />, label: t("atlas_menu_RFQ") },
+        { major: null, icon: <GiSandsOfTime className="size-6 mr-4" />, label: t("atlas_menu_waiting_order") },
+    ];
+
+
+
     const atlasItems = [
-        { major: null, icon: <TbHomeFilled className="size-6 mr-4" />, label: 'Thẻ của bạn' },
-        { major: null, icon: <SlLike className="size-6 mr-4" />, label: 'Đã thích' },
-        { major: null, icon: <FaRegistered className="size-6 mr-4" />, label: 'Đã đăng ký' }
+        { major: "Own", icon: <TbHomeFilled className="size-6 mr-4" />, label: t("atlas_menu_your_card") },
+        { major: null, icon: <SlLike className="size-6 mr-4" />, label: t("atlas_menu_liked") },
+        { major: null, icon: <FaRegistered className="size-6 mr-4" />, label: t("atlas_menu_registered") }
     ];
 
     const industryItems = [
-        { major: 'AC05', icon: <FaUserGear className="size-6 mr-4" />, label: 'Kỹ thuật' },
-        { major: 'AD05', icon: <BsBuildingFillAdd className="size-6 mr-4" />, label: 'Xây dựng' },
-        { major: 'AD01', icon: <GiSewingNeedle className="size-6 mr-4" />, label: 'May mặc' },
-        { major: 'AC13', icon: <GiElectricalResistance className="size-6 mr-4" />, label: 'Điện nước' },
-        { major: 'CB01', icon: <SiIobroker className="size-6 mr-4" />, label: 'Môi giới' },
-        { major: 'AF01', icon: <RiServiceLine className="size-6 mr-4" />, label: 'Dịch vụ' },
-        { major: 'AB03', icon: <FcCustomerSupport className="size-6 mr-4" />, label: 'Tư vấn, đào tạo' },
-        { major: 'BC01', icon: <PiPottedPlantFill className="text-green-700 size-6 mr-4" />, label: 'Trồng trọt' },
-        { major: 'BB02', icon: <SiPug className="size-6 mr-4" />, label: 'Chăn nuôi' },
-        { major: 'AD02', icon: <IoFastFoodSharp className="text-orange-600 size-6 mr-4" />, label: 'Thực phẩm' },
-        { major: 'AD04', icon: <MdLocalPharmacy className="size-6 mr-4" />, label: 'Dược phẩm' },
-        { major: 'AC09', icon: <GiChemicalDrop className="size-6 mr-4" />, label: 'Hóa chất' }
+        { major: 'AC05', icon: <FaUserGear className="size-6 mr-4" />, label: t("atlas_menu_major_tech") },
+        { major: 'AD05', icon: <BsBuildingFillAdd className="size-6 mr-4" />, label: t("atlas_menu_major_build") },
+        { major: 'AD01', icon: <GiSewingNeedle className="size-6 mr-4" />, label: t("atlas_menu_major_textile") },
+        { major: 'AC13', icon: <GiElectricalResistance className="size-6 mr-4" />, label: t("atlas_menu_major_E") },
+        { major: 'CB01', icon: <SiIobroker className="size-6 mr-4" />, label: t("atlas_menu_major_brokerage") },
+        { major: 'AB08', icon: <RiServiceLine className="size-6 mr-4" />, label: t("atlas_menu_major_account") },
+        { major: 'AB02', icon: <VscLaw className="size-6 mr-4" />, label: t("atlas_menu_major_law") },
+        // { major: 'AB03', icon: <FcCustomerSupport className="size-6 mr-4" />, label: 'Tư vấn, đào tạo' },
+        { major: 'BC01', icon: <PiPottedPlantFill className="text-green-700 size-6 mr-4" />, label: t("atlas_menu_major_plant") },
+        { major: 'BB02', icon: <SiPug className="size-6 mr-4" />, label: t("atlas_menu_major_livestock") },
+        { major: 'AD02', icon: <IoFastFoodSharp className="text-orange-600 size-6 mr-4" />, label: t("atlas_menu_major_food") },
+        { major: 'AD04', icon: <MdLocalPharmacy className="size-6 mr-4" />, label: t("atlas_menu_major_pharma") },
+        { major: 'AC09', icon: <GiChemicalDrop className="size-6 mr-4" />, label: t("atlas_menu_major_chemistry") }
     ];
 
     /**
@@ -59,7 +75,7 @@ const ExpandLeftMenu = () => {
      * @param {*} major 
      * @returns 
      */
-    const whenClick = (major) => {
+    const findCardOnclick = (major) => {
         if (!major)
             return;
 
@@ -81,6 +97,21 @@ const ExpandLeftMenu = () => {
 
         getTag();
     };
+
+    /**
+     * This function will be called when the card management is clicked.
+     * @returns
+     */
+    const cardManagementOnclick = (major) => {
+        if (!major)
+            return;
+
+        if (major === 'Own') {
+            // navigate('/me/studio/');
+            const url = "/me/studio";
+            window.open(url, "_blank");
+        }
+    }
 
     /**
      * When the major header is clicked, this function will be called to render the items of that major.
@@ -110,7 +141,7 @@ const ExpandLeftMenu = () => {
     };
 
 
-    const renderMenuItems =(items, whenClick) => {
+    const renderMenuItems = (items, whenClick) => {
         return items.map((item, index) => (
             <li
                 key={index}
@@ -131,20 +162,20 @@ const ExpandLeftMenu = () => {
         <div className="w-64 text-black h-screen p-4 bg-[#f2f2f2] overflow-y-auto overscroll-contain custom-scrollbar">
             <div className="ml-4">
                 <h4 className="text-xl font-semibold mb-4">WorkPlant</h4>
-                <ul>{renderMenuItems(menuItems, null)}</ul>
+                <ul>{renderMenuItems(workPlantItems, null)}</ul>
             </div>
             <hr className="my-6 border-t-2" />
             <div className="ml-4">
                 <h4 className="text-xl font-semibold mb-4">Atlas</h4>
-                <ul>{renderMenuItems(atlasItems, null)}</ul>
+                <ul>{renderMenuItems(atlasItems, cardManagementOnclick)}</ul>
             </div>
             <hr className="my-6 border-t-2" />
             <div className="ml-4">
                 <a href="#" className="text-xl font-semibold" onClick={whenHeaderItemClick}>
-                    <h4 className="text-xl font-semibold mb-4">Nhóm ngành</h4>
+                    <h4 className="text-xl font-semibold mb-4">{t("atlas_menu_major")}</h4>
                 </a>
-                
-                <ul>{renderMenuItems(industryItems, whenClick)}</ul>
+
+                <ul>{renderMenuItems(industryItems, findCardOnclick)}</ul>
             </div>
             <div className="my-20"></div>
         </div>

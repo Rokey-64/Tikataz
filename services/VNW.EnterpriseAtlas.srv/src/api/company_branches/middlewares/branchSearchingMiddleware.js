@@ -14,7 +14,6 @@ import createPhoneListModel from "../../../models/phoneListModel.js";
  */
 const BranchSeachingMiddleware = async (req, res, next) => {
     const model = getModelService(req);
-    const userID = "dkebsheu1sed55a8wwd5+";
     const branches = [];
 
     try {
@@ -29,13 +28,12 @@ const BranchSeachingMiddleware = async (req, res, next) => {
             {
                 type: QueryTypes.RAW,
                 replacements: {
-                    gUserID: userID
+                    gUserID: req.userID
                 }
             });
 
         if (result[0].length === 0) {
-            setFeedback(model, 404, "No data found", {});
-            return res.status(model.status).json(model);
+            return req.status(200).json(setFeedback(model, 404));
         }
 
         /**
@@ -55,7 +53,7 @@ const BranchSeachingMiddleware = async (req, res, next) => {
 
     }
     catch (err) {
-        return res.status(model.status).json(setFeedback(model, 500, "Internal server error", err));
+        return res.status(model.status).json(setFeedback(model, 500));
     }
 
     model.branches = branches;

@@ -11,7 +11,6 @@ import setFeedback from "../../../services/setFeedback.js";
  */
 const QuestionsLoadingMiddleware = (typeName) => async (req, res, next) => {
     const model = getModelService(req);
-    const userID = "dkebsheu1sed55a8wwd5+";
     const data = [
         /**
          * A structure of the data to be returned
@@ -41,12 +40,12 @@ const QuestionsLoadingMiddleware = (typeName) => async (req, res, next) => {
         const result = await mysqlConn.query(`CALL spGetSettings(:gUserID,:gTypeName)`, {
             type: QueryTypes.RAW,
             replacements: {
-                gUserID: userID,
+                gUserID: req.userID,
                 gTypeName: typeName
             }
         });
         if (result.length === 0) {
-            return res.status(400).json(setFeedback(req.feedback, false, result[0].message, {}));
+            return res.status(400).json(setFeedback(req.feedback, false));
         }
         result.forEach(element => {
             const lables = [];
@@ -75,7 +74,8 @@ const QuestionsLoadingMiddleware = (typeName) => async (req, res, next) => {
         model.questions = data;
     }
     catch (err) {
-        return res.status(500).json(setFeedback(req.feedback, false, err.message, {}));
+        // ⛔ TODO: Add a logger for the error
+        return res.status(500).json(setFeedback(req.feedback, false));
     }
 
     next();

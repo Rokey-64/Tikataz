@@ -11,10 +11,12 @@ const UploadCardImages = async (formData) => {
     /**
      * Get a list of timezones
      */
-    const apiUrl = `${API_HOST}vmw/me/card/update/image`;
+    const apiUrl = `${API_HOST}vmw/me/card/update/master`;
     try {
         const response = await axios.post(apiUrl, formData, {
-            headers: { "Content-Type": "multipart/form-data" }
+            headers: { "Content-Type": "multipart/form-data" },
+            timeout: 10000,
+            withCredentials: true,
         });
 
         if (response.status === 200) {

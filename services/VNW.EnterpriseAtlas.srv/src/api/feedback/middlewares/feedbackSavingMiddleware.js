@@ -1,10 +1,8 @@
 import getModelService from "../../../services/getModelService.js";
 import setFeedback from "../../../services/setFeedback.js";
 import mysqlConn from "../../../databases/mysql-jack.js";
-import { QueryTypes } from "sequelize";
 import feedbackModel from "../../../models/feedbackModel.js";
 import { nanoid } from "nanoid";
-import { use } from "i18next";
 
 /**
  * This middleware saves the feedback to the database
@@ -15,7 +13,6 @@ import { use } from "i18next";
  */
 const FeedbackSavingMiddleware = async (req, res, next) => {
     const model = getModelService(req);
-    const userID = "dkebsheu1sed55a8wwd5+";
     const feedback = feedbackModel(mysqlConn);
 
     /**
@@ -30,7 +27,7 @@ const FeedbackSavingMiddleware = async (req, res, next) => {
      * Check if the required fields are missing
      */
     if (!data?.content?.trim()) {
-        return res.status(400).json(setFeedback(req.feedback, false, "Missing required fields", {}));
+        return res.status(400).json(setFeedback(req.feedback, false));
     }
 
     try {
@@ -39,10 +36,11 @@ const FeedbackSavingMiddleware = async (req, res, next) => {
             content: data.content,
             email_notify: data.emailNotify,
             state: "await",
-            user_id: userID
+            user_id: req.userID
         });
     } catch (error) {
-        return res.status(500).json(setFeedback(req.feedback, false, error.message, {}));
+        // ⛔ TODO: Log the error here
+        return res.status(500).json(setFeedback(req.feedback, false));
     }
 
     next();

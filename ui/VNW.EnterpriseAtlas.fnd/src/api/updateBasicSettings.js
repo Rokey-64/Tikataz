@@ -9,7 +9,9 @@ const UpdateBasicSettings = async (data) => {
     const apiUrl = `${API_HOST}vmw/atlas/settings/basic/update`;
     try {
         const response = await axios.post(apiUrl, data, {
-            headers: { "Content-Type": "application/json" }
+            headers: { "Content-Type": "application/json" },
+            timeout: 10000,
+            withCredentials: true,
         });
 
         if (response.status === 200) {

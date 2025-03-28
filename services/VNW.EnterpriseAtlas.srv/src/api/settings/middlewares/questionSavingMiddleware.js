@@ -12,31 +12,31 @@ import setFeedback from "../../../services/setFeedback.js";
  **/
 const QuestionSavingMiddleware = async (req, res, next) => {
     const model = getModelService(req);
-    const userID = "dkebsheu1sed55a8wwd5+";
 
     if (!model?.answers?.length) {
-        return res.status(400).json(setFeedback(req.feedback, false, "Missing required fields", {}));
+        return res.status(400).json(setFeedback(req.feedback, false));
     }
 
     try {
         const result = await mysqlConn.query(`CALL spSaveSettings(:gUserID,:gArrayAnswer)`, {
             type: QueryTypes.RAW,
             replacements: {
-                gUserID: userID,
+                gUserID: req.userID,
                 gArrayAnswer: JSON.stringify(model.answers)
             }
         });
         if (result.length === 0) {
-            return res.status(400).json(setFeedback(req.feedback, false, result[0].message, {}));
+            return res.status(400).json(setFeedback(req.feedback, false));
         }
 
         if(result[0].status === 0) {
-            return res.status(400).json(setFeedback(req.feedback, false, result[0].message, {}));
+            return res.status(400).json(setFeedback(req.feedback, false));
         }
         
         return res.status(200).json(setFeedback(req.feedback, true, result[0].message, {}));
     } catch (error) {
-        return res.status(500).json(setFeedback(req.feedback, false, error.message, {}));
+        // ⛔ TODO: Add the error to the logs
+        return res.status(500).json(setFeedback(req.feedback, false));
     }
 };
 

@@ -2,6 +2,7 @@ import getModelService from "../../../services/getModelService.js";
 import setFeedback from "../../../services/setFeedback.js";
 import mysqlConn from "../../../databases/mysql-jack.js";
 import { QueryTypes } from "sequelize";
+import { showMessage } from "../../../databases/http_fluentd.js";
 
 /**
  * This middleware is used to save the branch of the company
@@ -9,13 +10,9 @@ import { QueryTypes } from "sequelize";
  * @param {*} res 
  * @param {*} next 
  */
-const LeaderSavingMiddleware = async (req, res, next) => {
+const leaderSavingMiddleware = async (req, res, next) => {
     const model = getModelService(req);
-    const userID = "dkebsheu1sed55a8wwd5+";
-
-    if (!model?.name?.trim() || !model?.position?.trim()) {
-        return res.status(400).json(setFeedback(req.feedback, false, "Missing required fields", {}));
-    }
+    const data = model.data;
 
     try {
         /**
@@ -40,31 +37,35 @@ const LeaderSavingMiddleware = async (req, res, next) => {
                     :gPhone, 
                     :gEmail,
                     :gSlogan,
-                    :gLogoIndex)`,
+                    :gLogoIndex,
+                    :gState)`,
             {
                 type: QueryTypes.RAW,
                 replacements: {
-                    gid: model.id,
-                    gUserID: userID,
-                    gName: model.name,
-                    gPosition: model.position,
-                    gDate: model.date?.replace(/-/g, "") || "",
-                    gPhone: model.phone,
-                    gEmail: model.email,
-                    gSlogan: model.slogan,
-                    gLogoIndex: model.logo
+                    gid: data.id,
+                    gUserID: req.userID,
+                    gName: data.name,
+                    gPosition: data.position,
+                    gDate: data.date?.replace(/-/g, "") || "",
+                    gPhone: data.phone,
+                    gEmail: data.email,
+                    gSlogan: data.slogan,
+                    gLogoIndex: `${data.id}_avatar`,
+                    gState: model.state
                 }
             });
 
         if (result[0].status === 0) {
-            return res.status(400).json(setFeedback(req.feedback, false, result[0].message, {}));
+            showMessage(result[0].message);
+            return res.status(400).json(setFeedback(req.feedback, false));
         }
     }
     catch (err) {
-        return res.status(500).json(setFeedback(req.feedback, false, err.message, {}));
+        showMessage(err);
+        return res.status(500).json(setFeedback(req.feedback, false));
     }
 
     next();
 };
 
-export default LeaderSavingMiddleware;
+export default leaderSavingMiddleware;

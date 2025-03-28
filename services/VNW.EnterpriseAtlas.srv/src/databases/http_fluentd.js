@@ -28,6 +28,6 @@ export const level = {
 
 export const showMessage = (...messages) => {
     if (env === 'development') {
-        console.log(messages);
+        console.log("⛔⛔", messages);
     }
 };

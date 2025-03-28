@@ -2,6 +2,7 @@ import getModelService from "../../../services/getModelService.js";
 import setFeedback from "../../../services/setFeedback.js";
 import mysqlConn from "../../../databases/mysql-jack.js";
 import { QueryTypes } from "sequelize";
+import { stringify } from "qs";
 
 /**
  * Save the profile to the database
@@ -12,41 +13,7 @@ import { QueryTypes } from "sequelize";
  */
 const ProfileSavingMiddleware = async (req, res, next) => {
     const model = getModelService(req);
-    const userID = "dkebsheu1sed55a8wwd5+";
-    // const data = {
-    //     logo: "", nation: { value: "", id: "" }, name: "", taxCode: "",
-    //     date: "", address: "", businessField: "", phone: "",
-    //     fax: "", email: "", vision: "", mission: "", id: ""
-    // };
-
-    const data = {
-        logo: model.logo, 
-        nation:{value:model.nation.value, id:model.nation.id}, 
-        name: model.name, 
-        taxCode: model.taxCode,
-        date: model.date.replace(/-/g, ""), 
-        address: model.address, 
-        businessField: model.businessField, 
-        phone: model.phone,
-        fax: model.fax, 
-        email: model.email, 
-        vision: model.vision, 
-        mission: model.mission
-    };
-    /**
-     * Check if the required fields are missing
-     */
-    if (data.name === ""
-        || data.taxCode === ""
-        || data.date === ""
-        || data.address === ""
-        || data.businessField === ""
-        || data.phone === ""
-        || data.email === ""
-        || data.nation.value === ""
-        || data.nation.id === "") {
-        return res.status(400).json(setFeedback(req.feedback, false, "Missing required fields", {}));
-    };
+    const profile = model.profile;
 
     try {
         const result = await mysqlConn.query(`call spSaveCommonProfile(
@@ -58,32 +25,32 @@ const ProfileSavingMiddleware = async (req, res, next) => {
             {
                 type: QueryTypes.RAW,
                 replacements: {
-                    gCorpName: data.name,
-                    gTaxCode: data.taxCode,
-                    gRegisterDate: data.date,
-                    gAddress: data.address,
-                    gBussinessField: data.businessField,
-                    gUserID: userID,
-                    gVision: data.vision,
-                    gMission: data.mission,
-                    gFaxNumber: data.fax,
-                    gNationID: data.nation.id,
-                    gPhoneNumber: data.phone,
-                    gEmail: data.email,
-                    gLogoIndex: data.logo
+                    gCorpName: profile.name,
+                    gTaxCode: profile.taxCode,
+                    gRegisterDate: profile.date.replace(/-/g, ''),
+                    gAddress: profile.address,
+                    gBussinessField: profile.businessField,
+                    gUserID: req.userID,
+                    gVision: profile.vision,
+                    gMission: profile.mission,
+                    gFaxNumber: profile.fax,
+                    gNationID: profile.nation.id,
+                    gPhoneNumber: profile.phone,
+                    gEmail: profile.email,
+                    gLogoIndex: `${req.userID}_company_logo`
                 }
             }); //'Named replacement ":gBussinessField" has no entry in the replacement map.'
 
         if (result[0].status === 0) {
-            return res.status(400).json(setFeedback(req.feedback, false, result[0].message, {}));
+            return res.status(400).json(setFeedback(req.feedback, false));
         }
 
     }
     catch (err) {
-        return res.status(500).json(setFeedback(req.feedback, false, err.message, {}));
+        // ⛔ TODO: Log the error here
+        return res.status(500).json(setFeedback(req.feedback, false));
     }
 
-    model.profile = data;
     next();
 };
 

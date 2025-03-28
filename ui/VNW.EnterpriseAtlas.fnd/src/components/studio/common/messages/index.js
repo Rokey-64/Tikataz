@@ -1,11 +1,11 @@
 import React from 'react';
-import InsertNoticeText from '../insert_notice';
+import InsertNoticeText from '../InsertNoticeText';
 
 /**
  * Get a message to notify the user about the card
  * @param {*} param0 
  */
-const CardMessages = ({ type }) => {
+const Messages = ({ type }) => {
     switch (type) {
         case 'ProductMessage':
             return <ProductMessage />
@@ -147,4 +147,4 @@ const ProductMessage = () => {
 
 
 
-export default CardMessages;
+export default Messages;

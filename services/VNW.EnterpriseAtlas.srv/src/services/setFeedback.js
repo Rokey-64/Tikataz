@@ -6,7 +6,7 @@
  * @param {*} message - message to return to the user
  * @param {*} data - data to return to the user
  */
-const setFeedback = (feedback, status, message, data) => {
+const setFeedback = (feedback, status, message='', data={}) => {
     if (!feedback) {
         throw new Error("Feedback is required");
     }

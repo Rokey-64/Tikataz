@@ -11,10 +11,8 @@ import { QueryTypes } from "sequelize";
  */
 const BranchSavingMiddleware = async (req, res, next) => {
     const model = getModelService(req);
-    const userID = "dkebsheu1sed55a8wwd5+";
-
-    if (!model?.name?.trim() || !model?.taxcode?.trim() || !model?.phone?.trim() || !model?.address?.trim() || !model?.email?.trim() || !model?.date?.trim()) {
-        return res.status(400).json(setFeedback(req.feedback, false, "Missing required fields", {}));
+    if (!model?.name?.trim() || !model?.address?.trim()) {
+        return res.status(400).json(setFeedback(req.feedback, false));
     }
 
     try {
@@ -44,7 +42,7 @@ const BranchSavingMiddleware = async (req, res, next) => {
                 type: QueryTypes.RAW,
                 replacements: {
                     gid: model.id,
-                    gUserID: userID,
+                    gUserID: req.userID,
                     gName: model.name,
                     gCode: model.taxcode,
                     gDate: model.date?.replace(/-/g, "") || "",
@@ -55,11 +53,12 @@ const BranchSavingMiddleware = async (req, res, next) => {
             });
 
         if (result[0].status === 0) {
-            return res.status(400).json(setFeedback(req.feedback, false, result[0].message, {}));
+            return res.status(400).json(setFeedback(req.feedback, false));
         }
     }
     catch (err) {
-        return res.status(500).json(setFeedback(req.feedback, false, err.message, {}));
+        // ⛔ TODO: Log the error here
+        return res.status(500).json(setFeedback(req.feedback, false));
     }
 
     next();

@@ -18,27 +18,37 @@ const CompressImage = async (file, options) => {
     if (options) {
         compressOptions = options;
     }
-    
-    // Return if the file is empty
-    if(!file) return;
 
-    if(file.size > 0.5 * 1024 * 1024) {
-        alert("Kích thước hình ảnh vượt quá 0.5MB. Vui lòng chọn hình ảnh khác");
-        return;
-    }
+    // Return if the file is empty
+    if (!file) return;
 
     // If the file size is less than 0.1MB, return the object URL
-    if (file.size < 0.1 * 1024 * 1024) {
+    if (file.size < compressOptions.maxSizeMB * 1024 * 1024) {
         return URL.createObjectURL(file);
     }
-    
 
-    let compressedFile = await imageCompression(file, compressOptions);
+    // Compress the image
+    let compressedFile = null;
+    const TIMEOUT = 500;
+    while ((compressedFile?.size || file.size) / 1024 / 1024 > compressOptions.maxSizeMB && compressOptions.initialQuality > 0.2) {
+        compressOptions.initialQuality -= 0.3;
+        try {
+            compressedFile = await Promise.race(
+                [
+                    new Promise((resolve) => setTimeout(() => resolve("timeout"), TIMEOUT)),
+                    imageCompression(file, compressOptions)
+                ]
+            );
+        }
+        catch (e) {
+            break;
+        }
+    }
 
-    // If the compressed file is still larger than 0.1MB, reduce the quality
-    while (compressedFile.size / 1024 / 1024 > compressOptions.maxSizeMB && compressOptions.initialQuality > 0.2) {
-        compressOptions.initialQuality -= 0.1;
-        compressedFile = await imageCompression(file, compressOptions);
+
+    if (compressedFile === "timeout" && file.size > compressOptions.maxSizeMB * 1024 * 1024) {
+        alert("Không thể tiến hành nén ảnh này, vui lòng chọn ảnh có kích thước nhỏ hơn 0.1MB");
+        return;
     }
 
     const imgUrl = URL.createObjectURL(compressedFile);

@@ -7,6 +7,8 @@ import branchesReducer from "./branchesSlice";
 import leadersReducer from "./leadersSlice";
 import optionsReducer from "./optionsSlice";
 import cardsReducer from "./cardsSlice";
+import inlineCardsReducer from "./inlineCardSlice";
+import pricingReducer from "./pricingSlice";
 
 
 const store = configureStore({ 
@@ -18,7 +20,9 @@ const store = configureStore({
         branches:branchesReducer,
         leaders:leadersReducer,
         options:optionsReducer,
-        cards: cardsReducer
+        cards: cardsReducer,
+        inlineCards: inlineCardsReducer,
+        pricing: pricingReducer
     } 
 });
 export default store;

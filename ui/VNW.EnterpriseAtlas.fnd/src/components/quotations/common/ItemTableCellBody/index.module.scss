@@ -1,0 +1,9 @@
+.button {
+    @apply flex px-1 py-1 text-center border-x border-b border-gray-300 text-gray-800 transition-all;
+    background: linear-gradient(135deg, #ffffff, #f7f7f7);
+    &:hover {
+        background: linear-gradient(135deg, #f0f0f0, #e5e5e5);
+    }
+}
+
+//border border-gray-300

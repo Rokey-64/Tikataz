@@ -11,10 +11,9 @@ import setFeedback from "../../../services/setFeedback.js";
  */
 const BranchDeletingMiddleware = async (req, res, next) => {
     const model = getModelService(req);
-    const userID = "dkebsheu1sed55a8wwd5+";
 
-    if (!model?.ids?.trim()) {
-        return res.status(400).json(setFeedback(req.feedback, false, "Missing required fields", {}));
+    if (!model?.ids || model.ids.length === 0) {
+        return res.status(400).json(setFeedback(req.feedback, false));
     }
     const concatID = model.ids.join(',');
 
@@ -27,20 +26,22 @@ const BranchDeletingMiddleware = async (req, res, next) => {
          * 
          * @returns {Array} - ref: branchModel.js
          */
-        const result = await mysqlConn.query(`call spDeleleBranches(:gid)`,
+        const result = await mysqlConn.query(`call spDeleleBranches(:gUserID, :gid)`,
             {
                 type: QueryTypes.RAW,
                 replacements: {
+                    gUserID: req.userID,
                     gid: concatID
                 }
             });
 
         if (result[0].status === 0) {
-            return res.status(400).json(setFeedback(req.feedback, false, result[0].message, {}));
+            return res.status(400).json(setFeedback(req.feedback, false));
         }
     }
     catch (err) {
-        return res.status(500).json(setFeedback(req.feedback, false, err.message, {}));
+        // ⛔ TODO: Log the error here
+        return res.status(500).json(setFeedback(req.feedback, false));
     }
 
     next();

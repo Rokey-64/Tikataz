@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_HOST = process.env.REACT_APP_API_HOST;
 
-const NationCategory = async () => {
+const nationCategory = async () => {
     /**
      * Get a list of nations
      */
@@ -19,4 +19,4 @@ const NationCategory = async () => {
     }
 }
 
-export default NationCategory;
+export default nationCategory;
