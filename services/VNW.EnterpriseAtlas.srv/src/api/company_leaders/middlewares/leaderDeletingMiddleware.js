@@ -1,7 +1,7 @@
-import { QueryTypes } from "sequelize";
-import mysqlConn from "../../../databases/mysql-jack.js";
 import getModelService from "../../../services/getModelService.js";
 import setFeedback from "../../../services/setFeedback.js";
+import deleteLeaderService from "../services/deleteLeaderService.js";
+import { showMessage } from "../../../databases/http_fluentd.js";
 
 /**
  * This middleware is used to delete the branch of the company
@@ -17,29 +17,14 @@ const LeaderDeletingMiddleware = async (req, res, next) => {
     }
 
     try {
-        /**
-         * Call the stored procedure to delete the branch
-         * 
-         * @param {string} gUserID - The user ID
-         * @param {string} gBranchID - The branch ID
-         * 
-         * @returns {Array} - ref: branchModel.js
-         */
-        const result = await mysqlConn.query(`call spDeleteLeader(:gUserID, :gid)`,
-            {
-                type: QueryTypes.RAW,
-                replacements: {
-                    gUserID: req.userID,
-                    gid: model.id
-                }
-            });
+        const result = await deleteLeaderService(model.userID, model.id);
 
         if (result[0].status === 0) {
             return res.status(400).json(setFeedback(req.feedback, false));
         }
     }
     catch (err) {
-        // ⛔ TODO: Log the error here
+        showMessage("LeaderDeletingMiddleware", err);
         return res.status(500).json(setFeedback(req.feedback, false));
     }
 

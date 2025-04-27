@@ -1,5 +1,5 @@
 import mysqlConn from '../../databases/mysql-jack.js';
-import nationModel from '../../models/nationModel.js';
+import nationModel from '../../models/mysql/nationModel.js';
 import setFeedback from '../../services/setFeedback.js';
 import getModelService from '../../services/getModelService.js';
 

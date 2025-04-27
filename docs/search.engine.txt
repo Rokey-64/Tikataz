@@ -1,0 +1,37 @@
+💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
+
+💥💥💥 MODULE NÀY TRÌNH BÀY PHƯƠNG PHÁP VÀ QUÁ TRÌNH THIẾT KẾ XÂY DỰNG SEARCH SERVICES CHO HỆ THỐNG TIKATAZ 💥💥💥
+
+💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
+
+I, CÁC PHƯƠNG PHÁP CÓ THỂ TIẾN HÀNH
+----------------------------------------------------------------------------------------------------------------
+🔰🔰 CÁCH 1: Lưu  keyworks thành 1 danh sách riêng, và mỗi keyworks trỏ đến các nhà cung cấp mà nó liên quan
+   -> keywork -> supliers
+
+💨 Ưu:
+ 💚💚 Truy cập nhanh: vì chỉ cần tìm từ khóa tương ứng vơi keyworks, từ đó suy ra khách hàng có liên quan
+ 💚💚 Tiết kiệm tài nguyên vì giảm thiểu tối đa keywords mang tính lặp lại
+⚠ Nhược:
+ 💚💚 Cập nhật chậm: Khi khách hàng cập nhật keyworks --> tìm kiếp từng keywork trong db rồi cập nhật từng cái ->> Quá trình cập nhật có tốn hiệu xuất hơn
+ 💚💚 Cần thiết kế thêm chức năng cập nhật, bổ sung chức năng ở một sô phần đã lưu theo cách 2
+
+🔰🔰 CÁCH 2: Lưu  keyworks vào trong từng nhà cung cấp
+   -> suplier -> keyworks
+
+💨 Ưu:
+ 💚💚 Cập nhật nhanh -> khi khách hàng cập nhật, chỉ cần tìm id của khách hàng và update keyword
+ 💚💚 Không cần thiết kế thêm chức năng cập nhật vì đã có sẵn
+⚠ Nhược
+ 💚💚 Truy cập chậm vì phải tìm kiếm từng khách hàng, sau đó lấy keyworks và kiểm tra tính đồng nghĩa
+ 💚💚 Tốn tài nguyên nếu các đối tác có cùng keyworks, lặp lại nhiều
+
+🔰🔰 CÁCH 3: Kết hợp
+ Desc: Khách hàng lưu keyword thì vẫn đồng bộ trực tiếp ứng với mỗi khách hàng, sau đó chuyển dần keyworks sang ElasticSearch phục vụ cho truy vấn nhanh, và lưu theo cơ chế từng key ứng với các khách hàng
+
+💨 Ưu:
+ 💚💚 Truy cập nhanh: -> khi khách hàng cập nhật, chỉ cần tìm id của khách hàng và update keyword
+⚠ Nhược
+ 💚💚 Tốn nhiều giai đoạn thực hiện, và phải cần thiết kế thêm module bất đồng bộ
+ 💚💚 Tốn nhiều tài nguyên bộ nhớ do 1 key phải lưu nhiều nơi khác nhau
+ 💚💚 Dự đoán thời gian thiết kế hoàn thiện kéo dài 

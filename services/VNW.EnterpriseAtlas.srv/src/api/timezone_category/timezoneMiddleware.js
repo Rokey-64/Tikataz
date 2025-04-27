@@ -1,5 +1,5 @@
 import mysqlConn from '../../databases/mysql-jack.js';
-import timezoneModel from '../../models/timezoneModel.js';
+import timezoneModel from '../../models/mysql/timezoneModel.js';
 import setFeedback from '../../services/setFeedback.js';
 import getModelService from '../../services/getModelService.js';
 

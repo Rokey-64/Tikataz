@@ -4,9 +4,12 @@ import mysqlConn from "../../../databases/mysql-jack.js";
 import { QueryTypes } from "sequelize";
 import createShortLinkRedis from "../../../services/createShortLinkRedis.js";
 import initContainerCliAzure from "../../../services/initializeContainerClientAzure.js";
+import createStorageService from "../../../services/strorages/createStorageService.js";
+import {GENERATING_COMPANY_LOGO_KEY} from "../../../services/generateRedisKeys.js";
+import searchLeaderService from "../services/searchProfileService.js";
 
 /**
- * This middleware is used to get the profile of the company
+ * This middleware is used to get the profile of the company 
  * @param {*} req 
  * @param {*} res 
  * @param {*} next 
@@ -22,10 +25,7 @@ const ProfileSeachingMiddleware = async (req, res, next) => {
     };
 
     try{
-        const result = await mysqlConn.query("call spGetCommonProfile(:gUserID)", {
-            type: QueryTypes.RAW,
-            replacements: { gUserID: userID }
-        });
+        const result = await searchLeaderService(userID);
 
         if(result.length > 0){
             const profile = result[0];
@@ -49,9 +49,13 @@ const ProfileSeachingMiddleware = async (req, res, next) => {
         return res.status(500).json(setFeedback(req.feedback, false));
     }
 
-    const containerClient = initContainerCliAzure("images");
-    const blobKey = `${req.userID}_company_logo`;
-    const shortLink = await createShortLinkRedis(blobKey, containerClient);
+    // const containerClient = initContainerCliAzure("images");
+    const storageService = createStorageService("images");
+    
+    // const blobKey = `${req.userID}_company_logo`;
+    const blobKey = GENERATING_COMPANY_LOGO_KEY(userID);
+
+    const shortLink = await createShortLinkRedis(blobKey, storageService);
     data.logo = shortLink;
 
     model.profile = data;

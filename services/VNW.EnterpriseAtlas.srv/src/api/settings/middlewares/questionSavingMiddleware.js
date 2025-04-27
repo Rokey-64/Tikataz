@@ -1,7 +1,7 @@
-import { QueryTypes } from "sequelize";
-import mysqlConn from "../../../databases/mysql-jack.js";
 import getModelService from "../../../services/getModelService.js";
 import setFeedback from "../../../services/setFeedback.js";
+import { showMessage } from "../../../databases/http_fluentd.js";
+import saveQuestionSettingService from "../services/saveQuestionSettingService.js";
 
 /**
  * Saves the basic settings of the user.
@@ -18,13 +18,7 @@ const QuestionSavingMiddleware = async (req, res, next) => {
     }
 
     try {
-        const result = await mysqlConn.query(`CALL spSaveSettings(:gUserID,:gArrayAnswer)`, {
-            type: QueryTypes.RAW,
-            replacements: {
-                gUserID: req.userID,
-                gArrayAnswer: JSON.stringify(model.answers)
-            }
-        });
+        const result = await saveQuestionSettingService(req.userID, model.answers);
         if (result.length === 0) {
             return res.status(400).json(setFeedback(req.feedback, false));
         }
@@ -33,11 +27,12 @@ const QuestionSavingMiddleware = async (req, res, next) => {
             return res.status(400).json(setFeedback(req.feedback, false));
         }
         
-        return res.status(200).json(setFeedback(req.feedback, true, result[0].message, {}));
     } catch (error) {
-        // ⛔ TODO: Add the error to the logs
+        showMessage("QuestionSavingMiddleware", error);
         return res.status(500).json(setFeedback(req.feedback, false));
     }
+
+    return next();
 };
 
 export default QuestionSavingMiddleware;

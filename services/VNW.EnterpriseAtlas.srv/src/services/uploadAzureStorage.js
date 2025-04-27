@@ -1,4 +1,4 @@
-
+import util from 'util';
 
 /**
  * Upload a block blob to Azure Storage
@@ -9,9 +9,7 @@
  * 
  * @returns
  */
-const uploadAzureStorage = async (imageBuffer, imageType, blobName, containerClient, tags) =>{
-    // const storageClient = BlobServiceClient.fromConnectionString(AZURE_CONNECTION_STRING);
-    // const ContainerClient = storageClient.getContainerClient(containerName);
+const uploadAzureStorage = util.debug(async (imageBuffer, imageType, blobName, containerClient, tags) =>{
     const blobs = containerClient.getBlockBlobClient(blobName);
     let result;
 
@@ -44,6 +42,6 @@ const uploadAzureStorage = async (imageBuffer, imageType, blobName, containerCli
     });
 
     return result;
-};
+}, 'uploadAzureStorage is deprecated. Use class StorageService instead.');
 
 export default uploadAzureStorage

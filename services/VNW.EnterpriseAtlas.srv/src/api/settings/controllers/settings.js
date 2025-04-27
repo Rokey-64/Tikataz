@@ -5,7 +5,7 @@ import setFeedback from "../../../services/setFeedback.js";
 import questionsLoadingMiddleware from "../middlewares/questionsLoadingMiddleware.js";
 import BasicLoadingMiddleware from "../middlewares/basicLoadingMiddleware.js";
 import QuestionSavingMiddleware from "../middlewares/questionSavingMiddleware.js";
-import BasicSavingMiddleware from "../middlewares/basicSavingMiddleware.js";
+import basicSavingMiddleware from "../middlewares/basicSavingMiddleware.js";
 
 const router = Router();
 
@@ -101,7 +101,7 @@ router.post("/vmw/atlas/settings/announce/update", QuestionSavingMiddleware, (re
     res.status(200).json(setFeedback(req.feedback, true, 'success', {}));
 });
 
-router.post("/vmw/atlas/settings/basic/update", BasicSavingMiddleware, (req, res) => {
+router.post("/vmw/atlas/settings/basic/update", basicSavingMiddleware, (req, res) => {
     /**
      * This route saves basic settings
      * 

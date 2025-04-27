@@ -1,8 +1,8 @@
 import getModelService from "../../../services/getModelService.js";
 import setFeedback from "../../../services/setFeedback.js";
-import mysqlConn from "../../../databases/mysql-jack.js";
-import { QueryTypes } from "sequelize";
-import { stringify } from "qs";
+import saveLeaderService from "../services/saveProfileService.js";
+import {GENERATING_COMPANY_LOGO_KEY} from "../../../services/generateRedisKeys.js";
+import { showMessage } from "../../../databases/http_fluentd.js";
 
 /**
  * Save the profile to the database
@@ -14,32 +14,24 @@ import { stringify } from "qs";
 const ProfileSavingMiddleware = async (req, res, next) => {
     const model = getModelService(req);
     const profile = model.profile;
+    const key = GENERATING_COMPANY_LOGO_KEY(req.userID);
 
     try {
-        const result = await mysqlConn.query(`call spSaveCommonProfile(
-                                :gCorpName, :gTaxCode, :gRegisterDate, 
-                                :gAddress, :gBussinessField, :gUserID, 
-                                :gVision, :gMission, :gFaxNumber, 
-                                :gNationID, :gPhoneNumber, :gEmail, 
-                                :gLogoIndex)`,
-            {
-                type: QueryTypes.RAW,
-                replacements: {
-                    gCorpName: profile.name,
-                    gTaxCode: profile.taxCode,
-                    gRegisterDate: profile.date.replace(/-/g, ''),
-                    gAddress: profile.address,
-                    gBussinessField: profile.businessField,
-                    gUserID: req.userID,
-                    gVision: profile.vision,
-                    gMission: profile.mission,
-                    gFaxNumber: profile.fax,
-                    gNationID: profile.nation.id,
-                    gPhoneNumber: profile.phone,
-                    gEmail: profile.email,
-                    gLogoIndex: `${req.userID}_company_logo`
-                }
-            }); //'Named replacement ":gBussinessField" has no entry in the replacement map.'
+        const result = await saveLeaderService({
+            name: profile.name,
+            taxcode: profile.taxCode,
+            date: profile.date.replace(/-/g, ''),
+            address: profile.address,
+            businessField: profile.businessField,
+            uid: req.userID,
+            vision: profile.vision,
+            mission: profile.mission,
+            fax: profile.fax,
+            nation: profile.nation.id,
+            phone: profile.phone,
+            email: profile.email,
+            logoIndex: key
+        });
 
         if (result[0].status === 0) {
             return res.status(400).json(setFeedback(req.feedback, false));
@@ -47,7 +39,7 @@ const ProfileSavingMiddleware = async (req, res, next) => {
 
     }
     catch (err) {
-        // ⛔ TODO: Log the error here
+        showMessage("profileSavingMiddleware", err);
         return res.status(500).json(setFeedback(req.feedback, false));
     }
 

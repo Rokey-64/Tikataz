@@ -36,7 +36,7 @@ const ExpandLeftMenu = () => {
         { major: null, icon: <PiEyedropperSample className="size-6 mr-4" />, label: t("atlas_menu_build_model") },
         { major: null, icon: <GiBuyCard className="size-6 mr-4" />, label: t("atlas_menu_order_outsourcing") },
         { major: null, icon: <GiSandsOfTime className="size-6 mr-4" />, label: t("atlas_menu_waiting_order") },
-        { major: null, icon: <RiPriceTag3Fill className="size-6 mr-4" />, label: t("atlas_menu_RFQ") }
+        { major: 'rfq', icon: <RiPriceTag3Fill className="size-6 mr-4" />, label: t("atlas_menu_RFQ") }
 
 
     ];
@@ -114,6 +114,20 @@ const ExpandLeftMenu = () => {
     }
 
     /**
+     * This function will be called when the workplant is clicked.
+     * @returns 
+     */
+    const workplantOnclick = (major) => {
+        if (!major)
+            return;
+
+        if (major === 'rfq') {
+            const url = "/rfq/dashboard";
+            window.open(url, "_blank");
+        }
+    }
+
+    /**
      * When the major header is clicked, this function will be called to render the items of that major.
      * @param {*} items 
      * @param {*}  whenHeaderItemClick
@@ -162,7 +176,7 @@ const ExpandLeftMenu = () => {
         <div className="w-64 text-black h-screen p-4 bg-[#f2f2f2] overflow-y-auto overscroll-contain custom-scrollbar">
             <div className="ml-4">
                 <h4 className="text-xl font-semibold mb-4">WorkPlant</h4>
-                <ul>{renderMenuItems(workPlantItems, null)}</ul>
+                <ul>{renderMenuItems(workPlantItems, workplantOnclick)}</ul>
             </div>
             <hr className="my-6 border-t-2" />
             <div className="ml-4">

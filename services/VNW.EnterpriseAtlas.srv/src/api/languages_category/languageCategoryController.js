@@ -2,7 +2,7 @@ import { Router } from "express";
 import getModelService from "../../services/getModelService.js";
 import setFeedback from "../../services/setFeedback.js";
 import mysqlConn from '../../databases/mysql-jack.js';
-import languagesModel from "../../models/languagesModel.js";
+import languagesModel from "../../models/mysql/languagesModel.js";
 import { where } from "sequelize";
 
 

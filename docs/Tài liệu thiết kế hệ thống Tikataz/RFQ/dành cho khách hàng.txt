@@ -1,0 +1,24 @@
+Yêu cầu chung:
+
+I, Khách hàng sẽ có chức năng báo giá:
+** Các hình thức sẽ gồm:
+1, Báo giá tự động: 
+ 💦 Nguyên tắc:
+    -> Khách hàng nhập đơn hàng và thông tin lọc [Module nhập]
+    -> hệ thống tự tìm nguồn cung ứng tối ưu nhất dựa trên yêu cầu đầu vào của khách hàng(3 nhà) [service tìm kiếm]
+    -> Hiện thị thông báo nếu nhà cung cấp đã báo giá tới khách hàng
+ 💦 Yêu cầu kỹ thuật
+    a, Form nhập
+       -> Có thể nhập đầy đủ thông tin gồm 3 phần chính: Thông tin chung đơn hàng, Chi tiết sản phẩm cần báo giá, tùy chọn bộ lọc nhà cung cấp
+       -> Chỉ được khởi tạo 1 lần -> không thể chỉnh sửa sau đó [có thể cải tiến điều này trong tương lai] -> có chức năng stop báo giá
+    b, Service tìm kiếm -> Tham khảo tài liệu cho service tìm kiếm
+    c, Hiện thị thông báo -> ở cột thông báo
+
+2, Tìm kiếm nhà cung cấp
+3, Khảo sát thị trường
+
+II Các form yêu cầu
+- Dasboard cho phép chọn loại hình báo giá, xem lại lịch sử
+- Báo giá: cho phép khách hàng báo giá
+- Lịch sử báo giá: Cho phép xem lại danh sách đơn hàng đã báo giá -> có thể Stop/Restore đơn báo giá ở đây
+- Lịch sử chi tiết: Cho phép xem chi tiết đơn hàng và trạng thái

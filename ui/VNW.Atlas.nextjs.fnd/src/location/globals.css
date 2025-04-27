@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    border-color: #e6e6e6;
+}
+
+.bookmark-label {
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
+}
+
+.clip-path-bookmark-corner {
+    clip-path: polygon(0 0, 100% 0, 100% 30%, 0 100%);
+}

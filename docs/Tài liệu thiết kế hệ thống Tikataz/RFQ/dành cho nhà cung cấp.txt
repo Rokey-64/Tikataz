@@ -1,0 +1,21 @@
+Yêu cầu chung:
+
+I, Nhà cung cấp sẽ có chức năng báo giá:
+** Các hình thức sẽ gồm:
+1, Báo giá tự động: 
+ 💦 Nguyên tắc:
+    -> Sau khi service tìm kiếm được nhà cung cấp sẽ gửi thông tin đến email đồng thời hiện thị thông báo trên cột thông báo thông qua 1 liên kết tạm thời có thời hạn
+    -> Khi khách hàng truy cập liên kết sẽ đến 1 trang thông báo, nơi khách hàng có thể cung cấp báo giá của mình
+    -> Xác nhận để tiến hành hoàn tất báo giá
+    ⚠ Lưu ý: 
+	- Khách hàng có thể tùy chỉnh lại báo giá trong thời hạn là 1h
+	- Ngoài thời gian đó, chỉ có thể đánh dấu báo giá là dừng/ vô hiệu để ngừng thông tin tới khách hàng
+ 💦 Yêu cầu kỹ thuật
+    a, Form nhập
+       -> Có thể nhập đầy đủ thông tin gồm 3 phần chính: Thông tin chung đơn hàng, Chi tiết sản phẩm cần báo giá, tùy chọn bộ lọc nhà cung cấp
+       -> Chỉ được khởi tạo 1 lần -> không thể chỉnh sửa sau đó [có thể cải tiến điều này trong tương lai] -> có chức năng stop báo giá
+    b, Service tìm kiếm -> Tham khảo tài liệu cho service tìm kiếm
+    c, Hiện thị thông báo -> ở cột thông báo
+
+2, Tìm kiếm nhà cung cấp
+3, Khảo sát thị trường

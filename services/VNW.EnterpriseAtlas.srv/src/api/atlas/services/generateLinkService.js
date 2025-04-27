@@ -1,0 +1,31 @@
+import createStorageService from "#@/services/strorages/createStorageService.js";
+import { cluster } from "#@/databases/redis-jack.js";
+
+/**
+ * Create a new key for the product image
+ * @param {*} key 
+ * @returns 
+ */
+const generateLink = async (key) => {
+    let redisLink = null;
+    const storageService = createStorageService('images');
+
+    try {
+        // Check redis for the key
+        redisLink = await cluster.get(key);
+        if (!redisLink) {
+            // generate a new link and store it in redis for 30 minutes
+            redisLink = await storageService.generateDownloadLink(key, 30);
+
+            // store the link in redis for 30 minutes
+            await cluster.set(key, redisLink, 'EX', 30 * 60 * 1);
+        }
+    }
+    catch (err) {
+        throw err;
+    }
+
+    return redisLink;
+};
+
+export default generateLink;

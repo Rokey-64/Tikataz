@@ -1,8 +1,7 @@
 import getModelService from "../../../services/getModelService.js";
 import setFeedback from "../../../services/setFeedback.js";
-import mysqlConn from "../../../databases/mysql-jack.js";
-import feedbackModel from "../../../models/feedbackModel.js";
-import { nanoid } from "nanoid";
+import saveFeedbackService from "../services/saveFeedbackService.js";
+import { showMessage } from "../../../databases/http_fluentd.js";
 
 /**
  * This middleware saves the feedback to the database
@@ -13,7 +12,6 @@ import { nanoid } from "nanoid";
  */
 const FeedbackSavingMiddleware = async (req, res, next) => {
     const model = getModelService(req);
-    const feedback = feedbackModel(mysqlConn);
 
     /**
      * The structure of the data to be returned
@@ -31,15 +29,9 @@ const FeedbackSavingMiddleware = async (req, res, next) => {
     }
 
     try {
-        await feedback.create({
-            id: nanoid(21),
-            content: data.content,
-            email_notify: data.emailNotify,
-            state: "await",
-            user_id: req.userID
-        });
+        await saveFeedbackService(data.content, data.emailNotify, req.userID);
     } catch (error) {
-        // ⛔ TODO: Log the error here
+        showMessage("feedbackSavingMiddleware", error);
         return res.status(500).json(setFeedback(req.feedback, false));
     }
 

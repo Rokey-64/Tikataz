@@ -1,7 +1,7 @@
-import { QueryTypes } from "sequelize";
-import mysqlConn from "../../../databases/mysql-jack.js";
 import getModelService from "../../../services/getModelService.js";
 import setFeedback from "../../../services/setFeedback.js";
+import saveBasicSettingService from "../services/saveBasicSettingService.js";
+import { showMessage } from "../../../databases/http_fluentd.js";
 
 /**
  * Saves the basic settings of the user.
@@ -10,7 +10,7 @@ import setFeedback from "../../../services/setFeedback.js";
  * @param {*} next 
  * @returns 
  */
-const BasicSavingMiddleware = async (req, res, next) => {
+const basicSavingMiddleware = async (req, res, next) => {
     const model = getModelService(req);
 
     if (!model?.theme.trim() || !model?.lang_id || !model?.timezone_id){
@@ -18,21 +18,18 @@ const BasicSavingMiddleware = async (req, res, next) => {
     }
 
     try {
-        const result = await mysqlConn.query(`CALL spSaveSettingsBasic(:gUserID,:gTheme,:gLang_id,:gTimezone_id)`, {
-            type: QueryTypes.RAW,
-            replacements: {
-                gUserID: req.userID,
-                gTheme: model.theme,
-                gLang_id: model.lang_id,
-                gTimezone_id:model.timezone_id
-            }
+        const result = await saveBasicSettingService({
+            uid: req.userID,
+            theme: model.theme,
+            lang: model.lang_id,
+            timezone: model.timezone_id
         });
     } catch (error) {
-        // ⛔ TODO: Log the error here
+        showMessage("BasicSavingMiddleware", error);
         return res.status(500).json(setFeedback(req.feedback, false));
     }
 
-    next();
+    return next();
 };
 
-export default BasicSavingMiddleware;
+export default basicSavingMiddleware;

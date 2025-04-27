@@ -8,7 +8,10 @@ import OrderItemList from './OrderItemList';
 import ProviderFilter from './ProviderFilter';
 import CreateOrderButton from './CreateOrderButton';
 import CancelOrderButton from './CancelOrderButton';
-import ConfirmDialog from './ComfirmForm';
+// import ConfirmDialog from './ComfirmForm';
+import ConfirmDialog from '../common/ComfirmForm';
+import { useLocation, useNavigate } from 'react-router-dom';
+import checkRFQValidIDAPI from '../../../api/checkRFQValidID';
 
 
 /**
@@ -18,6 +21,73 @@ const PricingPage = () => {
     const { t } = useTranslation();
     const [orderState, dispatch] = useReducer(ROFReducer, initialOrder);
     const [confirmDialog, setConfirmDialog] = useState(false);
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        /**
+         * Get the order ID from the URL query parameters
+         */
+        const orderId = queryParams.get("id");
+        if (!orderId) {
+            return navigate(`/rfq/dashboard`);
+        }
+
+        /**
+         * This function wil Check whether the order ID is valid or not
+         * @param {*} orderId 
+         * @returns 
+         */
+        const checkOrderID = async (orderId) => {
+            const response = await checkRFQValidIDAPI(orderId);
+            if (response) {
+                const data = response.data.payload;
+
+                /**
+                 * Check if user profile is valid
+                 */
+                if (!data.org || !data.tax) {
+                    const shouldCancel = window.confirm(t("user_profile_required"));
+                    if (shouldCancel) {
+                        return navigate("/me/general?tab=info");
+                    }
+                    return navigate(`/rfq/dashboard`);
+                }
+
+                dispatch({
+                    type: "SET_ORDER_PROFILE", payload: {
+                        id: orderId,
+                        profile: {
+                            org: data.org,
+                            tax: data.tax
+                        },
+                        address: data.addr
+
+                    }
+                });
+            } else {
+                navigate(`/rfq/dashboard`);
+                return false;
+            }
+        };
+        checkOrderID(orderId);
+
+        /**
+         * If the user tries to leave the page, show a confirmation dialog
+         * @param {*} event 
+         */
+        if(process.env.REACT_APP_ENV === "production"){
+            const handleBeforeUnload = (event) => {
+                event.preventDefault();
+            };
+    
+            window.addEventListener("beforeunload", handleBeforeUnload);
+            return () => {
+                window.removeEventListener("beforeunload", handleBeforeUnload);
+            };
+        }
+    }, []);
 
     /**
      * Check if the input field is empty
@@ -61,19 +131,19 @@ const PricingPage = () => {
      * @returns 
      */
     const checkBeforeConfirm = () => {
-        if(!checkValidInputField(orderState.general.orderName, t("enter_order_name"))) return false;
-        if(!checkValidInputField(orderState.general.orderAddress, t("enter_order_address"))) return false;
-        if(!checkValidInputField(orderState.general.orderCreatedAt, t("enter_order_start"))) return false;
-        if(!checkValidInputField(orderState.general.orderDueDate, t("enter_order_end"))) return false;
-        
-        if(!checkDateValid(orderState.general.orderCreatedAt, orderState.general.orderDueDate)) return false;
-        
-        
+        if (!checkValidInputField(orderState.general.orderName, t("enter_order_name"))) return false;
+        if (!checkValidInputField(orderState.general.orderAddress, t("enter_order_address"))) return false;
+        if (!checkValidInputField(orderState.general.orderCreatedAt, t("enter_order_start"))) return false;
+        if (!checkValidInputField(orderState.general.orderDueDate, t("enter_order_end"))) return false;
+
+        if (!checkDateValid(orderState.general.orderCreatedAt, orderState.general.orderDueDate)) return false;
+
+
         // Check items in pricing
         const check = orderState.pricing.some((item, index) => {
-            if (!checkValidInputField(item.itemName, `Item ${index+1}: ${t("enter_item_name")}`)) return true;
-            if (!checkValidInputField(item.quantity, `Item ${index+1}: ${t("enter_quantity")}`)) return true;
-            if (!checkValidInputField(item.unit, `Item ${index+1}: ${t("enter_unit")}`)) return true;
+            if (!checkValidInputField(item.itemName, `Item ${index + 1}: ${t("enter_item_name")}`)) return true;
+            if (!checkValidInputField(item.quantity, `Item ${index + 1}: ${t("enter_quantity")}`)) return true;
+            if (!checkValidInputField(item.unit, `Item ${index + 1}: ${t("enter_unit")}`)) return true;
         });
         return !check;
     }
@@ -88,8 +158,8 @@ const PricingPage = () => {
     }
 
     return (
-        <div className="fixed inset-0 top-14 flex justify-center items-start z-50">
-            <div className="relative border bg-white w-[90vw] max-w-6xl h-[calc(100vh-60px)] flex flex-col">
+        <div className="fixed inset-0 top-[6.5rem] md:top-[68px] flex justify-center items-start z-50">
+            <div className="relative border bg-white w-[90vw] max-w-6xl h-[calc(100vh-100px)] md:h-[calc(100vh-70px)] flex flex-col">
                 <label className="text-2xl font-bold mt-3 mx-3">{t("create_auto_rfq")}</label>
                 <hr className="w-full border-t-2 border-gray-300 my-2" />
                 <div className="flex-1 overflow-y-auto overflow-x-auto">
@@ -106,14 +176,14 @@ const PricingPage = () => {
                             <OrderInformation />
                             <OrderItemList />
                             <ProviderFilter />
-                            {confirmDialog && <ConfirmDialog onClose={() => setConfirmDialog(false)} />}
+                            <ConfirmDialog open={confirmDialog} onClose={() => setConfirmDialog(false)} />
                         </RFQItemOrderProvider>
                         <div className="h-52"></div>
                     </div>
                 </div>
                 <div className="w-full bg-blue-100/70 backdrop-blur-lg p-3">
                     <div className="flex justify-end items-center gap-x-2">
-                        {/* <CancelOrderButton /> */}
+                        <CancelOrderButton />
                         <CreateOrderButton onClick={onSubmit} />
                     </div>
                 </div>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32.5 32.5">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        stroke-width: .84px;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        fill: none;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4 {
+        stroke-miterlimit: 10;
+      }
+
+      .cls-1, .cls-4 {
+        stroke: #3b63a7;
+      }
+
+      .cls-2 {
+        stroke: #3a64a2;
+      }
+
+      .cls-5 {
+        font-family: Roboto-Black, Roboto;
+        font-size: 7.52px;
+        font-weight: 800;
+      }
+
+      .cls-5, .cls-6 {
+        fill: #3b63a7;
+      }
+
+      .cls-3 {
+        stroke: #3a62a4;
+        stroke-width: .36px;
+      }
+
+      .cls-4 {
+        fill: #fff;
+        stroke-width: .48px;
+      }
+
+      .cls-6 {
+        font-family: ArchivoNarrow-Bold, 'Archivo Narrow';
+        font-size: 2.88px;
+        font-variation-settings: 'wght' 700;
+        font-weight: 700;
+      }
+
+      .cls-7 {
+        letter-spacing: .09em;
+      }
+
+      .cls-8 {
+        letter-spacing: .1em;
+      }
+
+      .cls-9 {
+        letter-spacing: .11em;
+      }
+    </style>
+  </defs>
+  <circle class="cls-3" cx="16.25" cy="16.25" r="13.49"/>
+  <circle class="cls-2" cx="16.25" cy="16.25" r="12.35"/>
+  <circle class="cls-1" cx="16.25" cy="16.25" r="8.09"/>
+  <text class="cls-6" transform="translate(9.68 9.7) rotate(-39.89)"><tspan x="0" y="0">C</tspan></text>
+  <text class="cls-6" transform="translate(11.06 8.56) rotate(-28.76)"><tspan x="0" y="0">R</tspan></text>
+  <text class="cls-6" transform="translate(12.66 7.7) rotate(-17.84)"><tspan x="0" y="0">E</tspan></text>
+  <text class="cls-6" transform="translate(14.25 7.19) rotate(-7.14)"><tspan x="0" y="0">R</tspan></text>
+  <text class="cls-6" transform="translate(16.06 6.99) rotate(3.29)"><tspan x="0" y="0">T</tspan></text>
+  <text class="cls-6" transform="translate(17.67 7.12) rotate(10.83)"><tspan x="0" y="0">I</tspan></text>
+  <text class="cls-6" transform="translate(18.47 7.25) rotate(18.26)"><tspan x="0" y="0">F</tspan></text>
+  <text class="cls-6" transform="translate(19.98 7.79) rotate(25.81)"><tspan x="0" y="0">I</tspan></text>
+  <text class="cls-6" transform="translate(20.73 8.13) rotate(33.82)"><tspan x="0" y="0">E</tspan></text>
+  <text class="cls-6" transform="translate(22.11 9.06) rotate(44.46)"><tspan x="0" y="0">D</tspan></text>
+  <text class="cls-6" transform="translate(23.4 10.39) rotate(52.64)"><tspan x="0" y="0"> </tspan></text>
+  <text class="cls-6" transform="translate(6.98 22.59) rotate(51.99)"><tspan x="0" y="0">F</tspan></text>
+  <text class="cls-6" transform="translate(8.18 24.08) rotate(41.21)"><tspan x="0" y="0">O</tspan></text>
+  <text class="cls-6" transform="translate(9.99 25.6) rotate(29.07)"><tspan x="0" y="0">O</tspan></text>
+  <text class="cls-6" transform="translate(12.03 26.67) rotate(17.7)"><tspan x="0" y="0">D</tspan></text>
+  <text class="cls-6" transform="translate(14.08 27.25) rotate(9.5)"><tspan x="0" y="0"> </tspan></text>
+  <text class="cls-6" transform="translate(15.16 27.44) rotate(1.62)"><tspan x="0" y="0">S</tspan></text>
+  <text class="cls-6" transform="translate(17.19 27.45) rotate(-9.14)"><tspan x="0" y="0">A</tspan></text>
+  <text class="cls-6" transform="translate(19.35 27.05) rotate(-19.78)"><tspan x="0" y="0">F</tspan></text>
+  <text class="cls-6" transform="translate(21.14 26.37) rotate(-29.86)"><tspan x="0" y="0">E</tspan></text>
+  <text class="cls-6" transform="translate(22.86 25.34) rotate(-39.63)"><tspan x="0" y="0">T</tspan></text>
+  <text class="cls-6" transform="translate(24.32 24.08) rotate(-49.85)"><tspan x="0" y="0">Y</tspan></text>
+  <text class="cls-6" transform="translate(25.52 22.57) rotate(-57.44)"><tspan x="0" y="0"> </tspan></text>
+  <rect class="cls-4" x="1.02" y="11.99" width="30.46" height="8.51" rx=".96" ry=".96"/>
+  <text class="cls-5" transform="translate(2.16 18.81)"><tspan class="cls-9" x="0" y="0">H</tspan><tspan class="cls-7" x="6.1" y="0">A</tspan><tspan class="cls-8" x="11.9" y="0">CCP</tspan></text>
+</svg>

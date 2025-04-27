@@ -1,9 +1,10 @@
-import { Op, QueryTypes } from "sequelize";
 import setFeedback from "../../../services/setFeedback.js";
-import mysqlConn from "../../../databases/mysql-jack.js";
 import getModelService from "../../../services/getModelService.js";
+import { showMessage } from "../../../databases/http_fluentd.js";
+import { GENERATING_CARD_AVATAR_KEY } from "../../../services/generateRedisKeys.js";
 import createShortLinkRedis from "../../../services/createShortLinkRedis.js";
-import initContainerCliAzure from "../../../services/initializeContainerClientAzure.js";
+import createStorageService from "../../../services/strorages/createStorageService.js";
+import searchLeaderService from "../services/searchLeaderService.js";
 
 /**
  * This middleware is used to search the branch of the company
@@ -13,25 +14,11 @@ import initContainerCliAzure from "../../../services/initializeContainerClientAz
  */
 const LeaderSeachingMiddleware = async (req, res, next) => {
     const model = getModelService(req);
-    const containerClient = initContainerCliAzure("images");
-    
+    const storageService = createStorageService("images");
     const leaders = [];
 
     try {
-        /**
-         * Call the stored procedure to search the branch
-         * 
-         * @param {string} gUserID - The user ID
-         * 
-         * @returns {Array} - ref: branchModel.js
-         */
-        const result = await mysqlConn.query(`call spGetLeaders(:gUserID)`,
-            {
-                type: QueryTypes.RAW,
-                replacements: {
-                    gUserID: req.userID
-                }
-            });
+        const result = await searchLeaderService(req.userID);
 
         if (result[0].length === 0) {
             return res.status(404).json(setFeedback(model, false));
@@ -41,8 +28,8 @@ const LeaderSeachingMiddleware = async (req, res, next) => {
          * Create the branch template that suits the response
          */
         for(const item of result){
-            const blobKey = `${item.id}_avatar`;
-            const shortLink = await createShortLinkRedis(blobKey, containerClient);
+            const blobKey = GENERATING_CARD_AVATAR_KEY(item.id);
+            const shortLink = await createShortLinkRedis(blobKey, storageService);
 
             leaders.push({
                 id: item.id,
@@ -57,6 +44,7 @@ const LeaderSeachingMiddleware = async (req, res, next) => {
         }
     }
     catch (err) {
+        showMessage("LeaderSeachingMiddleware", err);
         return res.status(500).json(setFeedback(model, false));
     }
 

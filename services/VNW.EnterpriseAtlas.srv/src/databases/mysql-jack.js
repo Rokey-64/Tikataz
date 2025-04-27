@@ -81,7 +81,7 @@ const mysqlConn = new Sequelize(dbname, null, null,
 async function Connect(msg) {
     try {
         await mysqlConn.authenticate();
-        showMessage(`Mysql >> Action::: ${msg} >>> State::: Connected to the database`);
+        // showMessage(`Mysql >> Action::: ${msg} >>> State::: Connected to the database`);
     } catch (err) {
         showMessage(`Mysql >> Action::: ${msg} >>> State::: Connection failed`);
         if (count === RECONNECT_MAX_COUNT) {

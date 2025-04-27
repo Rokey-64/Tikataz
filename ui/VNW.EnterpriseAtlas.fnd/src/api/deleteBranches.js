@@ -8,7 +8,7 @@ const API_HOST = process.env.REACT_APP_API_HOST;
  */
 const DeleteBranches = async (data) => {
     try {
-        const res = await axios.delete("http://localhost:3160/vmw/atlas/branch/delete", {data:{ids: data}});
+        const res = await axios.delete(`${API_HOST}vmw/atlas/branch/delete`, {data:{ids: data}});
         if (res.status !== 200) 
             return null;
 

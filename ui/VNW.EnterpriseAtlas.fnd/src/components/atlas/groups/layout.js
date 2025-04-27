@@ -137,7 +137,7 @@ const Layout = () => {
     }, [tags]);
 
     return (
-        <div className="bg-[#f2f2f2] w-full overflow-x-hidden" style={{ fontFamily: "'Roboto', sans-serif" }}>
+        <div className="bg-[#f2f2f2] w-full overflow-x-hidden font-sans">
             {/* <LoadingSpinner/> */}
             <div className="fixed top-0 w-full z-10" ><Toolbar/></div>
             <div className="flex items-start justify-center">

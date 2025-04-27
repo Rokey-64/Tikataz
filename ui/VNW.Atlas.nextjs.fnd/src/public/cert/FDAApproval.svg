@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32.5 32.5">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #12556b;
+      }
+
+      .cls-3 {
+        fill: #fff;
+      }
+
+      .cls-4 {
+        stroke-width: .4px;
+      }
+
+      .cls-4, .cls-5 {
+        stroke: #fff;
+      }
+
+      .cls-4, .cls-5, .cls-6 {
+        fill: none;
+        stroke-miterlimit: 10;
+      }
+
+      .cls-5 {
+        stroke-width: .32px;
+      }
+
+      .cls-7 {
+        fill: #07526b;
+      }
+
+      .cls-6 {
+        stroke: #12556b;
+        stroke-width: .53px;
+      }
+
+      .cls-8 {
+        fill: #09576f;
+      }
+
+      .cls-8, .cls-2 {
+        font-family: Roboto-Medium, Roboto;
+        font-size: 3.34px;
+        font-weight: 500;
+      }
+    </style>
+  </defs>
+  <path class="cls-1" d="M16.25,1.05c8.38,0,15.2,6.82,15.2,15.2s-6.82,15.2-15.2,15.2S1.05,24.63,1.05,16.25,7.87,1.05,16.25,1.05M16.25.25C7.41.25.25,7.41.25,16.25s7.16,16,16,16,16-7.16,16-16S25.09.25,16.25.25h0Z"/>
+  <circle class="cls-7" cx="16.25" cy="16.25" r="9"/>
+  <path class="cls-1" d="M16.25,6.89c5.16,0,9.36,4.2,9.36,9.36s-4.2,9.36-9.36,9.36-9.36-4.2-9.36-9.36,4.2-9.36,9.36-9.36M16.25,6.36c-5.46,0-9.89,4.43-9.89,9.89s4.43,9.89,9.89,9.89,9.89-4.43,9.89-9.89-4.43-9.89-9.89-9.89h0Z"/>
+  <path class="cls-7" d="M2.42,12.18c-.38,1.29-.58,2.66-.58,4.07s.2,2.78.58,4.07h27.66c.38-1.29.58-2.66.58-4.07s-.2-2.78-.58-4.07H2.42Z"/>
+  <g>
+    <text class="cls-2" transform="translate(6.84 25.8) rotate(39.87)"><tspan x="0" y="0">A</tspan></text>
+    <text class="cls-2" transform="translate(9.01 27.53) rotate(28.17)"><tspan x="0" y="0">P</tspan></text>
+    <text class="cls-2" transform="translate(11.43 28.76) rotate(16.48)"><tspan x="0" y="0">P</tspan></text>
+    <text class="cls-2" transform="translate(14.06 29.47) rotate(4.89)"><tspan x="0" y="0">R</tspan></text>
+    <text class="cls-2" transform="translate(16.7 29.65) rotate(-6.79)"><tspan x="0" y="0">O</tspan></text>
+    <text class="cls-2" transform="translate(19.51 29.26) rotate(-18.7)"><tspan x="0" y="0">V</tspan></text>
+    <text class="cls-2" transform="translate(22.08 28.31) rotate(-29.9)"><tspan x="0" y="0">E</tspan></text>
+    <text class="cls-2" transform="translate(24.19 27.05) rotate(-40.99)"><tspan x="0" y="0">D</tspan></text>
+    <text class="cls-2" transform="translate(26.16 25.22) rotate(-49.62)"><tspan x="0" y="0"> </tspan></text>
+  </g>
+  <text class="cls-8" transform="translate(8.22 8.67) rotate(-40.9)"><tspan x="0" y="0">A</tspan></text>
+  <text class="cls-8" transform="translate(9.98 7.16) rotate(-29.12)"><tspan x="0" y="0">P</tspan></text>
+  <text class="cls-8" transform="translate(11.93 6.08) rotate(-17.46)"><tspan x="0" y="0">P</tspan></text>
+  <text class="cls-8" transform="translate(14.07 5.43) rotate(-5.89)"><tspan x="0" y="0">R</tspan></text>
+  <text class="cls-8" transform="translate(16.23 5.2) rotate(5.8)"><tspan x="0" y="0">O</tspan></text>
+  <text class="cls-8" transform="translate(18.59 5.45) rotate(17.81)"><tspan x="0" y="0">V</tspan></text>
+  <text class="cls-8" transform="translate(20.73 6.17) rotate(28.94)"><tspan x="0" y="0">E</tspan></text>
+  <text class="cls-8" transform="translate(22.48 7.13) rotate(40.04)"><tspan x="0" y="0">D</tspan></text>
+  <text class="cls-8" transform="translate(24.23 8.68) rotate(48.67)"><tspan x="0" y="0"> </tspan></text>
+  <line class="cls-4" x1="2.51" y1="12.21" x2="29.99" y2="12.21"/>
+  <line class="cls-4" x1="2.51" y1="20.35" x2="29.99" y2="20.35"/>
+  <circle class="cls-6" cx="16.25" cy="16.25" r="14.41"/>
+  <g>
+    <polygon class="cls-5" points="13.67 10.35 13.7 10.47 13.83 10.47 13.73 10.54 13.77 10.66 13.67 10.59 13.57 10.66 13.6 10.54 13.5 10.47 13.63 10.47 13.67 10.35"/>
+    <polygon class="cls-5" points="18.83 10.35 18.87 10.47 19 10.47 18.9 10.54 18.93 10.66 18.83 10.59 18.73 10.66 18.77 10.54 18.67 10.47 18.8 10.47 18.83 10.35"/>
+    <polygon class="cls-5" points="16.21 10.08 16.31 10.41 16.65 10.41 16.38 10.6 16.48 10.93 16.21 10.73 15.94 10.93 16.04 10.6 15.77 10.41 16.11 10.41 16.21 10.08"/>
+  </g>
+  <g>
+    <polygon class="cls-5" points="13.67 22.09 13.7 22.21 13.83 22.21 13.73 22.28 13.77 22.4 13.67 22.33 13.57 22.4 13.6 22.28 13.5 22.21 13.63 22.21 13.67 22.09"/>
+    <polygon class="cls-5" points="18.83 22.09 18.87 22.21 19 22.21 18.9 22.28 18.93 22.4 18.83 22.33 18.73 22.4 18.77 22.28 18.67 22.21 18.8 22.21 18.83 22.09"/>
+    <polygon class="cls-5" points="16.21 21.83 16.31 22.15 16.65 22.15 16.38 22.35 16.48 22.67 16.21 22.47 15.94 22.67 16.04 22.35 15.77 22.15 16.11 22.15 16.21 21.83"/>
+  </g>
+  <g>
+    <polygon class="cls-3" points="7.08 13.6 6.41 14.67 11.18 14.67 11.83 13.6 7.08 13.6"/>
+    <path class="cls-3" d="M6.41,19l.13-3.13s.13-.53.93-.53h3.4l-.73,1.2h-2.14l-.13,2.4-1.47.07Z"/>
+    <path class="cls-3" d="M12.42,15.87v3.13c.32.02.78.05,1.33.07.67.02,1.01.03,1.33,0,1.07-.1,1.65-.41,1.87-.53.05-.03.1-.06.17-.11.17-.11,1.18-.81,1.3-2.03.05-.55-.1-.97-.13-1.07-.04-.1-.2-.5-.67-.93-.74-.68-1.62-.86-2-.93,0,0-1-.19-3.15.13-.02,0-.04,0-.04,0,0,0,0,0-.01,0l.7,1.07c.4-.11,1.33-.32,2.24-.13.44.09.7.24.8.3.16.1.45.28.66.63.05.08.44.76.13,1.47-.21.48-.61.7-.8.8-.34.18-.63.22-1.07.27-.3.03-.71.05-1.2,0l-.04-2.67-1.43.53Z"/>
+    <polygon class="cls-3" points="21.24 17.17 21.89 18.4 23.98 18.4 24.43 19.05 26.09 19 22.4 13.6 21.57 13.6 17.9 19 19.46 19 21.99 15.33 23.1 17.17 21.24 17.17"/>
+  </g>
+</svg>

@@ -1,41 +1,65 @@
 import React from "react";
 import { MdOutlineFilterList } from "react-icons/md";
-import { IoSearch, search} from "react-icons/io5";
+import { IoSearch } from "react-icons/io5";
 
 /**
- * When the search box is inside the toolbar, this component is used to display the search box. its usually used in the MD and LG screen sizes
- * @param {*} param0 
- * @returns 
+ * Enhanced Search Component with modern design
+ * @param {Object} props - Component props
+ * @param {Function} props.searchClick - Mobile search click handler
+ * @param {string} props.value - Search input value
+ * @param {Function} props.onChange - Input change handler
+ * @returns {JSX.Element} Search component
  */
-const InsideSearch = ({ searchClick, value, onchange}) => {
-    return (
-        <div className="mx-1 sm:mx-4 md:mx-8 ">
-            <div className="hidden sm:block ">
-                <form>
-                    <div className="flex ">
-                        <div>
-                            <input type="search" value={value} onChange={onchange} placeholder="Search..." className="w-full min-w-96  h-10 rounded-3xl border border-gray-300 px-5 outline-none" />
-                        </div>
-                        <div>
-                            <button>
-                                <MdOutlineFilterList className="size-5 text-cyan-400 hover:text-cyan-300" />
-                            </button>
-                        </div>
-                    </div>
-                </form>
+const InsideSearch = ({ searchClick, value, onChange }) => {
+  return (
+    <div className="mx-2 sm:mx-4 lg:mx-6">
+      {/* Desktop Search */}
+      <div className="hidden sm:block">
+        <form
+          role="search"
+          onSubmit={(e) => e.preventDefault()}
+          className="max-w-xl mx-auto"
+        >
+          <div className="relative flex items-center">
+            {/* Search Icon */}
+            <div className="absolute left-3 text-gray-400">
+              <IoSearch className="w-5 h-5" />
             </div>
-            <div className="block sm:hidden ">
-                <div className="flex items-center">
-                    <button className="hover:bg-[#e1e1e2] p-1 rounded-full" onClick={searchClick}>
-                        <IoSearch className="size-6 text-[#848484]" />
-                    </button>
-                    <span className="text-[14px] sm:text-base ml-1">
-                        Tìm kiếm
-                    </span>
-                </div>
-            </div>
-        </div>
-    );
+
+            {/* Search Input */}
+            <input
+              type="search"
+              value={value}
+              onChange={onChange}
+              placeholder="Search for anything..."
+              className="w-96 py-2.5 pl-10 pr-12  rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition-all duration-200 shadow-sm hover:border-gray-300"
+              aria-label="Search"
+            />
+
+            {/* Filter Button */}
+            <button
+              type="button"
+              className="absolute right-2 flex items-center justify-center w-8 h-8 text-gray-500 hover:text-blue-600 rounded-md hover:bg-blue-50 transition-colors"
+              aria-label="Filter options"
+            >
+              <MdOutlineFilterList className="w-5 h-5" />
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {/* Mobile Search Trigger */}
+      <div className="block sm:hidden">
+        <button
+          onClick={searchClick}
+          className="p-2 text-gray-500 hover:text-blue-600 transition-colors"
+          aria-label="Search"
+        >
+          <IoSearch className="w-6 h-6" />
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default InsideSearch;

@@ -1,7 +1,7 @@
-import { QueryTypes } from "sequelize";
-import mysqlConn from "../../../databases/mysql-jack.js";
 import getModelService from "../../../services/getModelService.js";
 import setFeedback from "../../../services/setFeedback.js";
+import loadQuestionSettingService from "../services/loadQuestionSettingService.js";
+import { showMessage } from "../../../databases/http_fluentd.js";
 
 /**
  * Loads a list of questions - answers for the settings form.
@@ -24,26 +24,7 @@ const QuestionsLoadingMiddleware = (typeName) => async (req, res, next) => {
     ];
 
     try {
-        /**
-         * Call the stored procedure to get the list of questions
-         * 
-         * @param {string} gUserID - The user ID
-         * @param {string} gTypeName - The type name
-         * 
-         * @returns {Array}
-         *  - question_id
-         *  - question
-         *  - answer_id
-         *  - join_answer_id
-         *  - join_answer
-         */
-        const result = await mysqlConn.query(`CALL spGetSettings(:gUserID,:gTypeName)`, {
-            type: QueryTypes.RAW,
-            replacements: {
-                gUserID: req.userID,
-                gTypeName: typeName
-            }
-        });
+        const result = await loadQuestionSettingService(req.userID, typeName);
         if (result.length === 0) {
             return res.status(400).json(setFeedback(req.feedback, false));
         }
@@ -74,11 +55,11 @@ const QuestionsLoadingMiddleware = (typeName) => async (req, res, next) => {
         model.questions = data;
     }
     catch (err) {
-        // ⛔ TODO: Add a logger for the error
+        showMessage("QuestionsLoadingMiddleware", err);
         return res.status(500).json(setFeedback(req.feedback, false));
     }
 
-    next();
+    return next();
 };
 
 export default QuestionsLoadingMiddleware;

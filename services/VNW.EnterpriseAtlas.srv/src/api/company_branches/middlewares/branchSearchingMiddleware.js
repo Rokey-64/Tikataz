@@ -1,10 +1,7 @@
-import { Op, QueryTypes } from "sequelize";
 import setFeedback from "../../../services/setFeedback.js";
-import mysqlConn from "../../../databases/mysql-jack.js";
 import getModelService from "../../../services/getModelService.js";
-import createBranchModel from "../../../models/branchModel.js";
-import createMailListModel from "../../../models/mailListModel.js";
-import createPhoneListModel from "../../../models/phoneListModel.js";
+import searchBranchService from "../services/searchBranchService.js";
+import { showMessage } from "../../../databases/http_fluentd.js";
 
 /**
  * This middleware is used to search the branch of the company
@@ -17,20 +14,7 @@ const BranchSeachingMiddleware = async (req, res, next) => {
     const branches = [];
 
     try {
-        /**
-         * Call the stored procedure to search the branch
-         * 
-         * @param {string} gUserID - The user ID
-         * 
-         * @returns {Array} - ref: branchModel.js
-         */
-        const result = await mysqlConn.query(`call spGetBranches(:gUserID)`,
-            {
-                type: QueryTypes.RAW,
-                replacements: {
-                    gUserID: req.userID
-                }
-            });
+        const result = await searchBranchService(req.userID);
 
         if (result[0].length === 0) {
             return req.status(200).json(setFeedback(model, 404));
@@ -53,6 +37,7 @@ const BranchSeachingMiddleware = async (req, res, next) => {
 
     }
     catch (err) {
+        showMessage("BranchSeachingMiddleware", err);
         return res.status(model.status).json(setFeedback(model, 500));
     }
 

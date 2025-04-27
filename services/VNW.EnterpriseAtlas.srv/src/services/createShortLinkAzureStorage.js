@@ -1,6 +1,5 @@
-import {StorageManagementClient  } from '@azure/arm-storage';
-import { DefaultAzureCredential } from '@azure/identity';
-import { BlobServiceClient, ContainerClient, BlobSASPermissions, StorageSharedKeyCredential} from '@azure/storage-blob';
+import util from 'util';
+import { BlobServiceClient, ContainerClient, BlobSASPermissions, StorageSharedKeyCredential } from '@azure/storage-blob';
 import express from 'express';
 
 /**
@@ -9,14 +8,14 @@ import express from 'express';
  * @param {*} containerClient 
  * @returns 
  */
-const createShortLinkAzureStorage = async (blobName, containerClient) => {
+const createShortLinkAzureStorage = util.deprecate(async (blobName, containerClient) => {
 
     const blobs = containerClient.getBlockBlobClient(blobName);
 
     const expiryTime = new Date();
     expiryTime.setMinutes(expiryTime.getMinutes() + 30);
 
-    try{
+    try {
         const sasToken = await blobs.generateSasUrl({
             permissions: BlobSASPermissions.parse("r"),
             // startsOn: new Date(),
@@ -24,9 +23,9 @@ const createShortLinkAzureStorage = async (blobName, containerClient) => {
         });
         return sasToken;
     }
-    catch(err){
+    catch (err) {
         throw err;
     }
-};
+}, 'createShortLinkAzureStorage is deprecated. Use class StorageService instead.');
 
 export default createShortLinkAzureStorage

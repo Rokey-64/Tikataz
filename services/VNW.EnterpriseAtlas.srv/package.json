@@ -37,6 +37,8 @@
     "express-mongo-sanitize": "^2.2.0",
     "express-rate-limit": "^7.4.0",
     "express-session": "^1.18.0",
+    "fast-xml-parser": "^5.2.1",
+    "file-type": "^20.4.1",
     "finalhandler": "^1.2.0",
     "fluent-logger": "^3.4.1",
     "forwarded": "^0.2.0",
@@ -90,6 +92,7 @@
     "serve-static": "^1.15.0",
     "set-function-length": "^1.2.2",
     "setprototypeof": "^1.2.0",
+    "sharp": "^0.34.1",
     "side-channel": "^1.0.6",
     "statuses": "^2.0.1",
     "toidentifier": "^1.0.1",
@@ -109,5 +112,8 @@
   "author": "",
   "license": "ISC",
   "description": "",
-  "type": "module"
+  "type": "module",
+  "imports": {
+    "#@/*": "./src/*"
+  }
 }

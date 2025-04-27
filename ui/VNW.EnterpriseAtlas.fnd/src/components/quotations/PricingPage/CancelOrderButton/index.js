@@ -8,17 +8,9 @@ const CancelOrderButton = () => {
     const navigate = useNavigate();
     const [isDirty, setIsDirty] = useState(false);
 
-    useEffect(() => {
-        const handleBeforeUnload = (event) => {
-            event.preventDefault();
-            // event.returnValue = "Bạn có chắc chắn muốn rời đi? Dữ liệu chưa được lưu.";
-        };
+    // useEffect(() => {
 
-        window.addEventListener("beforeunload", handleBeforeUnload);
-        return () => {
-            window.removeEventListener("beforeunload", handleBeforeUnload);
-        };
-    }, []);
+    // }, []);
 
     const onClick = () => {
         const shouldCancel = window.confirm(t("block_navigation_message"));
