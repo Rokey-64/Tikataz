@@ -14,11 +14,11 @@ const generateLink = async (key) => {
         // Check redis for the key
         redisLink = await cluster.get(key);
         if (!redisLink) {
-            // generate a new link and store it in redis for 30 minutes
-            redisLink = await storageService.generateDownloadLink(key, 30);
+            // generate a new link and store it in redis for 2 days
+            redisLink = await storageService.generateDownloadLink(key, 60 * 24 * 2);
 
-            // store the link in redis for 30 minutes
-            await cluster.set(key, redisLink, 'EX', 30 * 60 * 1);
+            // store the link in redis for 2 days
+            await cluster.set(key, redisLink, 'EX', 60 * 60 * 24 * 2);
         }
     }
     catch (err) {

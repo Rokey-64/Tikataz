@@ -8,7 +8,7 @@ import { where } from "sequelize";
 
 const router = Router();
 
-router.get("/vmw/atlas/language/find", async (req, res) => {
+router.get("/", async (req, res) => {
     /**
      * This route handler expects ...
      * 

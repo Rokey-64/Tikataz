@@ -12,7 +12,7 @@ import countSupplierAccessMiddleware from "../middlewares/countSupplierAccessMid
 
 const router = Router();
 
-router.get("/vmw/rfq/currency", linkValidationMiddleware, getCurrencyMiddleware, async (req, res) => {
+router.get("/currency", linkValidationMiddleware, getCurrencyMiddleware, async (req, res) => {
     /**
      * Get a list of currencies from the database and attach it to the request object.
      * * @param {*} req
@@ -23,7 +23,7 @@ router.get("/vmw/rfq/currency", linkValidationMiddleware, getCurrencyMiddleware,
     return res.status(200).json(setFeedback(req.feedback, true, "success", { payload: model.payload }));
 });
 
-router.get("/vmw/rfq/supliers/orders", linkValidationMiddleware, countSupplierAccessMiddleware, getSupplierOrdersMiddleware, async (req, res) => {
+router.get("/orders", linkValidationMiddleware, countSupplierAccessMiddleware, getSupplierOrdersMiddleware, async (req, res) => {
     /**
      * Get a list of RFQ items that suppliers will price
      * * @param {*} req
@@ -34,7 +34,7 @@ router.get("/vmw/rfq/supliers/orders", linkValidationMiddleware, countSupplierAc
     return res.status(200).json(setFeedback(req.feedback, true, "success", { payload: model.payload }));
 });
 
-router.put("/vmw/rfq/supliers/pricing", linkValidationMiddleware, supplierPricingMiddleware, async (req, res) => {
+router.put("/pricing", linkValidationMiddleware, supplierPricingMiddleware, async (req, res) => {
     /**
      * Get a list of suppliers from the database and attach it to the request object.
      * * @param {*} req
@@ -47,7 +47,7 @@ router.put("/vmw/rfq/supliers/pricing", linkValidationMiddleware, supplierPricin
     return res.status(200).json(setFeedback(req.feedback, true, "success", { payload: model.payload }));
 });
 
-router.put("/vmw/rfq/supliers/profile/u", linkValidationMiddleware, updateProfileMiddleware, async (req, res) => {
+router.put("/profile", linkValidationMiddleware, updateProfileMiddleware, async (req, res) => {
     /**
      * Get a list of suppliers from the database and attach it to the request object.
      * * @param {*} req
@@ -58,7 +58,7 @@ router.put("/vmw/rfq/supliers/profile/u", linkValidationMiddleware, updateProfil
     return res.status(200).json(setFeedback(req.feedback, true, "success", {}));
 });
 
-router.get("/vmw/rfq/supliers/profile", linkValidationMiddleware, getSupplierProfileMiddleware, async (req, res) => {
+router.get("/profile", linkValidationMiddleware, getSupplierProfileMiddleware, async (req, res) => {
     /**
      * Get supplier profile from the database and attach it to the request object.
      * * @param {*} req

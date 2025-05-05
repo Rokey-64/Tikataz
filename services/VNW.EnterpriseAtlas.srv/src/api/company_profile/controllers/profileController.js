@@ -10,7 +10,7 @@ import checkFieldRequestMiddleware from "../middleware/checkFieldRequestMiddlewa
 const router = Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
-router.get("/vmw/atlas/profile/find", ProfileSeachingMiddleware, async (req, res) => {
+router.get("/", ProfileSeachingMiddleware, async (req, res) => {
     /**
      * This route finds a profile by ID
      * 
@@ -33,7 +33,7 @@ router.get("/vmw/atlas/profile/find", ProfileSeachingMiddleware, async (req, res
     res.status(200).json(setFeedback(req.feedback, true, 'success', {"profile" : model.profile, "_id" : req.id}));
 });
 
-router.post("/vmw/atlas/profile/update", upload.any(), checkFieldRequestMiddleware, uploadLogoMiddleware, ProfileSavingMiddleware, async (req, res) => {
+router.post("/", upload.any(), checkFieldRequestMiddleware, uploadLogoMiddleware, ProfileSavingMiddleware, async (req, res) => {
     /**
      * This route creates a new profile and updates the database
      * 

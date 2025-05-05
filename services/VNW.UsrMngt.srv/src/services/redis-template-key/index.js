@@ -18,10 +18,10 @@ export const genACKey = (userID) => `access-token:${userID}`;
  * 1. The user ID (currPayload.userID) - The user ID.
  * 
  * Returns:
- * The key for the refresh token: `Refresh-token:${userID}:${deviceID}`
+ * The key for the refresh token: `Refresh-token:${userID}:${did}`
  * 
  */
-export const genRFKey = (userID, deviceID) => `Refresh-token:${userID}:${deviceID}`;
+export const genRFKey = (userID, did) => `Refresh-token:${userID}:${did}`;
 
 /**
  * Generate a login OTP key for the redis template

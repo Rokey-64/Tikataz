@@ -70,7 +70,8 @@ class ManualCardService extends StandardCardService {
                 return {
                     id: product.id,
                     name: product.name || "",
-                    link: ""
+                    link: "",
+                    key: ""
                 };
             });
         }

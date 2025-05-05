@@ -1,0 +1,54 @@
+{
+  "header": {
+    "title": "Customer & Partner Care"
+  },
+  "menu": {
+    "open": "Open menu",
+    "introduction": "Introduction",
+    "help_center": "Help Center",
+    "customer_guide": "Customer Guide",
+    "training": "Training Program",
+    "updates": "Updates",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "sub_items": {
+      "about_us": "About Us",
+      "mission": "Mission",
+      "values": "Core Values",
+      "faq": "FAQ",
+      "contact": "Contact Support",
+      "feedback": "Send Feedback",
+      "shopping_guide": "Shopping Guide",
+      "payment_methods": "Payment Methods",
+      "shipping_policy": "Shipping Policy",
+      "seller_training": "Seller Training",
+      "affiliate_program": "Affiliate Program",
+      "new_features": "New Features",
+      "system_updates": "System Updates",
+      "user_agreement": "User Agreement",
+      "seller_terms": "Seller Terms",
+      "data_collection": "Data Collection",
+      "data_usage": "Data Usage",
+      "cookies": "Cookie Policy",
+      "getting_started": "Get Started",
+      "register_account": "Register Account",
+      "verify_account": "Verify Account",
+      "first_steps": "First Steps",
+      "account_management": "Account Management",
+      "profile_settings": "Profile Settings",
+      "account_security": "Account Security",
+      "troubleshooting": "Troubleshooting",
+      "login_issues": "Login Issues",
+      "payment_issues": "Payment Issues",
+      "technical_issues": "Technical Issues"
+    }
+  },
+  "content": {
+    "default": "Please select an item to view details",
+    "introduction": "Introduction content...",
+    "help_center": "Help center content...",
+    "about_us": "About us content...",
+    "mission": "Mission content...",
+    "values": "Core values content..."
+  }
+}

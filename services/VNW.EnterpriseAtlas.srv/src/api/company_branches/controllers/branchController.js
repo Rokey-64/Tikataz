@@ -7,7 +7,7 @@ import setFeedback from "../../../services/setFeedback.js";
 
 const router = Router();
 
-router.get("/vmw/atlas/branch/find", BranchSeachingMiddleware, async (req, res) => {
+router.get("/", BranchSeachingMiddleware, async (req, res) => {
     /**
      * This route finds a branch by ID
      * 
@@ -27,7 +27,7 @@ router.get("/vmw/atlas/branch/find", BranchSeachingMiddleware, async (req, res) 
     res.status(200).json(setFeedback(req.feedback, true, 'success', {"branches" : model.branches, "_id" : req.id}));
 });
 
-router.post("/vmw/atlas/branch/update", BranchSavingMiddleware, async (req, res) => {
+router.post("/", BranchSavingMiddleware, async (req, res) => {
     /**
      * This route creates a new branch and updates the database
      * 
@@ -47,7 +47,7 @@ router.post("/vmw/atlas/branch/update", BranchSavingMiddleware, async (req, res)
     res.status(200).json(setFeedback(req.feedback, true, 'success', {"_id" : req.id}));
 });
 
-router.delete("/vmw/atlas/branch/delete", BranchDeletingMiddleware, async (req, res) => {
+router.delete("/", BranchDeletingMiddleware, async (req, res) => {
     /**
      * This route deletes a branch by ID
      * 

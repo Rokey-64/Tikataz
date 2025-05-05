@@ -1,7 +1,5 @@
 import nodemailer from 'nodemailer';
-import TkzRegException from '../../exception/registerException.js';
 import 'dotenv/config.js';
-import { errCode } from '../../../errors.js';
 
 const httmFormat = (OTP) => {
     return `
@@ -51,10 +49,7 @@ const sendOTP = async (model) => {
     try {
         await transporter.sendMail(mailOptions);
     } catch (error) {
-        if (error.code === 'EAUTH') {
-            throw new TkzRegException('The provided email or password is not correct', errCode.SEND_MAIL_FAILED);
-        }
-        throw new Error('Cannot send the email right now');
+        throw error;
     }
 }
 

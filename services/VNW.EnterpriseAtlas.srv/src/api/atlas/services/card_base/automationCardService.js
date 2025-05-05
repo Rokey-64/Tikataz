@@ -82,7 +82,8 @@ class AutomationCardService extends StandardCardService {
                 return {
                     id: index,
                     name: '',
-                    link: product || ""
+                    link: product || "",
+                    key: ""
                 };
             });
         }

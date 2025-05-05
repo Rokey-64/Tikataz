@@ -5,7 +5,7 @@ import setFeedback from "../../services/setFeedback.js";
 
 const router = Router();
 
-router.get("/vmw/atlas/nation/find", LoadDataMiddleware, async (req, res) => {
+router.get("/", LoadDataMiddleware, async (req, res) => {
     /**
      * This route handler expects ...
      * 

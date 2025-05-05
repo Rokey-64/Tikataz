@@ -6,8 +6,6 @@ import {
 import getModelService from '#@/services/getModelService.js'
 import CommonCardTemplate from '../services/card_base/templateService.js'
 import generateLink from '../services/generateLinkService.js';
-import searchThumbnailList from '#@/services/searchThumbnailList.js';
-// import { showMessage } from "#@/databases/http_fluentd.js";
 
 /**
  * Generates the picture URL for the model if the picture is located in Azure Blob Storage.
@@ -39,13 +37,18 @@ const generatePictureUrl = async (req, res, next) => {
 
             // Set the product url
             if (cardData.products && cardData.products.length > 0) {
+                // Sort the products by id before generating the link
+                cardData.products.sort((product1, product2) => {return product1.id - product2.id;});
+                
                 for (let index = 0; index < cardData.products.length; index++) {
                     const product = cardData.products[index];
                     const productKey = GENERATING_CARD_PRODUCT_KEY(item.cid, product.id);
-                    product.link = await generateLink(productKey) || '';
+                    product.key = productKey;
 
                     // limit the number of products to 3 for the first generation
-                    if (index + 1 >= MAX_PRODUCT_SIZE) break;
+                    if (index + 1 > MAX_PRODUCT_SIZE) {continue;}
+
+                    product.link = await generateLink(productKey) || '';
                 }
             }
 

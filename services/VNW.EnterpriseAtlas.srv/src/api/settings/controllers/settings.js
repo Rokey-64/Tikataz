@@ -9,7 +9,7 @@ import basicSavingMiddleware from "../middlewares/basicSavingMiddleware.js";
 
 const router = Router();
 
-router.get("/vmw/atlas/settings/privacy/find", questionsLoadingMiddleware('privacy'), (req, res) => {
+router.get("/privacy", questionsLoadingMiddleware('privacy'), (req, res) => {
     /**
      * This route loads privacy settings
      * 
@@ -28,7 +28,7 @@ router.get("/vmw/atlas/settings/privacy/find", questionsLoadingMiddleware('priva
     res.status(200).json(setFeedback(req.feedback, true, 'success', {"privacy" : model.questions}));
 });
 
-router.get("/vmw/atlas/settings/announce/find", questionsLoadingMiddleware('announce'), (req, res) => {
+router.get("/announce", questionsLoadingMiddleware('announce'), (req, res) => {
     /**
      * This route loads announce settings
      * 
@@ -46,7 +46,7 @@ router.get("/vmw/atlas/settings/announce/find", questionsLoadingMiddleware('anno
     res.status(200).json(setFeedback(req.feedback, true, 'success', {"announce" : model.questions}));
 });
 
-router.get("/vmw/atlas/settings/basic/find", BasicLoadingMiddleware, (req, res) => {
+router.get("/basic", BasicLoadingMiddleware, (req, res) => {
     /**
      * This route loads basic settings
      * 
@@ -65,7 +65,7 @@ router.get("/vmw/atlas/settings/basic/find", BasicLoadingMiddleware, (req, res) 
 });
 
 
-router.post("/vmw/atlas/settings/privacy/update", QuestionSavingMiddleware, (req, res) => {
+router.post("/privacy", QuestionSavingMiddleware, (req, res) => {
     /**
      * This route saves privacy settings
      * 
@@ -83,7 +83,7 @@ router.post("/vmw/atlas/settings/privacy/update", QuestionSavingMiddleware, (req
     res.status(200).json(setFeedback(req.feedback, true, 'success', {}));
 });
 
-router.post("/vmw/atlas/settings/announce/update", QuestionSavingMiddleware, (req, res) => {
+router.post("/announce", QuestionSavingMiddleware, (req, res) => {
     /**
      * This route saves announce settings
      * 
@@ -101,7 +101,7 @@ router.post("/vmw/atlas/settings/announce/update", QuestionSavingMiddleware, (re
     res.status(200).json(setFeedback(req.feedback, true, 'success', {}));
 });
 
-router.post("/vmw/atlas/settings/basic/update", basicSavingMiddleware, (req, res) => {
+router.post("/basic", basicSavingMiddleware, (req, res) => {
     /**
      * This route saves basic settings
      * 

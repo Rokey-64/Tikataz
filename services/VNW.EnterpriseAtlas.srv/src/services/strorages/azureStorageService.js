@@ -41,10 +41,10 @@ class AzureStorageService extends StorageService {
     /**
      * Create a link to download the file or display image from Azure Storage
      * @param {string} fileName - the name of the file to download
-     * @param {number} exp - the expiration time in minutes
+     * @param {number} exp - the expiration time in minutes, default is 2 days
      * @returns 
      */
-    async generateDownloadLink(fileName, exp = 30) {
+    async generateDownloadLink(fileName, exp = 60 * 24 * 2) {
         const blockBlobClient = this.containerClient.getBlockBlobClient(fileName);
 
         const expiryTime = new Date();

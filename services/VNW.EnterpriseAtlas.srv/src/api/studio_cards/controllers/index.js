@@ -19,7 +19,7 @@ import createThumbnail from "../middlewares/createthumbnail.js";
 const router = Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
-router.get("/vmw/me/card/check", overLimmitCard, (req, res) => {
+router.get("/verify", overLimmitCard, (req, res) => {
     /**
      * Check whether the number of cards is over the limit
      * 
@@ -37,7 +37,7 @@ router.get("/vmw/me/card/check", overLimmitCard, (req, res) => {
     res.status(200).json(setFeedback(req.feedback, true));
 });
 
-router.get("/vmw/me/card/init", getCardByID, loadingInitialData, (req, res) => {
+router.get("/init", getCardByID, loadingInitialData, (req, res) => {
     /**
      * Prepare the initial data for the card in edit mode
      * 
@@ -54,7 +54,7 @@ router.get("/vmw/me/card/init", getCardByID, loadingInitialData, (req, res) => {
     res.status(200).json(setFeedback(req.feedback, true, 'success', { "payload": model.payload }));
 });
 
-router.post("/vmw/me/card/insert/master", accessLimit, 
+router.post("/master", accessLimit, 
     upload.any(), getSession, overLimmitCard, updateCardData, mongoUpdateCard, createThumbnail, pushFileToAzure,
     (req, res) => {
         /**
@@ -75,41 +75,7 @@ router.post("/vmw/me/card/insert/master", accessLimit,
         res.status(200).json(setFeedback(req.feedback, true, 'success', { "payload": model.mapping, "id": model.id }));
     });
 
-router.patch("/vmw/me/card/update/card/date", (req, res) => {
-    /**
-     * Update the card data in the database
-     * 
-     * {
-     *   // Required fields
-     *   token: 
-     * }
-     *
-     *  Example request:
-     *  
-     *
-     */
-    const model = getModelService(req);
-    res.status(200).json(setFeedback(req.feedback, true, 'success', { "id": model.payload.id }));
-});
-
-router.patch("/vmw/me/card/update/card/image", (req, res) => {
-    /**
-     * Update the card image if it changes
-     * 
-     * {
-     *   // Required fields
-     *   token: 
-     * }
-     *
-     *  Example request:
-     *  
-     *
-     */
-    const model = getModelService(req);
-    res.status(200).json(setFeedback(req.feedback, true, 'success', { "id": model.payload.id }));
-});
-
-router.post("/vmw/me/card/update/slave", validDataChecking, accessLimit, createCardDataSession, (req, res) => {
+router.post("/slave", validDataChecking, accessLimit, createCardDataSession, (req, res) => {
     /**
      * Push the data to the session
      * 
@@ -126,7 +92,7 @@ router.post("/vmw/me/card/update/slave", validDataChecking, accessLimit, createC
     res.status(200).json(setFeedback(req.feedback, true, 'success', { "id": model.payload.id }));
 });
 
-router.get("/vmw/me/card/inline/list", getInlineCards, setInlineCardDefaultData, (req, res) => {
+router.get("/inline", getInlineCards, setInlineCardDefaultData, (req, res) => {
     /**
      * This route handler expects a GET request with the following query parameters:
      * 

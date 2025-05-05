@@ -1,0 +1,89 @@
+{
+    "customer_service": "Customer Service",
+    "help_center": "Help Center",
+    "blogs": "Tikataz Blogs",
+    "customer_guide": "Customer Guide",
+    "training_program": "Training Program",
+    "announcement": "Update Announcements",
+  
+    "about_us": "About Tikataz",
+    "introduction": "Introduction",
+    "recruitment": "Recruitment",
+    "terms": "Terms of Service",
+    "privacy_policy": "Privacy Policy",
+  
+    "payment": "Payment",
+  
+    "follow_us": "Follow us on",
+    "facebook": "Facebook",
+    "youtube": "Youtube",
+    "tiktok": "Tiktok",
+    "zalo": "Zalo",
+  
+    "contact": "Contact",
+    "hotline": "• Customer Service Hotline - 18009061",
+    "technical_support": "• Technical Support - 0333462905 (Mr Linh)",
+    "contact_email": "• Contact Email - goltime604@gmail.com",
+    "working_time": "• Available 24/7 (Including Sat/Sun)",
+  
+    "business_license": "{{copyRight}}. {{companyName}}. Business license: {{bussinessLicence}} issued by {{licenceBy}} on {{licenceDate}}. E-commerce license: {{ecomerceLicent}} issued by {{ecomerceLicentBy}} on {{ecomerceLicentDate}}. Address: {{adress}}. Contact and documentation address: {{adress}}. Phone: {{phoneNumber}}. Email: {{email}}. Content manager: {{inChargeContentPerson}}. Email: {{inChargeContentEmail}}.",
+    "view_policy": "View usage policy",
+    "customerCare": "Customer Care",
+    "supportCenter": "Support Center",
+    "userGuide": "User Guide",
+    "trainingProgram": "Training Program",
+    "updates": "Updates",
+    "about": "About Tikataz",
+    "aboutUs": "About Us",
+    "privacyPolicy": "Privacy Policy",
+    "followUs": "Follow us on",
+    "support": "• Technical Support - 0333462905 (Mr. Linh)",
+    "emailContact": "• Contact Email - support@tikataz.com",
+    "workTime": "• 24/7 Operation (Including Sat/Sun)",
+    "businessCode": "Business Registration No.:",
+    "issuedBy": "issued by",
+    "issuedDate": "on",
+    "ecommerceLicense": "E-commerce License No.:",
+    "address": "Address:",
+    "contactAddress": "Contact and Document Submission Address:",
+    "phone": "Phone:",
+    "email": "Email:",
+    "responsiblePerson": "Content Responsible Person:",
+    "enter_code":"Enter the code sent to your email address",
+    "viewPolicy": "View Terms of Use",
+    "login_info_false": "Incorrect login information, please try again",
+    "error": "An error occurred, please try again later.",
+    "login_with_account":"Login with Account",
+    "agree_terms": "By clicking continue, you agree to our <1><3>Terms of Service</3></1> and <5><7>Privacy Policy</7></5>.",
+    "robot_verified": "Verification successful. You are not a robot.",
+    "resend_otp": "Resend OTP",
+    "notification": "Notification",
+    "login": {
+      "username": "Enter your email",
+      "password": "Enter your password",
+      "nomal_login": "Log in",
+      "forgot_password": "Forgot password",
+      "register": "Sign up",
+      "google_login": "Use Google"
+    },
+    "password_reset": {
+      "title": "Reset Password",
+      "description": "Create a new password for your account.",
+      "enter_new": "New password",
+      "confirm": "Confirm new password",
+      "change": "Change",
+      "message": "Please check your email and enter the verification code to reset your password."
+    },
+    "signup": {
+      "enter_email": "Enter your email",
+      "enter_password": "Enter your password",
+      "confirm_password": "Confirm your password",
+      "full_name": "Enter your full name",
+      "register": "Sign up"
+    },
+    "layout": {
+      "title": "Set up your factory in just a few steps",
+      "message": "Need to set up a factory?<br/>Let <1 translate='no'>Tikataz</1> do it for you."
+    }
+  }
+  

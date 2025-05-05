@@ -35,11 +35,11 @@ const orderDisplayGetLinkMiddleware = async (req, res, next) => {
         }
 
         try {
-            const shortLink = await storageService.generateDownloadLink(key, 60);
+            const shortLink = await storageService.generateDownloadLink(key, 60 * 24 * 2);
             if (shortLink) {
                 item.shortLink = shortLink;
-                // Store the short link in redis for 1 hour
-                await cluster.set(key, shortLink, 'EX', 60 * 60 * 1, 'NX');
+                // Store the short link in redis for 2 days
+                await cluster.set(key, shortLink, 'EX', 60 * 60 * 24 * 2, 'NX');
             }
             else {
                 showMessage("error", "Error get short link", "No data found");

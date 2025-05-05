@@ -107,7 +107,7 @@ const card_schema = new mongoose.Schema({
                     DDP: { value: {type: Boolean, default: false}},
                     DAP: { value: {type: Boolean, default: false}},
                     DPU: { value: {type: Boolean, default: false}},
-                    negotiation: { value: {type: Boolean, default: false}},
+                    negotiation: { value: {type: Boolean, default: true}},
                 }
             },
             time: {

@@ -12,7 +12,7 @@ import leaderLogoDeleteMiddleware from "../middlewares/leaderLogoDeleteMiddlewar
 const router = Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
-router.get("/vmw/atlas/leader/find", LeaderSeachingMiddleware, async (req, res) => {
+router.get("/", LeaderSeachingMiddleware, async (req, res) => {
     /**
      * This route finds a branch by ID
      * 
@@ -32,7 +32,7 @@ router.get("/vmw/atlas/leader/find", LeaderSeachingMiddleware, async (req, res) 
     res.status(200).json(setFeedback(req.feedback, true, 'success', {"leaders" : model.leaders}));
 });
 
-router.post("/vmw/atlas/leader/update", upload.any(), checkDataMiddleware, leaderSavingMiddleware, uploadAvatarMiddleware, async (req, res) => {
+router.post("/", upload.any(), checkDataMiddleware, leaderSavingMiddleware, uploadAvatarMiddleware, async (req, res) => {
     /**
      * This route creates a new branch and updates the database
      * 
@@ -52,7 +52,7 @@ router.post("/vmw/atlas/leader/update", upload.any(), checkDataMiddleware, leade
     res.status(200).json(setFeedback(req.feedback, true, 'success', {id: model.data.id}));
 });
 
-router.delete("/vmw/atlas/leader/delete", LeaderDeletingMiddleware, leaderLogoDeleteMiddleware, async (req, res) => {
+router.delete("/", LeaderDeletingMiddleware, leaderLogoDeleteMiddleware, async (req, res) => {
     /**
      * This route deletes a branch by ID
      * 

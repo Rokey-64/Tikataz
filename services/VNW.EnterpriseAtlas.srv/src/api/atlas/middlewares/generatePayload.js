@@ -1,11 +1,5 @@
 import setFeedback from '../../../services/setFeedback.js'
 import getModelService from '../../../services/getModelService.js'
-import { showMessage } from '#@/databases/http_fluentd.js'
-import AutomationCardService from '../services/card_base/automationCardService.js'
-import ManualCardService from '../services/card_base/manualCardService.js'
-import countRatingService from '../services/card_rating/countRatingService.js'
-import countReactionService from '../services/card_reaction/countReactionService.js'
-import getCardRewardService from '../services/card_rewards/getCardRewardService.js'
 import CommonCardTemplate from '../services/card_base/templateService.js'
 
 

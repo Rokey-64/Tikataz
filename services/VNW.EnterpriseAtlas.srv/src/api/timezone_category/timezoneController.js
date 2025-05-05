@@ -5,7 +5,7 @@ import LoadDataMiddleware from "./timezoneMiddleware.js";
 
 const router = Router();
 
-router.get("/vmw/atlas/timezone/find", LoadDataMiddleware, (req, res) => {
+router.get("/", LoadDataMiddleware, (req, res) => {
     /**
      * This route finds the timezone
      * 

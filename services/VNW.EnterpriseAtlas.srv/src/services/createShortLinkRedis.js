@@ -20,8 +20,8 @@ const createShortLinkRedis = async (blobKey, storageService) => {
         // shortLink = await createShortLinkAzureStorage(blobKey, containerClient);
         shortLink = await storageService.generateDownloadLink(blobKey);
         if(!shortLink) return '';
-
-        await setRedisKeyOveride(redisKey, shortLink, 60 * 30);
+        
+        await setRedisKeyOveride(redisKey, shortLink, 60 * 60 * 24 * 2);
     }
     catch (err) {
         showMessage('setInlineCardDefaultData', err);

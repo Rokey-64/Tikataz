@@ -14,8 +14,9 @@ import generateLink from '../services/generateLinkService.js';
  */
 const generateURLByIndex = async (req, res, next) => {
     const model = getModelService(req);
-    const cid = model.cid;
-    const productID = model.id;
+    // const cid = model.cid;
+    // const productID = model.id;
+    const { cid, productID } = req.params;
     let prodURL = '';
 
     if (!cid || !productID) {

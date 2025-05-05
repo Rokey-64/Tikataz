@@ -23,7 +23,7 @@ import orderDisplayGetLinkMiddleware from "../middlewares/orderDisplayGetLinkMid
 const router = Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
-router.get("/vmw/rfq/init", overLimmitRFQMiddleware, async (req, res) => {
+router.get("/init", overLimmitRFQMiddleware, async (req, res) => {
     /**
      * Generate a new key for the RFQ (Request for Quotation) process
      * 
@@ -56,7 +56,7 @@ router.get("/vmw/rfq/init", overLimmitRFQMiddleware, async (req, res) => {
     res.status(200).json(setFeedback(req.feedback, true, 'successfull', { id: rfqID }));
 });
 
-router.post("/vmw/rfq/update",
+router.post("/",
     upload.any(),
     overLimmitRFQMiddleware,
     requestRFQValidMiddleware,
@@ -95,7 +95,7 @@ router.post("/vmw/rfq/update",
         res.status(200).json(setFeedback(req.feedback, true, 'successfull', {}));
     });
 
-router.get("/vmw/rfq/new", checkIDMiddleware, loadInitDataMiddleware, async (req, res) => {
+router.get("/verify", checkIDMiddleware, loadInitDataMiddleware, async (req, res) => {
     /**
      * This route is used to check if the RFQ ID is valid
      */
@@ -104,7 +104,7 @@ router.get("/vmw/rfq/new", checkIDMiddleware, loadInitDataMiddleware, async (req
     res.status(200).json(setFeedback(req.feedback, true, 'successfull', { payload: model.payload }));
 });
 
-router.get("/vmw/rfq/items/history", findItemHistoryMiddleware, async (req, res) => {
+router.get("/items", findItemHistoryMiddleware, async (req, res) => {
     /**
      * This route is used to find the item history for the RFQ process
      */
@@ -113,7 +113,7 @@ router.get("/vmw/rfq/items/history", findItemHistoryMiddleware, async (req, res)
     res.status(200).json(setFeedback(req.feedback, true, 'successfull', { payload: model.payload }));
 });
 
-router.get("/vmw/rfq/hashtag", findHashtagMiddleware, async (req, res) => {
+router.get("/hashtags", findHashtagMiddleware, async (req, res) => {
     /**
      * This route is used to find the hashtag for the RFQ process
      */
@@ -122,7 +122,7 @@ router.get("/vmw/rfq/hashtag", findHashtagMiddleware, async (req, res) => {
     res.status(200).json(setFeedback(req.feedback, true, 'successfull', { payload: model.payload }));
 });
 
-router.get("/vmw/rfq/recently_auto", getRecentlyAutoRFQMiddleware, async (req, res) => {
+router.get("/recent", getRecentlyAutoRFQMiddleware, async (req, res) => {
     /**
      * This route is used to get the recently auto RFQ process
      */
@@ -131,14 +131,14 @@ router.get("/vmw/rfq/recently_auto", getRecentlyAutoRFQMiddleware, async (req, r
     res.status(200).json(setFeedback(req.feedback, true, 'successfull', { payload: model.payload }));
 });
 
-router.delete("/vmw/rfq/cancel", cancelQuotationMiddleware, async (req, res) => {
+router.delete("/stop", cancelQuotationMiddleware, async (req, res) => {
     /**
      * This route is used to cancel the RFQ process
      */
     res.status(200).json(setFeedback(req.feedback, true, 'successfull', {}));
 });
 
-router.get("/vmw/rfq/order/display",
+router.get("/details", async (req, res) => {
     orderDisplayInfoMiddleware,
     orderDisplayGetLinkMiddleware,
     async (req, res) => {
@@ -150,6 +150,7 @@ router.get("/vmw/rfq/order/display",
         
 
         res.status(200).json(setFeedback(req.feedback, true, 'successfull', { payload: model.payload }));
-    });
+    }
+});
 
 export default router;

@@ -1,0 +1,13 @@
+.custom-button{
+    @apply
+    text-black 
+    bg-[#D0CACA]
+    hover:bg-[#beb8b8]
+    focus:ring-0
+    font-medium 
+    rounded-lg
+    h-8 
+    text-sm
+    min-w-32
+    focus:outline-none
+}

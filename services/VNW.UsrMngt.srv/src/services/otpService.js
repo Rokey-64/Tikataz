@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { showMessage } from '../services/fluentd-connection/fluentd-jack.js';
+import { showMessage } from '#@/services/fluentd-connection/fluentd-jack.js';
 
 
 /**

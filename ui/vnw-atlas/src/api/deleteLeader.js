@@ -1,0 +1,24 @@
+
+import axios from "axios";
+
+const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
+
+/**
+ * Delete the leader from the server
+ */
+const DeleteLeader = async (data) => {
+    try {
+        const res = await axios.delete(`${API_HOST}auths/leaders`, {
+            data:{id:data},
+            withCredentials: true,
+        });
+        if (res.status !== 200) 
+            return null;
+
+        return res.data.data;
+    } catch (error) {
+        return null;
+    }
+};
+
+export default DeleteLeader;

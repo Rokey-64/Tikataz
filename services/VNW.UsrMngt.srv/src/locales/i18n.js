@@ -1,6 +1,5 @@
 
 import i18next from 'i18next';
-import i18nextMiddleware from 'i18next-express-middleware';
 import Backend from 'i18next-fs-backend';
 import path from 'path';
 import { fileURLToPath } from 'url';

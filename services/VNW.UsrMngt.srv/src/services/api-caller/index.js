@@ -1,10 +1,8 @@
 import axios from "axios";
 import 'dotenv/config';
-import { showMessage } from "../fluentd-connection/fluentd-jack.js";
-import status from "statuses";
 
 const host = process.env.EMAIL_SERVER_IP || "localhost";
-const mailServicePort = process.env.EMAIL_SERVER_PORT || 5051;
+const mailServicePort = process.env.EMAIL_SERVER_PORT || 5052;
 const environment = process.env.NODE_ENV || 'development';
 
 /**
@@ -13,18 +11,24 @@ const environment = process.env.NODE_ENV || 'development';
  * @returns
  */
 const mailSender = async (payload) => {
-    if(environment === 'development') {
-        showMessage('Đã gửi mail', payload);
-        return { status: status('OK') };
-    }
 
     const api = axios.create({
         baseURL: `http://${host}:${mailServicePort}`,
         timeout: 30000,
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
     });
 
-    const result = await api.post('/sender', payload);
-    return result.data;
+    try {
+        const result = await api.post('/api/v1/contact/mail-sender', {
+            options: payload,
+        });
+    }
+    catch (err) {
+        throw err;
+    }
 }
 
 export default mailSender;

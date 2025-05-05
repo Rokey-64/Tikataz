@@ -72,16 +72,17 @@ const mysqlConn = new Sequelize(dbname, null, null,
         dialect: 'mysql',
         port: port || '',
         replication: conf.replication,
-        pool: pool
+        pool: pool,
+        logging: false,
     }
 );
 
 async function Connect(msg) {
     try {
         await mysqlConn.authenticate();
-        showMessage(`Mysql >> Action::: ${msg} >>> State::: Connected to the database`);
+        // showMessage(`Mysql >> Action::: ${msg} >>> State::: Connected to the database`);
     } catch (err) {
-        showMessage(`Mysql >> Action::: ${msg} >>> State::: Connection failed`);
+        // showMessage(`Mysql >> Action::: ${msg} >>> State::: Connection failed`);
         if (count === RECONNECT_MAX_COUNT) {
             await emitLog(level.DB_ERROR, null, `Mysql | ${msg} | Connection failed | ${err}`, 'src/database/mysql-jack', null);
             return;

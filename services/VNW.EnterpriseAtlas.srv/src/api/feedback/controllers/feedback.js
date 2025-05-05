@@ -5,7 +5,7 @@ import FeedbackSavingMiddleware from "../middlewares/feedbackSavingMiddleware.js
 
 const router = Router();
 
-router.post("/vmw/atlas/feedback/update", FeedbackSavingMiddleware, (req, res) => {
+router.post("/", FeedbackSavingMiddleware, (req, res) => {
     /**
      * This route saves the feedback
      */

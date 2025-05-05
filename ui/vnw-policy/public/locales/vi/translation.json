@@ -1,0 +1,54 @@
+{
+  "header": {
+    "title": "Chăm sóc khách hàng & đối tác"
+  },
+  "menu": {
+    "open": "Mở menu",
+    "introduction": "Giới thiệu",
+    "help_center": "Trung Tâm Trợ Giúp",
+    "customer_guide": "Hướng dẫn khách hàng",
+    "training": "Chương trình đào tạo",
+    "updates": "Thông báo cập nhật",
+    "terms": "Điều khoản, dịch vụ",
+    "privacy": "Chính sách quyền riêng tư",
+    "sub_items": {
+      "about_us": "Về chúng tôi",
+      "mission": "Sứ mệnh",
+      "values": "Tầm nhìn",
+      "faq": "Câu hỏi thường gặp",
+      "contact": "Liên hệ hỗ trợ",
+      "feedback": "Gửi phản hồi",
+      "shopping_guide": "Hướng dẫn mua hàng",
+      "payment_methods": "Phương thức thanh toán",
+      "shipping_policy": "Chính sách vận chuyển",
+      "seller_training": "Đào tạo người bán",
+      "affiliate_program": "Chương trình liên kết",
+      "new_features": "Tính năng mới",
+      "system_updates": "Cập nhật hệ thống",
+      "user_agreement": "Thỏa thuận người dùng",
+      "seller_terms": "Điều khoản người bán",
+      "data_collection": "Thu thập dữ liệu",
+      "data_usage": "Sử dụng thông tin",
+      "cookies": "Chính sách cookie",
+      "getting_started": "Bắt đầu sử dụng",
+      "register_account": "Đăng ký tài khoản",
+      "verify_account": "Xác minh tài khoản",
+      "first_steps": "Những bước đầu tiên",
+      "account_management": "Quản lý tài khoản",
+      "profile_settings": "Cài đặt hồ sơ",
+      "account_security": "Bảo mật tài khoản",
+      "troubleshooting": "Khắc phục sự cố",
+      "login_issues": "Sự cố đăng nhập",
+      "payment_issues": "Sự cố thanh toán",
+      "technical_issues": "Sự cố kỹ thuật"
+    }
+  },
+  "content": {
+    "default": "Vui lòng chọn một mục để xem nội dung chi tiết",
+    "introduction": "Nội dung giới thiệu...",
+    "help_center": "Nội dung trung tâm trợ giúp...",
+    "about_us": "Nội dung về chúng tôi...",
+    "mission": "Nội dung sứ mệnh...",
+    "values": "Nội dung giá trị cốt lõi..."
+  }
+}

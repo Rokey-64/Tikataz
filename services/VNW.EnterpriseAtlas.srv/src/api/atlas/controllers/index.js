@@ -8,25 +8,58 @@ import loadBasicCardInfo from '../middlewares/loadBasicCardInfo.js'
 import generatePictureUrl from '../middlewares/generatePictureUrl.js'
 import generatePayload from '../middlewares/generatePayload.js'
 import generateURLByIndex from '../middlewares/generateURLByIndex.js'
+import generateProdURLs from '../middlewares/generateProdURLs.js'
+import repareOrgzProfile from '../middlewares/prepareOrgzProfile.js'
+import prepareOrgzPolicy from '../middlewares/prepareOrgzPolicy.js'
 
 const router = express.Router()
 
-router.get("/vmw/api/atlas/find", loadBasicCardInfo, generatePictureUrl, generatePayload, async (req, res) => {
+router.get("/general", loadBasicCardInfo, generatePictureUrl, generatePayload, async (req, res) => {
     /**
      * This route handler expects a GET request with the following query parameters:
      * 
      * {
      *   // Required fields
-     *   token: <string> (Required) - The token to verify.
+     *   
      * }
-     * 
+     *  
      */
 
     const model = getModelService(req);
     res.status(200).json(setFeedback(req.feedback, true, 'success', {payload: model.payload.base}));
 })
 
-router.get("/vmw/api/atlas/thumbnails/:id", async (req, res) => {
+router.get("/profile", repareOrgzProfile, async (req, res) => {
+    /**
+     * get the organization profile for the card
+     * 
+     * {
+     *   // Required fields
+     *   
+     * }
+     * 
+     */
+
+    const model = getModelService(req);
+    res.status(200).json(setFeedback(req.feedback, true, 'success', {payload: model.payload}));
+})
+
+router.get("/policy", prepareOrgzPolicy, async (req, res) => {
+    /**
+     * get the policy for the card
+     * 
+     * {
+     *   // Required fields
+     *   
+     * }
+     * 
+     */
+
+    const model = getModelService(req);
+    res.status(200).json(setFeedback(req.feedback, true, 'success', {payload: model.payload}));
+})
+
+router.get("/thumbnails/:id", async (req, res) => {
     const id =  req.params.id;
     if (!id) {
         return res.status(400).json(setFeedback(req.feedback, false));
@@ -50,17 +83,17 @@ router.get("/vmw/api/atlas/thumbnails/:id", async (req, res) => {
     }
 });
 
-router.get("/vmw/api/atlas/next/product/image", generateURLByIndex, async (req, res) => {
+router.get("/products/:cid/:id", generateURLByIndex, async (req, res) => {
     /**
-     * This route handler expects a GET request with the following query parameters:
+     * This route get a product url from Azure storage or Redis by product ID
      * 
      * {
      *   // Required fields
-     *   token: <string> (Required) - The token to verify.
+     *   
      * }
      * 
      *  Example request:
-     *  /otp/cnf?token=123456
+     *  
      * 
      */
     const model = getModelService(req);
@@ -68,46 +101,21 @@ router.get("/vmw/api/atlas/next/product/image", generateURLByIndex, async (req, 
     res.status(200).json(setFeedback(req.feedback, true, 'success', { "url": model.prodURL }));
 })
 
-router.get("/vmw/api/atlas/tag/find", findTopTag(), async (req, res) => {
+router.post("/products", generateProdURLs, async (req, res) => {
     /**
-     * This route handler expects a GET request with the following query parameters:
-     * 
+     * This route returns a a list of URLs for the product images from Azure storage or Redis.
      * {
      *   // Required fields
-     *   token: <string> (Required) - The token to verify.
-     * }
-     *
-     *  Example request:
-     *  /otp/cnf?token=123456
-     *
-     */
-    const model = getModelService(req);
-
-    setFeedback(req.feedback, true, 'success', { "tags": model.tags, "_id": model._id });
-
-    res.status(200).json(req.feedback);
-})
-
-
-
-router.get("/vmw/api/atlas/tag/findby", findTagByMajor(), async (req, res, next) => {
-    /**
-     * This route handler expects a GET request with the following query parameters:
-     * 
-     * {
-     *   // Required fields
-     *   token: <string> (Required) - The token to verify.
+     *   
      * }
      * 
      *  Example request:
-     *  /otp/cnf?token=123456
+     *  
      * 
      */
     const model = getModelService(req);
 
-    setFeedback(req.feedback, true, 'success', { "tags": model.tags, "_id": model._id });
-
-    res.status(200).json(req.feedback);
+    res.status(200).json(setFeedback(req.feedback, true, 'success', { "payload": model.payload }));
 })
 
 
