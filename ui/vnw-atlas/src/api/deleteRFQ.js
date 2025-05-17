@@ -1,5 +1,6 @@
 
 import axios from "axios";
+import axiosInstance from "./api";
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 
@@ -7,17 +8,20 @@ const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
  * Delete an RFQ from the server
  */
 const deleteRFQ = async (id, active) => {
+    const apiUrl = `${API_HOST}auths/rfq/stop`;
     try {
-        const res = await axios.delete(`${API_HOST}auths/rfq/stop`, {
-            data:{id: id, active: active},
-            withCredentials: true,
-        });
-        if (res.status !== 200) 
-            return null;
+        // const response = await axios.delete(apiUrl, {
+        //     data:{id: id, active: active},
+        //     withCredentials: true,
+        // });
 
-        return res.data.data;
+        const response = await axiosInstance.delete(apiUrl, {
+            data:{id: id, active: active}
+        });
+
+        if (response.status !== 200) 
+            return response.data.data;
     } catch (error) {
-        console.error("Error deleting RFQ:", error);
         return null;
     }
 };

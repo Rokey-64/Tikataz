@@ -1,13 +1,13 @@
 import React from 'react';
 import { AiOutlineStop } from "react-icons/ai";
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from "next-intl";
 /**
  * Display the discard button
  * @param {*} param0 
  * @returns 
  */
 const DiscardOrderButton = ({ row, stateRef, state, dispatch}) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
 
     if (row.state !== stateRef.processing && row.state !== stateRef.pending) {
         return null;

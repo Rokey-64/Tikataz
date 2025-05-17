@@ -1,12 +1,13 @@
+import React, {Suspense} from "react";
 import { createPortal } from "react-dom";
 import { useEffect, useRef } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import { useSearchParams, useRouter} from "next/navigation";
 import { useRFQSupliersContext } from '@/contexts/RFQSuppliersContext';
 import saveSupplierPricingAPI from '@/api/saveSupplierPricing';
 
 const ConfirmSubmitDialog = ({ open, setOpen, onConfirm }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const dialogRef = useRef(null);
     const { state } = useRFQSupliersContext();
     const router = useRouter();
@@ -152,4 +153,10 @@ const ConfirmSubmitDialog = ({ open, setOpen, onConfirm }) => {
     );
 };
 
-export default ConfirmSubmitDialog;
+const ConfirmSubmitDialogSuspense = ({ open, setOpen, onConfirm }) => (
+    <Suspense fallback={<div className="w-screen h-screen flex justify-center items-center"><h1 className="text-2xl font-bold">Loading...</h1></div>}>
+        <ConfirmSubmitDialog open={open} setOpen={setOpen} onConfirm={onConfirm} />
+    </Suspense>
+);
+
+export default ConfirmSubmitDialogSuspense;

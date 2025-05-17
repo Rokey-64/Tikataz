@@ -1,7 +1,7 @@
 import express from "express";
 import createAccount from "../resositories/createAccount.js";
 import { getRedisKey, deleteRedisKey } from "#@/services/db-connection/redis-jack.js";
-import emitLog, { level, showMessage } from '#@/services/fluentd-connection/fluentd-jack.js';
+import { showMessage } from '#@/services/fluentd-connection/fluentd-jack.js';
 import getModelService from "#@/services/getModelService.js";
 import setFeedback from "#@/services/setFeedback.js";
 import verifyRegisterToken from "../middlewares/verifyRegisterToken.js";
@@ -51,7 +51,7 @@ const getUser = async (req, res, next) => {
             )
         );
     } catch (err) {
-        emitLog(level.ERROR, req.id, err.message, 'src/controllers/signup/confirm | getRedisKey', { prevReqID: req.query.id });
+        showMessage(err.message, 'src/controllers/signup/confirm | getRedisKey');
         return res.status(500).json(
             setFeedback(
                 req.feedback,
@@ -109,7 +109,7 @@ const insertUsertoDB = async (req, res, next) => {
     try {
         await createAccount(userID, userName, hashPassword, email);
     } catch (error) {
-        emitLog(level.ERROR, req.id, error.message, 'src/controllers/signup/confirm | userAccount.create', { prevReqID: req.query.id });
+        showMessage(error.message, 'src/controllers/signup/confirm | userAccount.create');
         return res.status(500).json(
             setFeedback(
                 req.feedback,
@@ -151,7 +151,7 @@ router.get('/signup', verifyRegisterToken, getUser, insertUsertoDB, async (req, 
     const model = getModelService(req);
     const email = model?.user?.email;
     await deleteRedisKey(email).catch((err) => {
-        emitLog(level.ERROR, req.id, err.message, 'src/controllers/signup/confirm | deleteRedisKey', { prevReqID: req.query.id });
+        showMessage(err.message, 'src/controllers/signup/confirm | deleteRedisKey', { prevReqID: req.query.id });
         return res.status(500).json(
             setFeedback(
                 req.feedback,

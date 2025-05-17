@@ -30,7 +30,6 @@ const PolicyViewport = ({ card, visible }) => {
 
 export default PolicyViewport;
 
-
 // components/PolicySection.tsx
 function PolicySection({ card, policyData }) {
     // Render từng mục chính sách với icon và title
@@ -60,7 +59,6 @@ function PolicySection({ card, policyData }) {
         if (!policyData) return null;
         const { kindOfBusiness, transportation, partner, storage } = policyData;
         const sections = [];
-
 
         // 1. Loại hình kinh doanh
         const businessTypes = [];
@@ -117,10 +115,10 @@ function PolicySection({ card, policyData }) {
         const storageItems = [];
 
         if (storage.value) {
-            if (storage.kind.cold.value) storageItems.push("Kho lạnh");
-            if (storage.kind.dry.value) storageItems.push("Kho khô");
-            if (storage.kind.material.value) storageItems.push("Kho nguyên liệu");
-            if (storage.kind.product.value) storageItems.push("Kho thành phẩm");
+            if (storage.kind.options.cold.value) storageItems.push("Kho lạnh");
+            if (storage.kind.options.dry.value) storageItems.push("Kho khô");
+            if (storage.kind.options.material.value) storageItems.push("Kho nguyên liệu");
+            if (storage.kind.options.product.value) storageItems.push("Kho thành phẩm");
 
             if (storage.area.value > 0) storageItems.push(`Diện tích: ${storage.area.value}m²`);
             if (storage.capacity.value > 0) storageItems.push(`Sức chứa: ${storage.capacity.value}tấn`);

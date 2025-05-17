@@ -1,5 +1,5 @@
-import setFeedback from '../../../services/setFeedback.js'
-import getModelService from '../../../services/getModelService.js'
+import setFeedback from '#@/services/setFeedback.js'
+import getModelService from '#@/services/getModelService.js'
 import { showMessage } from '#@/databases/http_fluentd.js'
 import AutomationCardService from '../services/card_base/automationCardService.js'
 import ManualCardService from '../services/card_base/manualCardService.js'
@@ -40,7 +40,7 @@ const loadBasicCardInfo = async (req, res, next) => {
     /**
      * * * Get the card type from the request
      */
-    const cardType = cType_Enum[model.ctype.toLowerCase()];
+    const cardType = model.ctype ? cType_Enum[model.ctype.toLowerCase()] : undefined;
     if (!cardType) {
         return res.status(400).json(setFeedback(req.feedback, false));
     }
@@ -66,22 +66,46 @@ const loadBasicCardInfo = async (req, res, next) => {
                 .getProducts()
                 .getWorkingTime()
                 .getCerts()
-                .run(cardType ===  cType_Enum.manual ? preCID : "", LIMITED_CARD);
+                .run(cardType === cType_Enum.manual ? preCID : "", LIMITED_CARD, undefined, model.searchCIDs);
 
-            if (result.length < LIMITED_CARD) {
+            if (result && result.length > 0) {
+                if (result.length < LIMITED_CARD) {
+                    ctypeRedirect = true;
+                }
+
+                if (result.length > 0) {
+                    payload.base = result;
+                }
+            }
+            else {
                 ctypeRedirect = true;
             }
-
-            if (result.length > 0) {
-                payload.base = result;
-            }
         }
-        
+
         /**
          * * If the card type is 'auto' or ctypeRedirect is true, use the automation card service
          * * to get the card data.
          */
-        if (cardType ===  cType_Enum.auto || ctypeRedirect) {
+        if (cardType === cType_Enum.auto || ctypeRedirect) {
+
+            /**
+             * * Get the major from the request and split it into an array
+             */
+            const majs = model.majs;
+
+            /**
+             * * An array to store the major values
+             * * @param {Array} predicts - An array to store the major values
+             */
+            const predicts = [];
+            if (majs) {
+                majs.split(',').forEach((item) => {
+                    if (item) {
+                        predicts.push(item.trim());
+                    }
+                });
+            }
+
             const obj = new AutomationCardService();
             const NEW_LIMITED_CARD = LIMITED_CARD - payload.base.length;
             const result = await obj
@@ -92,7 +116,7 @@ const loadBasicCardInfo = async (req, res, next) => {
                 .getProducts()
                 .getWorkingTime()
                 .getCerts()
-                .run(cardType ===  cType_Enum.auto ? preCID : "", NEW_LIMITED_CARD);
+                .run(cardType === cType_Enum.auto ? preCID : "", NEW_LIMITED_CARD, predicts, model.searchCIDs);
 
             if (result && result.length > 0) {
                 payload.base = [...payload.base, ...result];

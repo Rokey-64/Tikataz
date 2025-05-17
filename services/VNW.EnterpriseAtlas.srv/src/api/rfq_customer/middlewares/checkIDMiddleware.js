@@ -3,6 +3,7 @@ import getModelService from "../../../services/getModelService.js";
 import setFeedback from "../../../services/setFeedback.js";
 import { cluster } from '../../../databases/redis-jack.js';
 import { showMessage } from "../../../databases/http_fluentd.js";
+import e from "express";
 
 
 /**
@@ -20,7 +21,7 @@ const checkIDMiddleware = async (req, res, next) => {
 
     const validKey = await cluster.get(key)
     if (!validKey) {
-        showMessage("error", "Error checking ID in Redis");
+        showMessage("error", "Error checking ID in Redis", key);
         return res.status(400).json(setFeedback(req.feedback, false));
     }
 

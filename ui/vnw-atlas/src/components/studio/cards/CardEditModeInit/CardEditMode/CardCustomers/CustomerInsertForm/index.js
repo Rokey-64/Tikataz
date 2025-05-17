@@ -1,6 +1,7 @@
-import ImageLoadingBoard from "../../../../../common/ImageLoadingBoard";
-import ElementSingleText from "../../../../../common/textInputs/ElementSingleText";
-import InsertNoticeText from "../../../../../common/InsertNoticeText";
+import ImageLoadingBoard from "@/components/studio/common/ImageLoadingBoard";
+import ElementSingleText from "@/components/studio/common/textInputs/ElementSingleText";
+import InsertNoticeText from "@/components/studio/common/InsertNoticeText";
+import { useTranslations } from "next-intl";
 
 
 /**
@@ -9,6 +10,8 @@ import InsertNoticeText from "../../../../../common/InsertNoticeText";
  * @returns 
  */
 const CustomerInsertForm = ({ object, callback }) => {
+    const t = useTranslations('trans');
+
     const inputCallback = (key, value) => {
         callback({...object, [key]: value});
     };
@@ -18,18 +21,18 @@ const CustomerInsertForm = ({ object, callback }) => {
             <form className="grid grid-cols-2 gap-3 max-w-[400px]">
                 <div className="col-span-2">
                     <InsertNoticeText
-                        header="Điền thông tin khách hàng của bạn vào các trường dưới đây"
+                        header={t("studio.card.edit.header")}
                         content={
                             <>
-                                * Thông tin được hiện thị trên thẻ của bạn, giúp tăng độ uy tín và tin cậy đối với đối tác tiềm năng.<br /><br />
-                                * Trong trường hợp cần ghi nhận xác thực, chúng tối sẽ tiến hành kiểm tra cụ thể hơn.
+                                * {t("studio.card.edit.m1")}<br /><br />
+                                * {t("studio.card.edit.m2")}
                             </>
                         }
                     />
                 </div>
                 <div className="flex items-center mb-6 col-span-2 space-x-4">
                     <ImageLoadingBoard
-                        label="Select logo"
+                        label={t("studio.card.edit.sel")}
                         aditionalClasses='h-20 w-24'
                         callback={inputCallback.bind(this, "custLogo")}
                         defaultValue=''
@@ -38,16 +41,16 @@ const CustomerInsertForm = ({ object, callback }) => {
 
                 <div className="col-span-2">
                     <ElementSingleText callback={inputCallback.bind(this, "custName")} defaultValue=''
-                        options={{ text: "Tên khách hàng", holder: "Nhập tên công ty hoặc tên thương hiệu", isRequired: true, limmit: 200}} />
+                        options={{ text: t("studio.card.edit.custname"), holder: t("studio.card.edit.custholder"), isRequired: true, limmit: 200}} />
                 </div>
                 <div>
                     <ElementSingleText callback={inputCallback.bind(this, "taxcode")} defaultValue=''
-                        options={{ text: "Mã số thuế", holder: "Nhập mã số thuế khách hàng của bạn", }} />
+                        options={{ text: t("tax_code"), holder: t("studio.card.edit.taxholder") }} />
                 </div>
 
                 <div className="mt-3 col-span-2">
                     <ElementSingleText callback={inputCallback.bind(this, "custAddress")} defaultValue=''
-                        options={{ text: "địa chỉ", holder: "Nhập địa chỉ trụ sở của khách hàng của bạn"}} />
+                        options={{ text: t("address"), holder: t("studio.card.edit.addrrholder")}} />
                 </div>
 
                 

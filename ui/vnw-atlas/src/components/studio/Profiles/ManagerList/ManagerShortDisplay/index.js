@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TiEdit } from "react-icons/ti";
 import { MdDeleteForever } from "react-icons/md";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 /**
  * This component is used to display the information of a manager in a viewport.
@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
  * @returns 
  */
 const ManagerShortDisplay = ({ profile, deleteOnclick, editOnclick, displayOnClick}) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const [isHover, setIsHover] = useState(false);
 
     const TrimText = (text, length) => {

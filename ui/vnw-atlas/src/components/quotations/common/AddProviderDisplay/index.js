@@ -1,13 +1,13 @@
 import { useMemo } from "react";
 import { BsPersonVcardFill } from "react-icons/bs";
 import { IoClose } from "react-icons/io5";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 /**
  * Display provider icon with delete functionality & random color
  */
 const AddProviderDisplay = ({ provider, event }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const colors = ["text-blue-500", "text-green-500", "text-purple-500", "text-yellow-500", "text-pink-500"];
 
     const randomColor = useMemo(() => colors[Math.floor(Math.random() * colors.length)], []);

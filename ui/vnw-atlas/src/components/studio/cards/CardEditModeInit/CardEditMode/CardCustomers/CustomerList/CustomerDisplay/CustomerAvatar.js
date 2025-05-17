@@ -6,7 +6,7 @@
  */
 const CustomerAvatar = ({ avatar, display}) => {
     const bgStyle = {
-        backgroundImage: `url(${avatar || "https://marketplace.canva.com/EAGDNFn31IA/1/0/1600w/canva-9mikvYk2s3E.jpg"})`,
+        backgroundImage: `url(${avatar || "/placeholder.jpg"})`,
         backgroundSize: "contain"
     };
     

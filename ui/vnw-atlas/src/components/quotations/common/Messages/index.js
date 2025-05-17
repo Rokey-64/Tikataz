@@ -1,6 +1,7 @@
 import React from 'react';
 import InsertNoticeText from '../InsertNoticeText';
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslations, Trans } from "next-intl";
+import Link from 'next/link';
 
 /**
  * Get a message to notify the user about the card
@@ -27,18 +28,18 @@ const Messages = ({ type }) => {
 };
 
 const AutRFQHistoryMessage = () => {
-    const { t } = useTranslation(["translation", "captions"]);
+    const t = useTranslations("mes");
+
     return (
         <InsertNoticeText
-            header={<p  className='text-base'>{t("captions:F0001")}</p>}
+            header={<p className='text-base'>{t("F0001")}</p>}
             content={
                 <div className="text-[14px] font-sans text-justify leading-5 w-[600px]">
-                    <Trans
-                        i18nKey={t("captions:F0002")}
-                        components={{
-                            1: <a className='text-blue-400 hover:text-blue-600 hover:underline' href='/' />
-                        }}
-                    />
+                    {
+                        t.rich("F0002", {
+                            "first": () => <Link href='/' className='text-blue-400 hover:text-blue-600 hover:underline' />
+                        })
+                    }
                 </div>
             }
         />
@@ -46,16 +47,17 @@ const AutRFQHistoryMessage = () => {
 };
 
 const AutRFQRecentMessage = () => {
-    const { t } = useTranslation("captions");
+    const t = useTranslations("mes");
+    const tTrans = useTranslations("trans");
     return (
         <InsertNoticeText
             header={t("D0001")}
             content={
                 <div className="text-[14px] font-sans text-justify leading-5">
                     <p>® {t("D0002")}</p>
-                    <p> {t("D0003")}</p> <br/>
-                    <p> ⚠ {t("note")}:</p>
-                    <p className='ml-5'>* {t("D0004")}</p><br/>
+                    <p> {t("D0003")}</p> <br />
+                    <p> ⚠ {tTrans("note")}:</p>
+                    <p className='ml-5'>* {t("D0004")}</p><br />
                 </div>
             }
         />
@@ -64,7 +66,7 @@ const AutRFQRecentMessage = () => {
 
 
 const AutRFQGenerMessage = () => {
-    const { t } = useTranslation("captions");
+    const t = useTranslations("mes");
     return (
         <InsertNoticeText
             header={t("A0001")}
@@ -79,7 +81,7 @@ const AutRFQGenerMessage = () => {
 };
 
 const AutRFQItemsMessage = () => {
-    const { t } = useTranslation("captions");
+    const t = useTranslations("mes");
     return (
         <InsertNoticeText
             header={t("B0005")}
@@ -115,7 +117,7 @@ const AutRFQItemsMessage = () => {
 };
 
 const AutRFQFilterMessage = () => {
-    const { t } = useTranslation("captions");
+    const t = useTranslations("mes");
     return (
         <InsertNoticeText
             header={t("C0017")}

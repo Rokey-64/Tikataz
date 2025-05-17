@@ -1,4 +1,4 @@
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 /**
  * Cancel button
@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
  * @returns 
  */
 const OrderCancelButton = ({ onCancel }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
 
     const onButtonClick = () => {
         onCancel&&onCancel();

@@ -1,0 +1,22 @@
+# Thư mục node_modules không nên được copy vào container
+node_modules
+
+# File Dockerfile không cần thiết trong container
+Dockerfile
+
+# File .dockerignore này cũng không cần
+.dockerignore
+
+# Bỏ thư mục Git nếu có
+.git
+.gitignore
+.vscode
+
+# Bỏ file log
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Thư mục build nếu bạn có dùng (ví dụ với React/Next.js)
+dist
+build

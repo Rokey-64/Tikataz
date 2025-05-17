@@ -1,16 +1,18 @@
 import { useState, useEffect, useCallback} from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setGeneral } from "../../../../../../../redux/cardsSlice";
-import InsertNoticeText from "../../../../../common/InsertNoticeText";
-import TextSingleInput from "../../../../../common/TextSingleInput";
-import TextAreaInput from "../../../../../common/TextAreaInput";
+import { setGeneral } from "@/redux/cardsSlice";
+import InsertNoticeText from "@/components/studio/common/InsertNoticeText";
+import TextSingleInput from "@/components/studio/common/TextSingleInput";
+import TextAreaInput from "@/components/studio/common/TextAreaInput";
 import debounce from "lodash.debounce";
+import { useTranslations } from "next-intl";
 
 /**
  * This component contains the business category and keywords of the company
  * @returns 
  */
 const BussinessMajor = () => {
+    const t = useTranslations("trans");
     const dispatch = useDispatch();
     const general = useSelector(state => state.cards.general);
     const [business, setBusiness] = useState({
@@ -45,25 +47,24 @@ const BussinessMajor = () => {
         <>
             <div className="col-span-2 mt-2 max-w-[700px]">
                 <InsertNoticeText
-                    header="Hạng mục kinh doanh"
-                    content="* Để giúp công cụ có thể liên kết thẻ của bạn với các khách hàng cách phù hợp nhất, hãy cung cấp cho chúng tôi thêm thông tin về lĩnh vực 
-                            kinh doanh của bạn."
+                    header={t("studio.card.gen.bzzcatg")}
+                    content={t("studio.card.gen.bzzcontent")}
                 />
             </div>
 
             <div className="col-span-2">
-                <TextSingleInput title="Lĩnh vực" 
+                <TextSingleInput title={t("studio.card.gen.bzzfield")}
                 type="text" 
                 content={business.businessField}
                 callback={callback.bind(this, general, 'businessField')}
                 maxlength={200}/>
             </div>
             <div className="col-span-2">
-                <TextAreaInput title="Từ khóa"
+                <TextAreaInput title={t("studio.card.gen.keywords")}
                     content={business.keywords}
                     callback={callback.bind(this, general, 'keywords')}
                     maxlength={300}
-                    placeholder={"Nhập một số từ khóa để các công cụ tìm kiếm có thể nhận biết bạn."} />
+                    placeholder={t("studio.card.gen.m4")}/>
             </div>
         </>
     );

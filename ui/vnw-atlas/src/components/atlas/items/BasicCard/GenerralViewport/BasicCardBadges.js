@@ -1,9 +1,9 @@
 import React from "react";
 import Image from 'next/image';
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 const BasicCardBadges = ({ card }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
 
     return (
         <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
@@ -26,7 +26,7 @@ const BasicCardBadges = ({ card }) => {
                         <div className="relative z-0 p-1.5 bg-gradient-to-br from-yellow-50 to-amber-50 rounded-full shadow-sm group-hover:shadow-md transition-all duration-300">
                             <div className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center bg-white rounded-full p-2 border border-yellow-100">
                                 <Image
-                                    src={`badges/${badge.code}.svg`}
+                                    src={`badges/${badge.code?.toLowerCase()}.svg`}
                                     alt={badge.name}
                                     width={40}
                                     height={40}

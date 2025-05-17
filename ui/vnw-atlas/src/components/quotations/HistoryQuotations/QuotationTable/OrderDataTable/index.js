@@ -1,13 +1,13 @@
 import DataTable from 'react-data-table-component';
 import RefreshButton from "../../../common/RefreshButton";
 import Messages from '../../../common/Messages';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from "next-intl";
 import DiscardOrderButton from '../DiscardOrderButton';
 import RestoreOrderButton from '../RestoreOrderButton';
 import ViewOrderButton from '../ViewOrderButton';
 
 const OrderDataTable = ({ quotationType, state, dispatch, onRefreshClick}) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
 
     /**
      * Refresh button click handler

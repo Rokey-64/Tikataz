@@ -1,12 +1,12 @@
 import { PiTrendUpThin } from "react-icons/pi";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 /**
  * Display the inline card edit button
  * @returns 
  */
 const InlineCardTrendButton = ({callback}) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
 
     return (
         <button className="hover:bg-white bg-gray-50 rounded-md p-1 hover:shadow-lg hover:scale-105 transition-transform"

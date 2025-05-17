@@ -17,7 +17,7 @@ const signinHandleClick = async (navigate, setContent, body, content) => {
             }
             else {
                 // navigate to home page when login success
-                window.location.href = 'http://tikataz.vn/';
+                window.location.href = 'http://tikataz.com/';
             }
         }
         else {

@@ -1,13 +1,27 @@
 import express from "express"
 import { setRedisKey } from "#@/services/db-connection/redis-jack.js"
 import { hashPassword } from '#@/services/password-hashing/index.js'
-import emitLog, { level, showMessage } from '#@/services/fluentd-connection/fluentd-jack.js'
+import { showMessage } from '#@/services/fluentd-connection/fluentd-jack.js'
 import setFeedback from "#@/services/setFeedback.js"
 import verifyUserRegister from "../middlewares/verifyUserRegister.js"
 import sendConfirmLink from "../middlewares/sendConfirmLink.js"
 
 const router = express.Router();
 const UKEY = 'REGISTER';
+
+router.get('/', (req, res) => {
+    return res.status(200).json(
+        setFeedback(
+            req.feedback,
+            true,
+            'OK',
+            {
+                prevID: req.id,
+                userNotification: req.t('ok')
+            }
+        )
+    )
+});
 
 router.post('/', verifyUserRegister, sendConfirmLink, async (req, res) => {
     /**
@@ -47,7 +61,7 @@ router.post('/', verifyUserRegister, sendConfirmLink, async (req, res) => {
     try {
         await setRedisKey(model.email, hpw, 60 * 60)
     } catch (err) {
-        emitLog(level.ERROR, req.id, err.message, 'signup/register | setRedisKey', metadata);
+        showMessage(err.message, 'registerController.js | setRedisKey');
         return res.status(500).json(
             setFeedback(
                 req.feedback,

@@ -16,14 +16,15 @@ router.get('/',
 );
 
 router.get('/callback',
-    passport.authenticate('google', { failureRedirect: '/login', session: false }),
+    passport.authenticate('google', { failureRedirect: process.env.USER_CLIENT_DOMAIN, session: false }),
     googleUserAuths,
     googleCreateUser,
     createRefreshToken,
     createAccessToken,
     setCookies,
     (req, res) => {
-        res.status(200).json(setFeedback(req.feedback, true, 'Login success'));
+        res.redirect(process.env.USER_CLIENT_DOMAIN);
+        //res.status(200).json(setFeedback(req.feedback, true, 'Login success'));
     }
 );
 

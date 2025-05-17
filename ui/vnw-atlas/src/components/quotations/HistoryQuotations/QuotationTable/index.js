@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useReducer } from 'react';
 import PaginationComponent from "../../common/Pagination";
 import getRFQRecentAPI from "../../../../api/getRFQRecent";
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from "next-intl";
 import { debounce} from 'lodash';
 import QuotationDiscardDialog from '../QuotationDiscardDisplay'
 import QuotationRestoreDisplay from '../QuotationRestoreDisplay'
@@ -11,7 +11,7 @@ import { initialState, quotationTableReducer } from '../../../../reducers/quotat
 import OrderDataTable from './OrderDataTable';
 
 const QuotationTable = ({ quotationType }) => {
-  const { t } = useTranslation();
+  const t = useTranslations('trans');
   const [state, dispatch] = useReducer(quotationTableReducer, initialState);
 
   // API call with debounce

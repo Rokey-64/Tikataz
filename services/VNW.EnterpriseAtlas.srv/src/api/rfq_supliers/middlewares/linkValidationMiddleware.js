@@ -1,10 +1,10 @@
-import setFeedback from "../../../services/setFeedback.js";
+import setFeedback from "#@/services/setFeedback.js";
 import _AutoCardModel from "../models/atoCardModel.js";
-import { showMessage } from "../../../databases/http_fluentd.js";
-import getModelService from "../../../services/getModelService.js";
-import { getJwtGenerator } from "../../../services/jwt/jwtGenerator.js";
-import { GENERATING_RFQ_LINK_KEY } from "../../../services/generateRedisKeys.js";
-import { cluster } from "../../../databases/redis-jack.js";
+import { showMessage } from "#@/databases/http_fluentd.js";
+import getModelService from "#@/services/getModelService.js";
+import { getJwtGenerator } from "#@/services/jwt/jwtGenerator.js";
+import { GENERATING_RFQ_LINK_KEY } from "#@/services/generateRedisKeys.js";
+import { cluster } from "#@/databases/redis-jack.js";
 
 /**
  * Check the link validation middleware
@@ -27,7 +27,7 @@ const linkValidationMiddleware = async (req, res, next) => {
     }
     catch (err) {
         if (err.name === 'TokenExpiredError') {
-            return res.status(401).json(setFeedback(req.feedback, false, "error", { error: "Link expired" }));
+            return res.status(400).json(setFeedback(req.feedback, false, "error", { error: "Link expired" }));
         }
 
         return res.status(400).json(setFeedback(req.feedback, false, "error", { error: err.message }));
@@ -38,7 +38,7 @@ const linkValidationMiddleware = async (req, res, next) => {
         const key = GENERATING_RFQ_LINK_KEY(data?.oid, data?.cid);
         const redisData = await cluster.get(key);
         if (!redisData) {
-            return res.status(401).json(setFeedback(req.feedback, false, "error", { error: "Link expired" }));
+            return res.status(400).json(setFeedback(req.feedback, false, "error", { error: "Link expired" }));
         }
     }
 

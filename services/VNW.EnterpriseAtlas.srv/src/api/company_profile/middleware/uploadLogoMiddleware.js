@@ -4,6 +4,7 @@ import setFeedback from "../../../services/setFeedback.js";
 import createStorageService from "../../../services/strorages/createStorageService.js";
 import {deleteRedisKey} from "../../../databases/redis-jack.js";
 import {GENERATING_COMPANY_LOGO_KEY} from "../../../services/generateRedisKeys.js";
+import { showMessage } from "#@/databases/http_fluentd.js";
 
 /**
  * Upload the logo to Azure Blob Storage
@@ -15,9 +16,7 @@ import {GENERATING_COMPANY_LOGO_KEY} from "../../../services/generateRedisKeys.j
 const uploadLogoMiddleware = async (req, res, next) => {
     // const containerClient = initContainerCliAzure("images");
     const storageService = createStorageService("images");
-    if (!req.files || req.files.length !== 1) {
-        return res.status(400).json(setFeedback(req.feedback, false));
-    }
+
 
     const file = req.files[0];
     if (!file) return next();
@@ -39,7 +38,8 @@ const uploadLogoMiddleware = async (req, res, next) => {
         await deleteRedisKey(blobName);
     }
     catch (err) {
-        return res.status(500).json(setFeedback(req.feedback, false));
+        showMessage("error", "Error uploading file to Azure", err);
+        return res.status(500).json(setFeedback(req.feedback, false, "Error uploading file uploadLogoMiddleware"));
     }
 
     return next();

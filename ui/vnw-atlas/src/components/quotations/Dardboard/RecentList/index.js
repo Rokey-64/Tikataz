@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback} from "react";
 import Link from 'next/link';
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import { PiNoteBlankThin } from "react-icons/pi";
 import getRFQRecentAPI from "../../../../api/getRFQRecent";
 import Messages from "../../common/Messages";
@@ -14,7 +14,7 @@ import PaginationComponent from "../../common/Pagination";
  * @returns 
  */
 const RecentList = () => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const [recentList, setRecentList] = useState([]);
     const [pageCount, setPageCount] = useState(0);
 

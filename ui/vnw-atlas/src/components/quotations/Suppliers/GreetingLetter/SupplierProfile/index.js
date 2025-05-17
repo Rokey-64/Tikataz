@@ -1,7 +1,7 @@
 
 
-import { useState, useEffect, use } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useState, useEffect, Suspense } from 'react';
+import { useTranslations } from "next-intl";
 import DisplayProfile from './DisplayProfile';
 import EditProfile from './EditProfile';
 import updateSupplierProfileAPI from '@/api/updateSupplierProfile';
@@ -9,7 +9,7 @@ import getRFQSupplierProfileAPI from '@/api/getRFQSupplierProfile';
 import { useSearchParams, useRouter } from 'next/navigation';
 
 const SupplierProfile = () => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const searchParams = useSearchParams();
     const router = useRouter();
     const [isEditing, setIsEditing] = useState(false);
@@ -167,4 +167,10 @@ const SupplierProfile = () => {
     );
 }
 
-export default SupplierProfile;
+const SupplierProfileSuspense = () => (
+    <Suspense fallback={<div className="w-screen h-screen flex justify-center items-center"><h1 className="text-2xl font-bold">Loading...</h1></div>}>
+        <SupplierProfile />
+    </Suspense>
+);
+
+export default SupplierProfileSuspense;

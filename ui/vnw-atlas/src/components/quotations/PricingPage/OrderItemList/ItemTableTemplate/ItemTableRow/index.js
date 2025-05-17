@@ -8,10 +8,10 @@ import AddHashtagButton from "../../../../common/AddHashtagButton";
 import AddProviderButton from "../../../../common/AddProviderButton";
 import { useAppContext } from "../../../../../../contexts/RFQItemOrder";
 import _ from "lodash";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 const ItemTableRow = ({ hashtagEvent, providerEvent, itemID, pos }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const { state, dispatch, orderItem } = useAppContext();
     const [item, setItem] = useState(orderItem);
     useEffect(() => {

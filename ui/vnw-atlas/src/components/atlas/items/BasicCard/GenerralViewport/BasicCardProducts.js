@@ -1,15 +1,16 @@
-import React, { useEffect, useState, useCallback} from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Image from 'next/image';
 import { nanoid } from 'nanoid';
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import getAtlasProductURLsAPI from "@/api/getAtlasProductURLs";
 import { useDispatch } from "react-redux";
 import { updateAtlas } from "@/redux/atlasSlice";
 import _ from "lodash";
 
 const BasicCardProducts = ({ card }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const dispatch = useDispatch();
+    const [imgSrc, setImgSrc] = useState('');
 
     // Limmit the products when the view-more button click
     const MAX_ADDED_PRODUCT = 3;
@@ -44,10 +45,10 @@ const BasicCardProducts = ({ card }) => {
                 }
                 return product;
             });
-            dispatch(updateAtlas({newProducts}));
+            dispatch(updateAtlas({ newProducts }));
             setProducts(newProducts.slice(0, maxProducts));
         }
-    }, [maxProducts]);
+    }, [maxProducts, dispatch]);
 
     useEffect(() => {
         const keys = []
@@ -72,6 +73,10 @@ const BasicCardProducts = ({ card }) => {
         setMaxProducts(maxProducts + MAX_ADDED_PRODUCT);
     }
 
+    const handleError = () => {
+        setImgSrc('/placeholder.jpg');
+    };
+
 
 
     return (
@@ -85,11 +90,12 @@ const BasicCardProducts = ({ card }) => {
                     <div key={nanoid()} className="group flex flex-col items-center min-w-[80px] sm:min-w-0">
                         <div className="w-20 h-20 sm:w-28 sm:h-28 rounded-lg border border-gray-200 overflow-hidden bg-gray-50 relative shadow-sm hover:shadow-md transition-shadow">
                             <Image
-                                src={product.link}
+                                src={imgSrc || product.link}
                                 alt={product.name}
                                 fill
                                 className="object-cover transition-transform duration-300 group-hover:scale-110"
                                 sizes="(max-width: 768px) 100vw, 140px"
+                                onError={handleError}
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         </div>

@@ -1,8 +1,8 @@
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import { GiPriceTag } from "react-icons/gi";
 
 const ComfirmTitle = ({ title }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
 
     return (
         <div className="flex items-center gap-2 uppercase">

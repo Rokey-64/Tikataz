@@ -13,7 +13,7 @@ const UKEY = 'AUTHENTICATION';
 const verifyRF = async (req, res, next) => {
     const refreshCookiesToken = req.cookies.refreshToken;
 
-    if (!refreshCookiesToken) return res.status(400).end();
+    if (!refreshCookiesToken) return res.status(400).json("No refresh token");
 
     /**
      * Check if the refresh token is valid
@@ -23,7 +23,7 @@ const verifyRF = async (req, res, next) => {
         await verifyJWT(refreshCookiesToken)
     }
     catch (err) {
-        return res.status(400).end();
+        return res.status(400).json("Invalid refresh token");
     }
 
     return next();
@@ -39,26 +39,24 @@ const verifyAC = async (req, res, next) => {
      * return the payload if the access token is valid
      */
     try{
-        await verifyJWT(accessCookiesToken);
+        const payload = await verifyJWT(accessCookiesToken);
 
         //* Check if the access token is expired
-        return res.status(200).end();
+        return res.status(200).json({uid: payload.userID});
     }
     catch (err) {
         if (err instanceof jwt.TokenExpiredError) {
             return next();
         }
 
-        return res.status(400).end();
+        return res.status(400).json("Invalid access token verifyAC");
     }
 
-    return next();
 }
-
 
 router.post('/refresh', verifyRefreshToken, verifyAC, createAccessToken,  (req, res) => {
     const model = getModelService(req);
-    
+    const refreshPayload = model.user.refreshPayload;
 
     /**
     * Set the access token to the cookies
@@ -74,7 +72,7 @@ router.post('/refresh', verifyRefreshToken, verifyAC, createAccessToken,  (req, 
         domain: process.env.COOKIE_DOMAIN
     });
 
-    res.status(200).end();
+    res.status(200).json({uid: refreshPayload.userID});
 });
 
 router.get('/verify', verifyRF, (req, res) => {

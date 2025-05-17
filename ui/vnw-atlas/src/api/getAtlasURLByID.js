@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosInstance from "./api";
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 
@@ -11,9 +12,10 @@ const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 const getAtlasURLByID = async (cid, id) => {
     let apiUrl = `${API_HOST}public/atlas/products/${cid}/${id}`;
     try {
-        const response = await axios.get(apiUrl, {
-            withCredentials: true
-        });
+        // const response = await axios.get(apiUrl, {
+        //     withCredentials: true
+        // });
+        const response = await axiosInstance.get(apiUrl);
         if (response.status === 200) {
             return response.data.data.url;
         }

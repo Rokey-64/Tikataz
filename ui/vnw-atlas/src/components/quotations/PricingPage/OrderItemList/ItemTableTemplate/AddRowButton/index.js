@@ -1,5 +1,5 @@
 import { MdLibraryAdd } from "react-icons/md";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 /**
  * The add row button for the item table
@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
  * @returns 
  */
 const AddRowButton = ({ onClick }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     return (
         <p className="text-blue-600 hover:text-blue-800 w-fit cursor-pointer hover:underline font-sans text-sm mt-3"
             data-tooltip-id="pricing-tooltip"

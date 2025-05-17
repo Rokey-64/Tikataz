@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const { REACT_APP_HOST: host,
-    REACT_APP_PORT: port,
-    REACT_APP_PROTOCOL: protocol,
-    REACT_APP_ROOT_PATH: root_path } = process.env;
+const { VITE_API_HOST: host,
+    VITE_API_PORT: port,
+    VITE_PROTOCOL: protocol,
+    VITE_ROOT_PATH: root_path } = import.meta.env;
     
 
 /**
@@ -23,7 +23,7 @@ const { REACT_APP_HOST: host,
  */
 export const requireForLogin = async (body) => {
     try {
-        const res = await axios.post(`${protocol}://${host}:${port}${root_path}/login`, body,
+        const res = await axios.post(`${protocol}://${host}${root_path}/login`, body,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ export const requireForLogin = async (body) => {
  */
 export const loginWithOTP = async (body) => {
     try {
-        const response = await axios.post(`${protocol}://${host}:${port}${root_path}/login/otp/verify`, body,
+        const response = await axios.post(`${protocol}://${host}${root_path}/login/otp/verify`, body,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ export const loginWithOTP = async (body) => {
  * */
 export const resendOTP = async (token, lang='vi') => {
     try {
-        const response = await axios.get(`${protocol}://${host}:${port}${root_path}/login/otp/resend?token=${token}&lang=${lang}`,
+        const response = await axios.get(`${protocol}://${host}${root_path}/login/otp/resend?token=${token}&lang=${lang}`,
             {
                 headers: {
                     'Content-Type': 'application/json',

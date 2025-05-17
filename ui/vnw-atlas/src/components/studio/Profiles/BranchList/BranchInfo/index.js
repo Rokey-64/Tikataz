@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setBranches, deleteBranch } from "../../../../../redux/branchesSlice";
@@ -12,7 +14,8 @@ import RightDeleteContainer from "../../../common/RightDeleteContainer/index";
 import InsertNoticeText from "../../../common/InsertNoticeText";
 import loadBranches from "../../../../../api/loadBranches";
 import DeleteBranches from "../../../../../api/deleteBranches";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
+import Messages from "../../../common/Messages";
 
 /**
  * Display the list of branches
@@ -20,7 +23,7 @@ import { useTranslation } from "react-i18next";
  */
 const BranchInfo = () => {
     const dispatch = useDispatch();
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const branches = useSelector((state) => state.branches);
     const [branchInspector, setBranchInspector] = useState({
         referenceState: ["add", "edit", "delete"],
@@ -42,7 +45,7 @@ const BranchInfo = () => {
      * Load branches from the server for the first time 
      */
     useEffect(() => {
-        if (branches.length > 0) 
+        if (branches.length > 0)
             return;
 
         /**
@@ -60,8 +63,8 @@ const BranchInfo = () => {
      * Adds a new object to the objects array.
      */
     const addRowHandler = () => {
-        const curentObject = { ...branchInspector.objectTemplate, id: nanoid()};
-        setBranchInspector({ ...branchInspector, state: "add", currentObjects: [curentObject]});
+        const curentObject = { ...branchInspector.objectTemplate, id: nanoid() };
+        setBranchInspector({ ...branchInspector, state: "add", currentObjects: [curentObject] });
     };
 
     /**
@@ -114,7 +117,7 @@ const BranchInfo = () => {
                 alert(t("common:delete_failed"));
             }
         });
-        
+
     };
 
     return (
@@ -127,58 +130,39 @@ const BranchInfo = () => {
             }
 
             {branchInspector.state === "delete" && (<RightDeleteContainer state={branchInspector} setState={setBranchInspector} callback={deleteCallback}
-                headerContent={<h1 className="text-[18px]"><strong>{t("delete_branch")}</strong></h1>}
-                children={
-                    <InsertNoticeText header={<strong className="text-[14px] text-black ">Việc xóa chi nhánh tác động như thế nào đến quy trình của bạn?</strong>}
-                        content={
-                            <div className="text-[13px] text-black font-sans text-justify leading-5 space-y-2">
-                                <p>Các chi nhánh được chọn sẽ bị xóa. Điều này sẽ cập nhật đến hồ sơ năng lực của bạn.</p>
-                                <p>Hệ thống sẽ bỏ qua gợi ý vị trí địa lý đối với những chi nhánh này.
-                                    Và những đơn hàng phù hợp trước đây sẽ không hiện thị nếu nằm ngoài phạm vi mới.</p>
-                                <p>Việc bạn thêm mới lại chi nhánh sẽ được chúng tôi kiểm duyệt và đánh giá trước khi bắt đầu liên kết đơn hàng.</p>
-                            </div>
-                        }
-                    />}
-            />)}
+                headerContent={<h1 className="text-[18px]"><strong>{t("delete_branch")}</strong></h1>}>
+                <Messages type="DelBranchInfoMessage" />
+            </RightDeleteContainer>)}
 
-            <AboveFixedContainer
-                children={
-                    <div className="flex items-center justify-end space-x-10 ">
-                        <AboveInsertedButton callback={addRowHandler} content={`${t("add_new_branch")}`} options={{ icon: IoAdd }} />
-                        <AboveInsertedButton callback={editRowHandler} content={`${t("update_branch")}`} options={{
-                            icon: FaUserEdit,
-                            isFreezeed: branchInspector.selectedObjects.length === 1 ? false : true
-                        }} />
-                        <div className="flex items-center justify-end">
-                            <AboveInsertedButton callback={deleteRowHandler} content={`${t("delete")}`}
-                                options={{
-                                    icon: MdDeleteForever,
-                                    additionalClasses: "text-red-600",
-                                    isFreezeed: branchInspector.selectedObjects.length >= 1 ? false : true
-                                }} />
-                        </div>
+            <AboveFixedContainer>
+                <div className="flex items-center justify-end space-x-10 ">
+                    <AboveInsertedButton callback={addRowHandler} content={`${t("add_new_branch")}`} options={{ icon: IoAdd }} />
+                    <AboveInsertedButton callback={editRowHandler} content={`${t("update_branch")}`} options={{
+                        icon: FaUserEdit,
+                        isFreezeed: branchInspector.selectedObjects.length === 1 ? false : true
+                    }} />
+                    <div className="flex items-center justify-end">
+                        <AboveInsertedButton callback={deleteRowHandler} content={`${t("delete")}`}
+                            options={{
+                                icon: MdDeleteForever,
+                                additionalClasses: "text-red-600",
+                                isFreezeed: branchInspector.selectedObjects.length >= 1 ? false : true
+                            }} />
                     </div>
+                </div>
+            </AboveFixedContainer>
+            <div className="mt-5 px-2 overflow-y-auto overflow-x-auto 
+                            md:max-h-[calc(100vh-8.5rem)] md:min-h-[calc(100vh-8.5rem)]
+                            max-h-[calc(100vh-10.5rem)] min-h-[calc(100vh-10.5rem)]
+                            md:max-w-[calc(100vw-280px)] md:min-w-[calc(100vw-280px)]
+                            max-w-[calc(100vw-18px)] min-w-[calc(100vw-18px)]"
 
-                } />
-
-            <div className="mt-5 px-2 overflow-y-auto overflow-x-auto max-h-[calc(100vh-8.5rem)] max-w-[calc(100vw-10px)] md:max-w-[calc(100vw-270px)] bg-[#fdfdfd] [clip-path:inset(0px_0px_0px_0px)]">
-                <div className=" min-h-[calc(100vh-9.25rem)]" style={{ width: 'fit-content' }}>
+            >
+                <div className="min-h-[calc(100vh-5rem)]" style={{ width: 'fit-content' }}>
                     {
                         branches.length === 0 && (
                             <div>
-                                <InsertNoticeText header={<strong>Hãy cập nhật thông tin về các chi nhánh mở rộng của doanh nghiệp bạn</strong>}
-                                    content={
-                                        <div className="w-[35rem] space-y-1 space-x-1">
-                                            <h2><strong>🔰 Chi nhánh giúp bạn</strong></h2>
-                                            <p>✔ Liên kết và tìm kiếm đối tác phù hợp với bạn thông qua địa chỉ mà bạn cung cấp</p>
-                                            <p>✔ Tăng mức độ uy tính doanh nghiệp bạn</p>
-                                            <p>✔ Hệ thống sẽ đánh giá điểm số thông tin mà bạn cung cấp, từ đó tăng đề xuất với khách hàng tiềm năng</p>
-                                            <br />
-                                            <h2 ><strong>⚠ Lưu ý:</strong></h2>
-                                            <p>Chi nhánh được thêm sẽ được chúng tôi kiểm duyệt trước khi chấp thuận nó như một phần của hồ sơ doanh nghiệp của bạn.</p>
-                                        </div>
-                                    }
-                                />
+                                <Messages type="ExpBranchInfoMessage" />
                             </div>
                         )
                     }
@@ -198,7 +182,7 @@ const BranchInfo = () => {
                         <tbody>
                             {branches.length > 0 && branches.map((branch, index) => (
                                 <tr key={index} className="border-b border-[#e4e4e7]">
-                                    <td className="p-2 sticky left-0 bg-white ">
+                                    <td className="pr-2 sticky left-0 bg-white ">
                                         <div className="flex items-center justify-center">
                                             <input type="checkbox" className="w-5 h-5" checked={branchInspector.selectedObjects.includes(branch.id)}
                                                 onChange={(e) => handleRowSelect(branch.id, e.target.checked)} />

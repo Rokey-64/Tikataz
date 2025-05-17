@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 
 /**
  * Display the certificate number
@@ -5,9 +6,11 @@
  * @returns 
  */
 const CertificateNumber = ({ cert }) => {
+    const t = useTranslations('trans'); 
+
     return (
         <div className="mb-2">
-        <span className="font-medium">Số chứng chỉ: </span> {cert.certCode || "(Chưa có thông tin)"}
+        <span className="font-medium">{t("studio.card.cert.certcode")}: </span> {cert.certCode || t("unknown")}
     </div>
     );
 };

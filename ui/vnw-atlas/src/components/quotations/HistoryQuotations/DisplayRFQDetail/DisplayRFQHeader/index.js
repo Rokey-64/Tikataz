@@ -1,4 +1,4 @@
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 /**
  * * Display the RFQ header information
@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
  */
 const DisplayRFQHeader = ({ data }) => {
   console.log("DisplayRFQHeader", data);
-  const { t } = useTranslation();
+  const t = useTranslations('trans');
 
   return (
     <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-lg shadow-sm border border-blue-100">

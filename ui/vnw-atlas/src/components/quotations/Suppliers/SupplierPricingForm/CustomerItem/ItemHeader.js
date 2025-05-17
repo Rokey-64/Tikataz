@@ -1,7 +1,7 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from "next-intl";
 
 const ItemHeader = ({ item}) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
 
     const itemDetails = [
         { label: t("item_specification"), value: item.specification },

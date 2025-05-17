@@ -8,14 +8,14 @@ import { useRouter } from 'next/navigation';
 import { debounce } from "lodash";
 import { useCallback } from "react";
 import getQuoteInitAPI from "../../../../api/getQuoteInit";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 /**
  * Display a panel listing the quotation types
  * @returns 
  */
 const RequestForQuotation = () => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const router = useRouter();
 
     const createQuotation = useCallback(debounce(() => {

@@ -4,7 +4,6 @@ import redis from 'ioredis'
 import 'dotenv/config'
 import url from 'url'
 import dbc from './dbc.json' assert {type: 'json'}
-// import emitLog, { level, showMessage } from './fluentd-jack'
 import {emitLog, level, showMessage} from './http_fluentd.js'
 
 const TIME_OUT = 15000;

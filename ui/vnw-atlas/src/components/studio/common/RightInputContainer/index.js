@@ -2,7 +2,7 @@ import { TfiSave } from "react-icons/tfi";
 import { IoClose } from "react-icons/io5";
 import RightChildrenBox from "../RightChidrenBox";
 import { throttle } from 'lodash';
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 
 /**
@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
  * @returns 
  */
 const RightInputContainer = ({ children, closeCallback, saveCallback }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const TIME_INTERVAL = 3000;
     const closeHandleClick = () => {
         closeCallback && closeCallback(false);
@@ -21,7 +21,7 @@ const RightInputContainer = ({ children, closeCallback, saveCallback }) => {
     /**
      * Throttled sendHandleClick function
      */
-    const throttledHandleClick  = throttle(() => {
+    const throttledHandleClick = throttle(() => {
         saveCallback && saveCallback();
     }, TIME_INTERVAL, { trailing: false });
 
@@ -30,7 +30,7 @@ const RightInputContainer = ({ children, closeCallback, saveCallback }) => {
     };
 
     return (
-        <div className="absolute top-3 right-2 w-fit shadow-xl bg-[#e1effa] z-50">
+        <div className="absolute top-14 md:top-5 right-0 md:right-3 w-fit shadow-xl bg-[#e1effa] z-[50]">
             <div className="grid grid-cols-2 gap-3 shadow-sm">
                 <div className='flex justify-start pt-5 shadow-sm '>
                     <button
@@ -51,9 +51,14 @@ const RightInputContainer = ({ children, closeCallback, saveCallback }) => {
 
             </div>
             <hr />
-            <div className="p-6 overflow-y-auto max-h-[calc(100vh-7rem)] min-h-[calc(100vh-7rem)] flex  shadow-xl bg-gradient-to-t from-[#ffffff] to-[#cbe1f1]">
-                <div className="md:min-w-[450px] md:max-w-[450px] w-full mb-6">
-                    <RightChildrenBox children={children}/>
+            <div className="p-6 overflow-y-auto flex  shadow-xl bg-gradient-to-t from-[#ffffff] to-[#cbe1f1] 
+                            max-h-[calc(100vh-10rem)] min-h-[calc(100vh-10rem)]
+                            md:max-h-[calc(100vh-8rem)] md:min-h-[calc(100vh-8rem)]">
+                <div className="md:min-w-[450px] md:max-w-[450px] w-full mb-40">
+                    <RightChildrenBox>
+                        {children}
+                    </RightChildrenBox>
+                    <div className="h-40"/>
                 </div>
             </div>
         </div>

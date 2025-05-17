@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import emitLog, { level, showMessage } from '#@/services/fluentd-connection/fluentd-jack.js';
+import { showMessage } from '#@/services/fluentd-connection/fluentd-jack.js';
 import getModelService from '#@/services/getModelService.js';
 import sessionService from '#@/services/sessionService.js';
 import setFeedback from '#@/services/setFeedback.js';
@@ -86,7 +86,7 @@ const inspector = async (req, res, next) => {
             );
         }
 
-        emitLog(level.ERROR, req.id, err.message, 'reset-pw/inspectorUserlogin | checkUsernameBeforeUpdate', { loginName: model.loginName });
+        showMessage(err.message, 'reset-pw/inspectorUserlogin | checkUsernameBeforeUpdate');
         return res.status(500).json(
             setFeedback(
                 req.feedback,
@@ -285,7 +285,7 @@ router.post('/recover', verifyConfirmToken(UKEY), checkNewPassword, resetPasswor
     try {
         await deleteRedisKey(`confirm-token:${payload?.userID}:${payload.did}`);
     } catch (error) {
-        emitLog(level.ERROR, req.id, error.message, 'reset-pw/resetPassword | deleteRedisKey', { userID: payload?.userID });
+        showMessage(error.message, 'reset-pw/resetPassword | deleteRedisKey');
         return res.status(500).json(
             setFeedback(
                 req.feedback,

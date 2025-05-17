@@ -44,21 +44,12 @@ class ManualCardService extends StandardCardService {
         return this;
     }
 
-    async run(cid, limit){
+    async run(cid, limit, predicts, searchCIDs) {
         const cardTemplate = new CommonCardTemplate();
-        const queryCondition = {};
-        if (cid) {
-            queryCondition._id = {$gt: new mongoose.Types.ObjectId(String(cid))};
-        }
+        this.createFilter(cid, predicts, searchCIDs);
 
-        // Check state of card
-        if(process.env.NODE_ENV === 'production'){
-            queryCondition.state = "approved";
-        }
-
-        const result = await cardModel.find(queryCondition, this.queryString).limit(limit).lean();
-        if (result == null) return null;
-        if (result.length === 0) return null;
+        const result = await cardModel.find(this.queryCondition, this.queryString).limit(limit).lean();
+        if (!result || result.length === 0) return null;
 
         /**
          * convert products to the format of card
@@ -76,8 +67,6 @@ class ManualCardService extends StandardCardService {
             });
         }
 
-
-
         for (let i = 0; i < result.length; i++) {
             const card = result[i];
 
@@ -91,19 +80,19 @@ class ManualCardService extends StandardCardService {
 
 
             const payload = cardTemplate.createNewTemplate()
-            .setCID(card._id.toString())
-            .setUID(card.user_id)
-            .setCardType('manual')
-            .setWebsite(card.general.website || "")
-            .setDescription(card.general.description || "")
-            .setBranchName(card.general.branchName || "")
-            .setAddress(address)
-            .setProducts(products)
-            .setCustomers(card.customers || [])
-            .setCerts(card.certificates || [])
-            .setLogo(card.general.logo || "")
-            .setWorkingTime(card.general.workingTime || [])
-            .getPayload();
+                .setCID(card._id.toString())
+                .setUID(card.user_id)
+                .setCardType('manual')
+                .setWebsite(card.general.website || "")
+                .setDescription(card.general.description || "")
+                .setBranchName(card.general.branchName || "")
+                .setAddress(address)
+                .setProducts(products)
+                .setCustomers(card.customers || [])
+                .setCerts(card.certificates || [])
+                .setLogo(card.general.logo || "")
+                .setWorkingTime(card.general.workingTime || [])
+                .getPayload();
 
             this.payload.push(payload);
         }

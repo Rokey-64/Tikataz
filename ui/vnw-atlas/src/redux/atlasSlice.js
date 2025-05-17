@@ -236,9 +236,7 @@ export const mockupAtlas = {
 
 const slice = createSlice({
     name: "atlas",
-    initialState: [
-        mockupAtlas
-    ],
+    initialState: [],
     reducers: {
         /** Load atlas from the server for the first time */
         setAtlas: (state, action) => {

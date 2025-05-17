@@ -3,9 +3,9 @@
 import 'dotenv/config'
 import Sequelize from 'sequelize'
 import dbc from '../../../dbc.json' assert {type: 'json'}
-import emitLog, { level, showMessage } from '../fluentd-connection/fluentd-jack.js'
+import { showMessage } from '../fluentd-connection/fluentd-jack.js'
 
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV ||'development';
 const dialect = 'mysql';
 const conf = {
     replication: {
@@ -83,8 +83,11 @@ async function Connect(msg) {
         // showMessage(`Mysql >> Action::: ${msg} >>> State::: Connected to the database`);
     } catch (err) {
         // showMessage(`Mysql >> Action::: ${msg} >>> State::: Connection failed`);
+        if(msg==="connection") {
+            console.log('Mysql | Connection failed |');
+        }   
         if (count === RECONNECT_MAX_COUNT) {
-            await emitLog(level.DB_ERROR, null, `Mysql | ${msg} | Connection failed | ${err}`, 'src/database/mysql-jack', null);
+            showMessage(err, `Mysql | ${msg} | Connection failed `, 'src/database/mysql-jack');
             return;
         }
         setTimeout(Connect, TIME_OUT); // Thử lại sau 5 giây

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
-const password = encodeURIComponent("Tikcom@192.168.1.1@hnlhnl123")
-const uri = `mongodb://admin:${password}@103.218.122.181:27017/VNW?authSource=admin`;
+const password = encodeURIComponent(process.env.MONGO_PASSWORD);
+const uri = `mongodb://${process.env.MONGO_USER}:${password}@${process.env.MOMGO_HOST}`;
 let retries = 0;
 const MAX_RETRIES = 10
 const options = {

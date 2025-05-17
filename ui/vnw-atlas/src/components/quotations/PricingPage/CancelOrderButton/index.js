@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import { useRouter  } from 'next/navigation';
 
 
 const CancelOrderButton = () => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     // const navigate = useNavigate();
     const router = useRouter();
     const [isDirty, setIsDirty] = useState(false);

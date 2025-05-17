@@ -1,11 +1,11 @@
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 /**
  * Display a panel
  * @param {} param0
  * @returns 
  */
 const PanelButton = ({ icon: Icon, imgBg, content, grad, event }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
 
     const buttonClicked = () => {
         if (event) event();

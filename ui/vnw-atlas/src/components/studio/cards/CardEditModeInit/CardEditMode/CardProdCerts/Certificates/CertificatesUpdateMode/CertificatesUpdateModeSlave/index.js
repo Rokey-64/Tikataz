@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setCerts } from "../../../../../../../../../redux/cardsSlice";
+import { setCerts } from "@/redux/cardsSlice";
 import CertificatesDisplayIcon from "./CertificatesDisplayIcon/index";
 import CertificatesInputValue from "./CertificatesInputValue";
 import CertificatesSearchingBox from "./CertificatesSearchingBox";
 import CertificatesDisplaySelected from "./CertificatesDisplaySelected";
 import CertificesSaveButton from "./CertificatesSaveButton";
-import Messages from "../../../../../../../common/Messages";
-import certsTemplate from "../../../../../../../../../services/certTemplate";
+import Messages from "@/components/studio/common/Messages";
+import certsTemplate from "@/services/certTemplate";
+import { useTranslations } from "next-intl";
 
 const CertificatesUpdateModeSlave = ({ callback }) => {
+    const t = useTranslations("trans");
     const dispatch = useDispatch();
     const certificates = useSelector((state) => state.cards.certificates);
     const [formData, setFormData] = useState({
@@ -33,12 +35,12 @@ const CertificatesUpdateModeSlave = ({ callback }) => {
 
     const saveOnClick = () => {
         if(!formData.certype){
-            alert("Vui lòng chọn loại chứng chỉ");
+            alert(t("studio.card.cert.m28"));
             return;
         }
 
         if(!formData.certProvider){
-            alert("Vui lòng nhập tên tổ chức cung cấp");
+            alert(t("studio.card.cert.m29"));
             return;
         }
         // Save the certificate to the redux store
@@ -99,11 +101,11 @@ const CertificatesUpdateModeSlave = ({ callback }) => {
                 <Messages type="CertInputMessage" />
 
                     <div className="grid grid-cols-2 gap-4">
-                        <CertificatesInputValue type="text" name="certCode" value={formData.certCode} callback={handleInputChange} placeholder="Mã số chứng chỉ" />
-                        <CertificatesInputValue type="text" name="certProvider" value={formData.certProvider} callback={handleInputChange} placeholder="Tên tổ chức cung cấp" />
-                        <CertificatesInputValue type="date" name="certValidDate" value={formData.certValidDate} callback={handleInputChange} placeholder="Từ ngày" />
+                        <CertificatesInputValue type="text" name="certCode" value={formData.certCode} callback={handleInputChange} placeholder={t("studio.card.cert.certcode")}/>
+                        <CertificatesInputValue type="text" name="certProvider" value={formData.certProvider} callback={handleInputChange} placeholder={t("studio.card.cert.providedby")}/>
+                        <CertificatesInputValue type="date" name="certValidDate" value={formData.certValidDate} callback={handleInputChange} placeholder={t("studio.card.cert.frmdate")}/>
                         <CertificatesInputValue type="date" name="certExpiredDate" value={formData.certExpiredDate} callback={handleInputChange} />
-                        <CertificatesInputValue type="text" name="certWeblink" value={formData.certWeblink} callback={handleInputChange} placeholder="Địa chỉ website" />
+                        <CertificatesInputValue type="text" name="certWeblink" value={formData.certWeblink} callback={handleInputChange} placeholder={t("studio.card.cert.website")}/>
                         <CertificesSaveButton saveCert={saveOnClick} />
                     </div>
             </div>

@@ -1,18 +1,22 @@
+'use client'
+
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setLanguages, setTimezones } from "../../../../redux/optionsSlice";
+import { setLanguages, setTimezones } from "@/redux/optionsSlice";
 import { FiSettings } from "react-icons/fi";
 import AboveFixedContainer from "../../common/AboveFixedContainer/index";
 import SelectBox from "../../common/SelectBox";
-import InsertNoticeText from "../../common/InsertNoticeText";
-import LanguageCategoryAPI from "../../../../api/languageCategory";
-import TimezoneCategoryAPI from "../../../../api/timezoneCategory";
-import LoadBasicSettingsAPI from "../../../../api/loadBasicSettings";
-import UpdateBasicSettingsAPI from "../../../../api/updateBasicSettings";
+import LanguageCategoryAPI from "@/api/languageCategory";
+import TimezoneCategoryAPI from "@/api/timezoneCategory";
+import LoadBasicSettingsAPI from "@/api/loadBasicSettings";
+import UpdateBasicSettingsAPI from "@/api/updateBasicSettings";
 import ApplyButton from "../ApplyButton";
-import DelayedRoute from "../../../../services/routeDelay";
+import DelayedRoute from "@/services/routeDelay";
+import Messages from "../../common/Messages";
+import { useTranslations } from "next-intl";
 
 const BasicSetting = () => {
+    const t = useTranslations('trans');
     const dispatch = useDispatch();
     const languages = useSelector((state) => state.options.languages);
     const timeZones = useSelector((state) => state.options.timezones);
@@ -94,28 +98,20 @@ const BasicSetting = () => {
     return (
         <DelayedRoute>
             <div>
-                <AboveFixedContainer
-                    children={
-                        <div className="flex my-4 space-x-3">
-                            <FiSettings className="text-xl" />
-                            <h1 className="font-semibold">Thiết lập cơ bản</h1>
-                        </div>
-                    }
-                />
-                <div className="overflow-y-auto min-h-[calc(100vh-180px)] max-h-[calc(100vh-180px)] min-w-[calc(100vw-9px)] max-w-[calc(100vw-9px)]
-                            md:min-w-[calc(100vw-268px)] md:max-w-[calc(100vw-268px)]"
-                >
-                    <InsertNoticeText
-                        header={<strong className="text-[14px]">Bạn có thể thiết lập các thay đổi nào tại đây?</strong>}
-                        content={
-                            <div className="text-[13px] font-sans text-justify leading-5 space-y-2 w-[50rem]">
-                                <p>Thiết lập cơ bản tập trung vào điều chỉnh các chức năng điều khiển và hiển thị hệ thống và giao diện tương tác người dùng.</p>
-                                <p>Điều này giúp trực quan hơn các thao tác của bạn và góp phần đảm bảo sự thuận tiện nhất khi sử dụng website.</p>
-                            </div>
-                        }
-                    />
+                <AboveFixedContainer>
+                    <div className="flex my-4 space-x-3">
+                        <FiSettings className="text-xl" />
+                        <h1 className="font-semibold">{t('studio.profiles.settings.basic.header')}</h1>
+                    </div>
+                </AboveFixedContainer>
+                <div className="overflow-y-auto 
+                            min-w-[calc(100vw-20px)] max-w-[calc(100vw-20px)]
+                            md:min-w-[calc(100vw-280px)] md:max-w-[calc(100vw-280px)]
+                            max-h-[calc(100vh-215px)] min-h-[calc(100vh-215px)]"
+                            >
+                    <Messages type="BasicSettingMessage" />
 
-                    <h2 className="font-sans text-base  my-2">Lựa chọn ngôn ngữ và định dạng múi giờ sẽ áp dụng cho trang của bạn</h2>
+                    <h2 className="font-sans text-base  my-2">{t('studio.profiles.settings.basic.timezone')}</h2>
                     <SelectBox header="Ngôn ngữ"
                         object={languages.map((lang) => ({ value: lang.id, label: lang.language }))}
                         defaultValue={basicSettings.lang_id}
@@ -126,12 +122,12 @@ const BasicSetting = () => {
                         defaultValue={basicSettings.timezone_id}
                         callback={timezoneCallback}
                     />
-                    <h2 className="font-sans text-base mb-2 mt-10">Lựa chọn giao diện</h2>
+                    <h2 className="font-sans text-base mb-2 mt-10">{t('studio.profiles.settings.basic.ui')}</h2>
                     <div>
                         <div className="flex flex-col items-start space-x-4">
                             <div className="flex items-center space-x-2 ml-12 mb-2">
-                                <input type="radio" name="theme" id="dark" checked title="sáng" />
-                                <label for="dark" className="font-sans text-sm">Sáng</label>
+                                <input type="radio" name="theme" id="dark" checked title={t('studio.profiles.settings.basic.light')} />
+                                <label for="dark" className="font-sans text-sm">{t('studio.profiles.settings.basic.light')}</label>
                             </div>
                             <div className="w-32 h-32 rounded-lg border shadow-md flex items-center justify-center bg-white text-black">
                                 <span></span>

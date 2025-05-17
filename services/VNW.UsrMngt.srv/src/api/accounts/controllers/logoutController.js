@@ -1,17 +1,14 @@
 import { Router } from "express";
 import { verifyJWT } from "#@/services/token-auths";
 import { genRFKey } from "#@/services/redis-template-key";
-import getModelService from "#@/services/getModelService";
 import { deleteRedisKey } from "#@/services/db-connection/redis-jack";
-import emitLog from "#@/services/fluentd-connection/fluentd-jack";
+import {showMessage} from "#@/services/fluentd-connection/fluentd-jack";
 import setFeedback from "#@/services/setFeedback";
 
 const router = Router();
-const UKEY = 'LOGOUT';
 
 router.post('/logout', async (req, res) => {
 
-    const model = getModelService(req);
     const accessToken = req.cookies.accessToken;
 
     const payload = await verifyJWT(accessToken).catch(err => {
@@ -41,7 +38,7 @@ router.post('/logout', async (req, res) => {
      * * 500 - Internal server error.
      */
     await deleteRedisKey(key).catch(err => {
-        emitLog('ERROR', req.id, err.message, 'src/controllers/logoutController.js | deleteRedisKey', { payload });
+        showMessage('ERROR', err.message, 'src/controllers/logoutController.js | deleteRedisKey');
         return res.status(500).json(
             setFeedback(
                 req.feedback,

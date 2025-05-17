@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from "next-intl";
 import { useRFQSupliersContext } from '../../../../../contexts/RFQSuppliersContext';
 
 const CustPrivacy = () => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const { state, dispatch } = useRFQSupliersContext();
     return (
         <div className="mb-8 p-4 border rounded-lg bg-blue-50">

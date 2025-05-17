@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer} from 'react';
+import { useState, useEffect, useReducer, Suspense} from 'react';
 import { RFQSupliersProvider } from '../../../contexts/RFQSuppliersContext';
 import {quoteVenderReducer, initialState} from '../../../reducers/quoteVenderReducer';
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -117,4 +117,11 @@ const Supliers = () => {
     );
 };
 
-export default Supliers;
+
+const SupliersSuspense = () => (
+    <Suspense fallback={<div className="w-screen h-screen flex justify-center items-center"><h1 className="text-2xl font-bold">Loading...</h1></div>}>
+        <Supliers />
+    </Suspense>
+);
+
+export default SupliersSuspense;

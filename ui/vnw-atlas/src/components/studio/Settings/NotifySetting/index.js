@@ -1,19 +1,22 @@
+'use client'
+
 import { useState, useEffect } from "react";
 import { MdNotificationsActive } from "react-icons/md";
 import AboveFixedContainer from "../../common/AboveFixedContainer/index";
-import InsertNoticeText from "../../common/InsertNoticeText";
 import RadioOptionButton from "../../common/RadioOptionButton";
 import loadQuestionSettingsAPI from "@/api/loadQuestionSettings";
 import ApplyButton from "../ApplyButton";
 import UpdateQuestionSettings from "@/api/updateQuestionSettings";
 import DelayedRoute from "@/services/routeDelay";
+import Messages from "../../common/Messages";
+import { useTranslations } from "next-intl";
 
 /**
  * Notify setting component
  * @returns 
  */
 const NotifySetting = () => {
-
+    const t = useTranslations('trans');
     const [changedAnswers, setChangedAnswers] = useState([
         /**
          * {
@@ -80,35 +83,19 @@ const NotifySetting = () => {
     return (
         <DelayedRoute>
             <div className="flex flex-col min-h-[calc(100vh-5.5rem)]">
-                <AboveFixedContainer
-                    children={
-                        <div className="flex my-4 space-x-3">
-                            <MdNotificationsActive className="text-[22px] text-yellow-500" />
-                            <h1 className="font-semibold ">Thiết lập thông báo</h1>
-                        </div>
-                    } />
+                <AboveFixedContainer>
+                    <div className="flex my-4 space-x-3">
+                        <MdNotificationsActive className="text-[22px] text-yellow-500" />
+                        <h1 className="font-semibold ">{t('studio.profiles.settings.notify.header')}</h1>
+                    </div>
+                </AboveFixedContainer>
 
-                <div className="overflow-y-auto min-h-[calc(100vh-180px)] max-h-[calc(100vh-180px)] min-w-[calc(100vw-9px)] max-w-[calc(100vw-9px)]
-                            md:min-w-[calc(100vw-268px)] md:max-w-[calc(100vw-268px)]"
+                <div className="overflow-y-auto
+                            min-w-[calc(100vw-20px)] max-w-[calc(100vw-20px)]
+                            md:min-w-[calc(100vw-280px)] md:max-w-[calc(100vw-280px)]
+                            max-h-[calc(100vh-215px)] min-h-[calc(100vh-215px)]"
                 >
-                    <InsertNoticeText
-                        header={<strong className="text-[14px]">Thiết lập thông báo hỗ trợ bạn điều gì?</strong>}
-                        content={
-                            <div className="text-[13px] font-sans text-justify leading-5 space-y-2 text-wrap max-w-[800px]">
-                                <p > Hệ thống chúng tôi sẽ tự động mặc định gửi thông báo đến với bạn thông qua thông tin liên lạc mà bạn cung cấp ở mục hồ sơ
-                                    hoặc mục thẻ Tag của bạn.
-                                    Chúng tôi sẽ gửi thông báo ở các tác vụ sẽ được liệt kê ở phần thiết lập bên dưới khi cần thiết.
-                                </p>
-                                <p>Điều này giúp bạn tiếp cận thông tin cập nhật cách nhanh nhất có thể. Tuy nhiên, bạn có thể thiết lập những thông báo sẽ được nhận
-                                    thông qua mục thiết lập bên dưới.
-                                </p>
-                                <h2 ><strong>⚠ Lưu ý:</strong></h2>
-                                <p>Điều này không bao gồm các tác vụ mang tính cấp thiết, ví dụ như thông báo về việc xác minh tài khoản, thông báo về việc
-                                    thay đổi điều khoảng sử dụng dịch vụ, thông báo về việc thay đổi quyền riêng tư, thông báo về việc thay đổi thông tin, ...
-                                </p>
-                            </div>
-                        }
-                    />
+                    <Messages type="NotifySettingMessage" />
                     <div className="flex flex-wrap">
                         {privacySettings.map((item, index) => (
                             <RadioOptionButton data={item} key={index} callback={radioOnChange} />

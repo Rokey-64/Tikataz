@@ -1,5 +1,6 @@
 import React from 'react';
 import InsertNoticeText from '../InsertNoticeText';
+import { useTranslations } from "next-intl";
 
 /**
  * Get a message to notify the user about the card
@@ -13,33 +14,217 @@ const Messages = ({ type }) => {
             return <CertMessage />
         case 'CertMessage2':
             return <CertMessage2 />
-        case 'CardRemoveProduct':
-            return <CardRemoveProduct />
         case "CertInputMessage":
             return <CertInputMessage />
         case "CertRemoveMessage":
             return <CertRemoveMessage />
         case "CategoryMessage":
             return <CategoryMessage />
+        case "DelBranchInfoMessage":
+            return <DelBranchInfoMessage />
+        case "ExpBranchInfoMessage":
+            return <ExpBranchInfoMessage />
+        case "GeneralProfileMessage":
+            return <GeneralProfileMessage />
+        case "ManagerMessage":
+            return <ManagerMessage />
+        case "ManagerListMessage":
+            return <ManagerListMessage />
+        case "ManagerListMessage2":
+            return <ManagerListMessage2 />
+        case "BasicSettingMessage":
+            return <BasicSettingMessage />
+        case "NotifySettingMessage":
+            return <NotifySettingMessage />
+        case "PrivacySettingMessage":
+            return <PrivacySettingMessage />
         default:
             return <></>
-
-
     }
 };
 
-const CategoryMessage = () => {
+const PrivacySettingMessage = () => {
+    const t = useTranslations('trans');
+
     return (
         <InsertNoticeText
-            header="Hạng mục mở rộng"
+            header={<strong className="text-[14px]">{t('studio.profiles.settings.privacy.m1')}</strong>}
+            content={
+                <div className="text-[13px] font-sans text-justify leading-5 space-y-3 text-wrap max-w-[800px]">
+                    <p>{t('studio.profiles.settings.privacy.m2')}</p>
+                    <p>{t('studio.profiles.settings.privacy.m3')}</p>
+                    <p>{t('studio.profiles.settings.privacy.m4')}</p>
+                    <h2 ><strong>{t('note_p')}</strong></h2>
+                    <p>{t('studio.profiles.settings.privacy.m5')}</p>
+                </div>
+            }
+        />
+    )
+}
+
+const NotifySettingMessage = () => {
+    const t = useTranslations('trans');
+
+    return (
+        <InsertNoticeText
+            header={<strong className="text-[14px]">{t('studio.profiles.settings.notify.m1')}</strong>}
+            content={
+                <div className="text-[13px] font-sans text-justify leading-5 space-y-2 text-wrap max-w-[800px]">
+                    <p >{t('studio.profiles.settings.notify.m2')}</p>
+                    <p>{t('studio.profiles.settings.notify.m3')}</p>
+                    <h2 ><strong>{t('note_p')}</strong></h2>
+                    <p>{t('studio.profiles.settings.notify.m4')}</p>
+                </div>
+            }
+        />
+    )
+}
+
+const BasicSettingMessage = () => {
+    const t = useTranslations('trans');
+
+    return (
+        <InsertNoticeText
+            header={<strong className="text-[14px]">{t('studio.profiles.settings.basic.m1')}</strong>}
+            content={
+                <div className="text-[13px] font-sans text-justify leading-5 space-y-2 w-[50rem]">
+                    <p>{t('studio.profiles.settings.basic.m2')}</p>
+                    <p>{t('studio.profiles.settings.basic.m3')}</p>
+                </div>
+            }
+        />
+    )
+}
+
+const ManagerListMessage2 = () => {
+    const t = useTranslations("trans");
+
+    return (
+        <InsertNoticeText header={<strong className="text-[14px] text-black ">{t('studio.profiles.manager.m16')}</strong>}
+            content={
+                <div className="text-[13px] text-black font-sans text-justify leading-5 space-y-2">
+                    <p>{t('studio.profiles.manager.m17')}</p>
+                    <p>{t('studio.profiles.manager.m18')}</p>
+                    <p>{t('studio.profiles.manager.m19')}</p>
+                </div>
+            }
+        />
+    )
+}
+
+const ManagerListMessage = () => {
+    const t = useTranslations('trans');
+
+    return (
+        <InsertNoticeText header={<strong>{t('studio.profiles.manager.m10')}</strong>}
+            content={
+                <div className="w-[35rem] space-y-1 space-x-1">
+                    <h2><strong>{t('studio.profiles.manager.m11')}</strong></h2>
+                    <p>{t('studio.profiles.manager.m12')}p</p>
+                    <p>{t('studio.profiles.manager.m13')}</p>
+                    <p>{t('studio.profiles.manager.m14')}</p>
+                    <br />
+                    <h2 ><strong>{t('note_p')}</strong></h2>
+                    <p>{t('studio.profiles.manager.m15')}</p>
+                </div>
+            }
+        />
+    )
+
+}
+
+const ManagerMessage = () => {
+    const t = useTranslations('trans');
+
+    return (
+        <InsertNoticeText header={<strong className="text-[14px] text-black ">{t('studio.profiles.manager.m1')}</strong>}
+            content={
+                <div className="text-[13px] text-black font-sans text-justify leading-5 space-y-2">
+                    <p>{t('studio.profiles.manager.m2')}</p>
+                    <p>{t('studio.profiles.manager.m3')}</p>
+                    <p>{t('studio.profiles.manager.m4')}</p>
+                </div>
+            }
+        />
+    )
+}
+
+const GeneralProfileMessage = () => {
+    const t = useTranslations('trans');
+
+    return (
+        <InsertNoticeText header={<strong>{t('studio.profiles.conpany.mess01')}</strong>}
+            content={
+                <div className="w-[35rem] space-y-1 space-x-1">
+                    <h2><strong>{t('studio.profiles.conpany.mess02')}</strong></h2>
+                    <p>
+                        {t('studio.profiles.conpany.mess03')}
+                        <br />
+                        {t('studio.profiles.conpany.mess04')}
+                    </p>
+                    <br />
+                    <h2><strong>{t('studio.profiles.conpany.mess05')}</strong></h2>
+                    <p>{t('studio.profiles.conpany.mess06')}</p>
+                    <p>{t('studio.profiles.conpany.mess07')}</p>
+                    <p>{t('studio.profiles.conpany.mess08')}</p>
+                    <br />
+                    <h2 ><strong>{t('studio.profiles.conpany.mess09')}</strong></h2>
+                    <p>{t('studio.profiles.conpany.mess10')}</p>
+                </div>
+            }
+        />
+    )
+};
+
+const DelBranchInfoMessage = () => {
+    const t = useTranslations('trans');
+
+    return (
+        <InsertNoticeText header={<strong className="text-[14px] text-black ">{t('studio.profiles.branches.mess01')}</strong>}
+            content={
+                <div className="text-[13px] text-black font-sans text-justify leading-5 space-y-2">
+                    <p>{t('studio.profiles.branches.mess02')}</p>
+                    <p>{t('studio.profiles.branches.mess03')}</p>
+                    <p>{t('studio.profiles.branches.mess04')}</p>
+                </div>
+            }
+        />
+    );
+};
+
+const ExpBranchInfoMessage = () => {
+    const t = useTranslations('trans');
+
+    return (
+        <InsertNoticeText header={<strong>{t('studio.profiles.branches.mess05')}</strong>}
+            content={
+                <div className="w-[35rem] space-y-1 space-x-1">
+                    <h2><strong>{t('studio.profiles.branches.mess06')}</strong></h2>
+                    <p>{t('studio.profiles.branches.mess07')}</p>
+                    <p>{t('studio.profiles.branches.mess08')}</p>
+                    <p>{t('studio.profiles.branches.mess09')}</p>
+                    <br />
+                    <h2 ><strong>{t('studio.profiles.branches.mess10')}</strong></h2>
+                    <p>{t('studio.profiles.branches.mess11')}</p>
+                </div>
+            }
+        />
+    );
+};
+
+const CategoryMessage = () => {
+    const t = useTranslations('trans');
+
+    return (
+        <InsertNoticeText
+            header={t('studio.card.category.mess01')}
             content={
                 <div className="text-[12px] font-sans text-justify leading-5 space-y-2 ml-6 w-[1000px]">
                     <p>
-                        Hạn mục bao gồm các tiêu chí bên ngoài các dữ liệu đã lấy bên trên, tập trung vào các điều kiện nâng cao mà doanh nghiệp có thể cung cấp cho khách hàng đồng Thời
-                        tăng tín trực quang của thẻ đối với đối tác.<br />
-                        Điều này không chỉ cần thiết đối với đối tác của bạn mà còn giúp chúng tôi nhận biết mức độ phù hợp của bạn với các đề xuất từ khách hàng.<br />
-                        - Vui lòng cung cấp thông tin chi tiết và chính xác nhất bằng cách chọn các hạng mục phù hợp với doanh nghiệp của bạn và điền thông tin cần thiết vào các ô nhập bên dưới.<br />
-                        
+                        {t('studio.card.category.mess02')}<br />
+                        {t('studio.card.category.mess03')}<br />
+                        {t('studio.card.category.mess04')}<br />
+
                     </p>
                 </div>
             }
@@ -48,11 +233,13 @@ const CategoryMessage = () => {
 };
 
 const CertRemoveMessage = () => {
+    const t = useTranslations('trans');
+
     return (
-        <InsertNoticeText header={<strong className="text-[12px] ">Xóa chứng chỉ:</strong>}
+        <InsertNoticeText header={<strong className="text-[12px] ">{t('studio.card.cert.m01')}</strong>}
             content={
                 <div className="text-[12px] font-sans text-justify leading-5 space-y-2">
-                    <p>Sau khi xác nhận xóa chứng chỉ, các chứng chỉ bị xóa sẽ không thể khôi phục. Thay vào đó nếu muốn bổ sung hay thêm mới chứng chỉ</p>
+                    <p>{t('studio.card.cert.m02')}</p>
                 </div>
             }
         />
@@ -61,13 +248,15 @@ const CertRemoveMessage = () => {
 
 
 const CertInputMessage = () => {
+    const t = useTranslations('trans');
+
     return (
-        <InsertNoticeText header={<strong className="text-[12px] ">Hướng dẫn:</strong>}
+        <InsertNoticeText header={<strong className="text-[12px] ">{t('studio.card.cert.m03')}</strong>}
             content={
                 <div className="text-[12px] font-sans text-justify leading-5 space-y-2">
-                    <p>Chọn hoặc tìm kiếm đúng loại chứng chỉ cần thêm.<br />
-                        Sau đó điền các thông tin về chứng chỉ cần thiết vào các ô nhập bên dưới.<br />
-                        Trong trường hợp không tìm thấy loại chứng chỉ của bạn, hãy chọn chứng chỉ mặc định là chưa xác định, và vẫn điền các thông tin còn lại như thông thường
+                    <p>{t('studio.card.cert.m04')}<br />
+                        {t('studio.card.cert.m05')}<br />
+                        {t('studio.card.cert.m06')}
                     </p>
                 </div>
             }
@@ -75,31 +264,17 @@ const CertInputMessage = () => {
     );
 };
 
-const CardRemoveProduct = () => {
-    return (
-        <InsertNoticeText header={<strong className="text-[14px] text-black ">Việc xóa chi nhánh tác động như thế nào đến quy trình của bạn?</strong>}
-            content={
-                <div className="text-[13px] text-black font-sans text-justify leading-5 space-y-2">
-                    <p>Các chi nhánh được chọn sẽ bị xóa. Điều này sẽ cập nhật đến hồ sơ năng lực của bạn.</p>
-                    <p>Hệ thống sẽ bỏ qua gợi ý vị trí địa lý đối với những chi nhánh này.
-                        Và những đơn hàng phù hợp trước đây sẽ không hiện thị nếu nằm ngoài phạm vi mới.</p>
-                    <p>Việc bạn thêm mới lại chi nhánh sẽ được chúng tôi kiểm duyệt và đánh giá trước khi bắt đầu liên kết đơn hàng.</p>
-                </div>
-            }
-        />
-    );
-};
-
 const CertMessage2 = () => {
+    const t = useTranslations('trans');
+
     return (
         <InsertNoticeText
-            header="Một số lưu ý mở rộng"
+            header={t('studio.card.cert.m07')}
             content={
                 <>
-                    * Trong trường hợp không tìm thấy được biểu tượng chứng chỉ yêu cầu, bạn có thể:<br />
-                    <strong>1. Phản hồi:</strong> Gửi một phản hồi yêu cầu xây dựng hệ thống chứng chỉ đặc thù của sản phẩm của bạn.<br />
-                    <strong>2. Thêm ở module sản phẩm:</strong> Không chỉ giới hạn ở hình thức sản phẩm, bạn có thể thêm các giải thưởng, hình ảnh thể hiện độ uy tín của sản phẩm
-                    của bạn<br /><br />
+                    {t('studio.card.cert.m08')}<br />
+                    <strong>{t('studio.card.cert.m09')}</strong> {t('studio.card.cert.m10')}<br />
+                    <strong>{t('studio.card.cert.m11')}</strong>{t('studio.card.cert.m12')}<br /><br />
                 </>
             }
         />
@@ -107,17 +282,17 @@ const CertMessage2 = () => {
 };
 
 const CertMessage = () => {
+    const t = useTranslations('trans');
+
     return (
         <InsertNoticeText
-            header="Chứng chỉ, chứng nhận"
+            header={t('studio.card.cert.m13')}
             content={
                 <>
-                    * Chúng tôi sẽ dựa vào thông tin chứng chỉ bạn cung cấp để xác định rằng doanh nghiệp bạn có đáp ứng được các yêu cầu khách hàng đưa ra trên sản phẩm hay không
-                    từ đó xác định đề xuất phù hợp.<br /><br />
-                    *<b> Lưu ý:</b> Chứng chỉ được quy định là những chứng chỉ chính thức, có giá trị thể hiện độ tin cậy đáp ứng các yêu cầu đưa ra từ các tổ chức hợp lệ.<br />
-                    Điều này không bao gồm các giải thưởng, huy hiệu hoặc
-                    danh hiệu khác.<br />
-                    - Trong các trường hợp khác, vui lòng phản hồi cho chúng tôi để nhận được sự hỗ trợ hợp lý.<br /><br />
+                    {t('studio.card.cert.m14')}<br /><br />
+                    *<b> {t('studio.card.cert.m15')}</b> {t('studio.card.cert.m16')}<br />
+                    {t('studio.card.cert.m17')}<br />
+                    {t('studio.card.cert.m18')}<br /><br />
 
                 </>
             }
@@ -126,17 +301,17 @@ const CertMessage = () => {
 };
 
 const ProductMessage = () => {
+    const t = useTranslations('trans');
+
     return (
         <InsertNoticeText
-            header="Sản phẩm, dịch vụ"
+            header={t('studio.card.cert.m19')}
             content={
                 <>
-                    * Lựa chọn một số hình ảnh đặc trưng sản phẩm của bạn, để cho tối tác dễ dàng nhận biết sản phẩm và năng lực của bạn,
-                    hình ảnh đảm bảo một số yêu cầu sau:<br />
-                    <strong>1. Định dạng ảnh:</strong> Hỗ trợ một số định dạng ảnh *.PNG; *.JPG/JPEG; *.WebP .<br />
-                    <strong>2. Kích thước ảnh:</strong> Mỗi hình ảnh nên có kích thước dưới 400x400 pixels<br />
-                    <strong>3. Dung lượng ảnh:</strong> Mỗi hình ảnh yêu cầu dung lượng dưới 0.3Mb, nếu vượt quá kích thước hệ thống sẽ nén xuống theo kích thước phù hợp,
-                    điều này có thể ảnh hưởng đến chất lượng hình ảnh của bạn.<br /><br />
+                    {t('studio.card.cert.m20')}<br />
+                    <strong>{t('studio.card.cert.m21')}</strong> {t('studio.card.cert.m22')}<br />
+                    <strong>{t('studio.card.cert.m23')}</strong> {t('studio.card.cert.m24')}<br />
+                    <strong>{t('studio.card.cert.m25')}</strong> {t('studio.card.cert.m26')}<br /><br />
 
                     {/* * Lưu ý: Nếu bạn không cung cấp thêm, mặc định sẽ lấy thông tin từ hồ sơ của bạn. Vui lòng hoàn tất hồ sơ của bạn. */}
                 </>

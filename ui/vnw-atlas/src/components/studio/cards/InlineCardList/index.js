@@ -2,23 +2,23 @@ import { useState, useEffect, useCallback } from "react";
 import { useRouter } from 'next/navigation';
 import { IoAdd } from "react-icons/io5";
 import { IoMdRefresh } from "react-icons/io";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import { useDispatch, useSelector } from "react-redux";
-import { setInlineCards } from "../../../../redux/inlineCardSlice";
-import { resetDefault } from "../../../../redux/cardsSlice";
+import { setInlineCards } from "@/redux/inlineCardSlice";
+import { resetDefault } from "@/redux/cardsSlice";
 import InlineCardElement from "./InlineCardElement";
 import AboveFixedContainer from "../../common/AboveFixedContainer/index";
 import AboveInsertedButton from "../../common/AboveInsertedButton";
-import DelayedRoute from "../../../../services/routeDelay";
-import getInlineCardsAPI from "../../../../api/getInlineCards";
-import checkOverCardAPI from "../../../../api/checkOverCard";
+import DelayedRoute from "@/services/routeDelay";
+import getInlineCardsAPI from "@/api/getInlineCards";
+import checkOverCardAPI from "@/api/checkOverCard";
 import _ from "lodash";
 
 import { throttle } from "lodash";
 import { nanoid } from "nanoid";
 
 const InlineCardList = () => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const router = useRouter();
     const dispatch = useDispatch();
     const inlineCards = useSelector((state) => state.inlineCards.inlineCards);
@@ -39,7 +39,7 @@ const InlineCardList = () => {
 
                 const cardId = nanoid();
                 dispatch(resetDefault());
-                router.push(`/edit/card?id=${cardId}&st=n`);
+                router.push(`/card?id=${cardId}&st=n`);
             },
             3000, { trailing: false }),
         [router]
@@ -84,26 +84,28 @@ const InlineCardList = () => {
 
     return (
         <DelayedRoute>
-            <div className="flex pt-6  w-screen mx-auto">
+            <div className="flex pt-14 md:pt-6 w-screen mx-auto">
                 <div className="md:pl-10 space-y-5">
 
                     <div>
-                        <AboveFixedContainer
-                            children={
-                                <div className="flex items-center justify-end space-x-10">
-                                    <AboveInsertedButton callback={addRowHandler} content={t("add_card")} options={{ icon: IoAdd }} />
-                                    <AboveInsertedButton callback={refreshCardsHandler} content={t("refresh")}
-                                        options={
-                                            {
-                                                icon: IoMdRefresh,
-                                                iconAdditionalClass: `${refreshCards ? "animate-spin" : ""}`
-                                            }
-                                        } />
-                                </div>
-                            } />
+                        <AboveFixedContainer>
+                            <div className="flex items-center justify-end space-x-10">
+                                <AboveInsertedButton callback={addRowHandler} content={t("add_card")} options={{ icon: IoAdd }} />
+                                <AboveInsertedButton callback={refreshCardsHandler} content={t("refresh")}
+                                    options={
+                                        {
+                                            icon: IoMdRefresh,
+                                            iconAdditionalClass: `${refreshCards ? "animate-spin" : ""}`
+                                        }
+                                    } />
+                            </div>
+                        </AboveFixedContainer>
                     </div>
 
-                    <div className="min-h-[calc(100vh-8.3rem)] max-h-[calc(100vh-8.3rem)] max-w-[calc(100vw-10px)] md:max-w-[calc(100vw-270px)] overflow-y-auto bg-white">
+                    <div className="overflow-y-auto bg-white
+                                    max-w-[calc(100vw-15px)] md:max-w-[calc(100vw-280px)] 
+                                    md:max-h-[calc(100vh-135px)] md:min-h-[calc(100vh-135px)] 
+                                    max-h-[calc(100vh-165px)] min-h-[calc(100vh-165px)]">
                         <div>
                             <table className="text-sm text-left text-gray-500 dark:text-gray-400 w-full table-auto h-fit">
                                 <thead className="sticky top-0 text-xs text-gray-700 uppercase bg-white dark:bg-gray-700 dark:text-gray-400 z-10">
@@ -121,7 +123,6 @@ const InlineCardList = () => {
                                         inlineCards.map((cardData, index) => (
                                             <InlineCardElement key={index} cardData={cardData} />
                                         ))
-
                                     }
                                 </tbody>
                             </table>

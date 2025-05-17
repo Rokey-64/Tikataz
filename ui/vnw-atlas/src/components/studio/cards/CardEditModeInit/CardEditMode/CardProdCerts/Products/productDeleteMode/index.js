@@ -1,8 +1,9 @@
 
 import { useSelector, useDispatch } from "react-redux";
-import { setProducts } from "../../../../../../../../redux/cardsSlice";
-import RightDeleteContainer from "../../../../../../common/RightDeleteContainer";
-import CardMessages from "../../../../../../common/Messages";
+import { setProducts } from "@/redux/cardsSlice";
+import RightDeleteContainer from "@/components/studio/common/RightDeleteContainer";
+import CardMessages from "@/components/studio/common/Messages";
+import { useTranslations } from "next-intl";
 
 /**
  * Display the remove box when the delete mode is on
@@ -10,7 +11,7 @@ import CardMessages from "../../../../../../common/Messages";
  * @returns 
  */
 const ProductDeleteMode = ({ delStatus, setDelStatus }) => {
-
+    const t = useTranslations("trans");
     const dispatch = useDispatch();
     const products = useSelector((state) => state.cards.products);
 
@@ -42,13 +43,11 @@ const ProductDeleteMode = ({ delStatus, setDelStatus }) => {
     if (!delStatus.status) return null;
     return (
         <RightDeleteContainer state={state} setState={setStateHandler} callback={deleteCallback}
-            headerContent={<h1 className="text-[18px]"><strong>Xóa sản phẩm, hìn ảnh minh họa</strong></h1>}
-            children={
-                <div>
-                    <CardMessages type="CardRemoveProduct" />
-
-                </div>
-            } />
+            headerContent={<h1 className="text-[18px]"><strong>{t("studio.card.product.del")}</strong></h1>}>
+            <div>
+                <CardMessages type="DelBranchInfoMessage" />
+            </div>
+        </RightDeleteContainer>
     )
 };
 

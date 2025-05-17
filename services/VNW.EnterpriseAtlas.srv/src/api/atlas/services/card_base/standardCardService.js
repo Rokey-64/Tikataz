@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import CommonCardTemplate from './templateService.js'
 
 /**
@@ -5,11 +6,21 @@ import CommonCardTemplate from './templateService.js'
  */
 class StandardCardService {
   constructor() {
+    this.payload = [];
+
+    /**
+     * Specifies the fields to be included in the query result.
+     */
     this.queryString = {
       'user_id': 1,
       'state': 1,
     };
-    this.payload = [];
+
+
+    /**
+     * * A filter for the query
+     */
+    this.queryCondition = {};
   }
 
   /**
@@ -112,6 +123,53 @@ class StandardCardService {
       return address[0];
     }
     return '';
+  }
+
+  /**
+   * Create a filter for the query based on the card ID and predictions.
+   * @param {*} cid - The card ID to filter by.
+   * @param {*} predicts - The predictions major to filter by.
+   * @param {*} searchCIDs - A list of card IDs retrieved from the Meili API.
+   */
+  createFilter(cid, predicts, searchCIDs) {
+    /**
+     * * Check state of card
+     */
+    if (process.env.NODE_ENV === 'production') {
+      this.queryCondition.state = "approved";
+    }
+
+    /**
+     * If the searchCID is not empty, use it to filter the query.
+     */
+    if (searchCIDs && searchCIDs.length > 0) {
+      this.queryCondition._id = { $in: searchCIDs };
+      return;
+    }
+
+    /**
+     * * Just get from ID
+     */
+    if (cid) {
+      this.queryCondition._id = { $gt: new mongoose.Types.ObjectId(String(cid)) };
+    }
+
+    /**
+     * * Need to categorize the card by major category
+     */
+    if (predicts && predicts.length > 0) {
+      const tags = predicts.map((item) => {
+        const key = `prediction.weighted_predict.${item}`;
+
+        return {
+          $and: [
+            { [key]: { $exists: true } },
+            { [key]: { $gte: 25 } }
+          ]
+        };
+      });
+      this.queryCondition.$or = tags;
+    }
   }
 
 

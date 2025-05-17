@@ -2,7 +2,7 @@ import ItemTableTemplate from "./ItemTableTemplate";
 import HeaderDisplay from "../../common/HeaderDisplay";
 import FileAttachmentButton from "../../common/FileAttachmentButton";
 import { useAppContext } from "../../../../contexts/RFQItemOrder";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 /**
  * Display the list of order items
@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
  * @returns 
  */
 const OrderItemList = () => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const { state, dispatch, orderItem } = useAppContext();
 
     const fileAttachmentOnChange = (file) => {

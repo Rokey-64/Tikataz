@@ -16,8 +16,12 @@ const BranchSeachingMiddleware = async (req, res, next) => {
     try {
         const result = await searchBranchService(req.userID);
 
-        if (result[0].length === 0) {
-            return req.status(200).json(setFeedback(model, 404));
+        /**
+         * There is no branch found
+         * This means that the user has no branch
+         */
+        if (result.length === 0) {
+            return res.status(200).json(setFeedback(model, 404));
         }
 
         /**

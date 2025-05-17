@@ -11,7 +11,7 @@ import RemoveItemButton from "../../../common/RemoveItemButton";
 import AddHashtagDialog from "../../../common/AddHashtagDialog";
 import AddProviderDialog from "../../../common/AddProviderDialog";
 import ItemHistoryDialog from "../../../common/ItemHistoryDialog";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import { nanoid } from "nanoid";
 import _, { set } from "lodash";
 
@@ -21,7 +21,7 @@ import _, { set } from "lodash";
  * @returns 
  */
 const ItemTableTemplate = () => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const [hoverIndex, setHoverIndex] = useState(-1);
     const [hashtagCurrID, setHashtagCurrID] = useState('');
     const [openProviderID, setOpenProviderID] = useState('');

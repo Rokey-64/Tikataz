@@ -1,6 +1,6 @@
 
 const getLang = () => {
-    const savedLanguage = getCookie('i18next_lng') || 'vi';
+    const savedLanguage = getCookie('next-intl') || 'vi';
     return savedLanguage;
 }
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from "next-intl";
 
 
 import TagElement from './tagElement';
@@ -22,7 +22,7 @@ import { MdCenterFocusWeak } from 'react-icons/md';
  */
 const CustomerTag = ({ card }) => {
     const [isSetElement, setIsSetElement] = useState(false);
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
 
     return (
         <div className="w-[290px] sm:w-[38rem] h-[20rem] sm:h-[17rem] rounded-2xl  m-2">

@@ -1,29 +1,28 @@
-import React from "react";
-import { useSearchParams } from 'next/navigation';
+
+
 import BasicSetting from "./BasicSetting";
 import NotifySetting from "./NotifySetting";
 import PrivacySetting from "./PrivacySetting";
 
 
-const Setting = () => {
-    const searchParams = useSearchParams();
-    const tab = searchParams.get('tab');
+const Setting = async ({ slug }) => {  // Thêm async vào đây
 
     const setActiveTab = () => {
-        switch (tab) {
+        switch (slug) {
             case "base":
-                return <BasicSetting />
+                return <BasicSetting />;
             case "notify":
-                return <NotifySetting />
+                return <NotifySetting />;
             case "privacy":
-                return <PrivacySetting />
+                return <PrivacySetting />;
             default:
-                return <></>
+                return <></>;
         }
-    }
+    };
+
     return (
         <div>
-            <div className="flex pt-6  w-screen mx-auto">
+            <div className="flex pt-14 md:mt-0 w-screen mx-auto">
                 <div className="md:pl-10">
                     {setActiveTab()}
                 </div>

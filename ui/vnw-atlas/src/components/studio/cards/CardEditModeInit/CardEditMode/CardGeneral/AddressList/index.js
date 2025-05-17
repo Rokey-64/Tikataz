@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback} from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setGeneral } from "../../../../../../../redux/cardsSlice";
-import InsertAddress from "../../../../../common/InsertAddress";
-import InsertNoticeText from "../../../../../common/InsertNoticeText";
+import { setGeneral } from "@/redux/cardsSlice";
+import InsertAddress from "@/components/studio/common/InsertAddress";
+import InsertNoticeText from "@/components/studio/common/InsertNoticeText";
 import debounce from "lodash.debounce";
+import { useTranslations } from "next-intl";
 
 /**
  * This component is used to get the address information of a company
@@ -11,6 +12,7 @@ import debounce from "lodash.debounce";
  * @returns 
  */
 const AddressList = () => {
+    const t = useTranslations("trans");
     const dispatch = useDispatch();
     const general = useSelector(state => state.cards.general);
     
@@ -39,12 +41,11 @@ const AddressList = () => {
         <>
             <div className="col-span-2 mt-2 max-w-[700px]">
                 <InsertNoticeText
-                    header="Cung cấp cho chúng tôi địa chỉ của bạn"
+                    header={t("studio.card.gen.m1")}
                     content={
                         <>
-                            * Thông tin về địa chỉ sẽ được sử dụng để xác định vị trí của bạn, giúp chúng tôi có thể đưa tới khách hàng tiềm
-                            năng quanh khu vực đó.<br /><br />
-                            * Bạn có thể cung cấp một hoặc nhiều địa chỉ cụ thể hoặc phạm vi hoạt động của bạn.
+                            * {t("studio.card.gen.m2")}<br /><br />
+                            * {t("studio.card.gen.m3")}
                         </>
                     }
                 />

@@ -7,10 +7,10 @@ import InsertNoticeText from "../common/InsertNoticeText";
 import FeedbackIntro from "./FeedbackIntro";
 import SaveFeedback from "../../../api/saveFeedback";
 import DelayedRoute from "../../../services/routeDelay";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 const Feedback = () => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const [feedback, setFeedback] = useState({ content: '', emailNotify: true });
     const [showAddBox, setShowAddBox] = useState(false);
 
@@ -56,46 +56,41 @@ const Feedback = () => {
 
     return (
         <DelayedRoute>
-            <div className="ml-10 mt-6">
+            <div className="md:ml-10 pt-14 md:pt-6">
                 {
                     showAddBox &&
-                    <FeedbackContainer setShowBranch={setShowAddBox} closeCallback={() => setShowAddBox(false)} saveCallback={sendCallback}
+                    <FeedbackContainer setShowBranch={setShowAddBox} closeCallback={() => setShowAddBox(false)} saveCallback={sendCallback}>
+                        <div className="mr-10">
+                            <InsertNoticeText header={<strong>{t("feedback_remark")}</strong>}
+                                content={<FeedbackIntro />}
+                            />
+                            <div className="mt-5 space-y-5 font-sans text-[13px]">
+                                <div>
+                                    <h3>{t("feedback_content")}</h3>
+                                    <textarea className="w-[28rem] h-[8rem] border-blue-800 rounded-md shadow-sm focus:ring-1 ring-1 p-3 m-2"
+                                        placeholder={t("feedback_content_placeholder")}
+                                        value={feedback.content}
+                                        onChange={textChange}
+                                    />
+                                </div>
 
-                        children={
-                            <div className="mr-10">
-                                <InsertNoticeText header={<strong>{t("feedback_remark")}</strong>}
-                                    content={<FeedbackIntro />}
-                                />
-                                <div className="mt-5 space-y-5 font-sans text-[13px]">
-                                    <div>
-                                        <h3>{t("feedback_content")}</h3>
-                                        <textarea className="w-[28rem] h-[8rem] border-blue-800 rounded-md shadow-sm focus:ring-1 ring-1 p-3 m-2"
-                                            placeholder={t("feedback_content_placeholder")}
-                                            value={feedback.content}
-                                            onChange={textChange}
-                                        />
-                                    </div>
-
-                                    <div className="flex items-center space-x-2 ">
-                                        <input type="checkbox" className="h-5 w-5"
-                                            checked={feedback.emailNotify}
-                                            onChange={emailNotifyChange} />
-                                        <label className="ml-3">{t("feedback_email_confirm")}</label>
-                                    </div>
+                                <div className="flex items-center space-x-2 ">
+                                    <input type="checkbox" className="h-5 w-5"
+                                        checked={feedback.emailNotify}
+                                        onChange={emailNotifyChange} />
+                                    <label className="ml-3">{t("feedback_email_confirm")}</label>
                                 </div>
                             </div>
-                        }
-                    />
+                        </div>
+                    </FeedbackContainer>
                 }
 
-                <AboveFixedContainer
-                    children={
-                        <div className="flex items-center justify-end space-x-10 ">
-                            <AboveInsertedButton content={t("create_feedback")} options={{ icon: IoAdd }} callback={addCallback} />
+                <AboveFixedContainer>
+                    <div className="flex items-center justify-end space-x-10 ">
+                        <AboveInsertedButton content={t("create_feedback")} options={{ icon: IoAdd }} callback={addCallback} />
 
-                        </div>
-                    }
-                />
+                    </div>
+                </AboveFixedContainer>
 
                 <div className="mt-5 px-2 overflow-y-auto overflow-x-auto max-h-[calc(100vh-8.5rem)] max-w-[calc(100vw-10px)] md:max-w-[calc(100vw-270px)] bg-[#fdfdfd] [clip-path:inset(0px_0px_0px_0px)]">
                     <div className=" min-h-[calc(100vh-9.25rem)]" style={{ width: 'fit-content' }}>

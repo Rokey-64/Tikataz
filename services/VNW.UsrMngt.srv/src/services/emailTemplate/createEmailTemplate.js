@@ -3,8 +3,8 @@ import ejs from 'ejs';
 export const templateType = { link: 'link', otp: 'otp'};
 export const sendType = { email: 'mail', phone: 'phone', app: 'app' };
 const views = {
-    otp: { 'vi': './src/views/emailReceivedOTP.ejs', 'en': './src/views/emailReceivedOTP-eng.ejs' },
-    link: { 'vi': './src/views/emailConfirmByLink.ejs', 'en': './src/views/emailConfirmByLink-eng.ejs' }
+    otp: { 'vi': './src/api/accounts/views/emailReceivedOTP.ejs', 'en': './src/api/accounts/views/views/emailReceivedOTP-eng.ejs' },
+    link: { 'vi': './src/api/accounts/views/views/emailConfirmByLink.ejs', 'en': './src/api/accounts/views/views/emailConfirmByLink-eng.ejs' }
 };
 
 /**

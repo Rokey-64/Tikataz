@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from "next-intl";
 import { Tooltip } from 'react-tooltip';
 import QuotationStateButton from './QuotationStateButton';
 
 const QuotationState = ({setType}) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const [current, setCurrent] = useState(0);
 
     const handleClick = (index) => {

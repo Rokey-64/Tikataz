@@ -2,7 +2,7 @@ import { IoClose } from "react-icons/io5";
 import { RiFileShield2Fill } from "react-icons/ri";
 import RightChildrenBox from "../RightChidrenBox";
 import { throttle } from 'lodash';
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 /**
  * /**
@@ -15,8 +15,8 @@ import { useTranslation } from "react-i18next";
  * @param {*} callback - The function to be called when the delete button is clicked
  * @returns 
  */
-const RightDeleteContainer = ({ headerContent, children, state, setState, callback = null}) => {
-    const { t } = useTranslation();
+const RightDeleteContainer = ({ headerContent, children, state, setState, callback = null }) => {
+    const t = useTranslations('trans');
     const TIME_INTERVAL = 3000;
 
     const closeHandleClick = () => {
@@ -26,7 +26,7 @@ const RightDeleteContainer = ({ headerContent, children, state, setState, callba
     /**
      * Throttled sendHandleClick function
      */
-    const throttledHandleClick  = throttle(() => {
+    const throttledHandleClick = throttle(() => {
         callback && callback();
     }, TIME_INTERVAL, { trailing: false });
 
@@ -35,7 +35,7 @@ const RightDeleteContainer = ({ headerContent, children, state, setState, callba
     };
 
     return (
-        <div className="absolute top-3 right-1 w-fit max-w-[480px] shadow-xl z-50 bg-[#eaf3fa]">
+        <div className="absolute top-14 md:top-5 right-0 md:right-3 w-fit max-w-[480px] shadow-xl z-50 bg-[#eaf3fa]">
             <div >
                 <div className="grid grid-cols-2 gap-3 pl-3 " >
                     <div className='flex justify-start pt-5 h-14'>
@@ -49,8 +49,11 @@ const RightDeleteContainer = ({ headerContent, children, state, setState, callba
                 </div>
 
             </div>
-            <div className="sm:min-w-[480px] sm:max-w-[480px]  mt-6 min-h-[calc(100vh-10rem)] max-h-[calc(100vh-10rem)]">
-                <RightChildrenBox children={
+            <div className="mt-6 
+                            sm:min-w-[480px] sm:max-w-[480px]  
+                            min-h-[calc(100vh-10rem)] max-h-[calc(100vh-10rem)]
+                            md:max-h-[calc(100vh-10rem)] md:min-h-[calc(100vh-10rem)]">
+                <RightChildrenBox>
                     <>
                         <div className="px-2">
                             {children}
@@ -61,7 +64,6 @@ const RightDeleteContainer = ({ headerContent, children, state, setState, callba
                         </div>
                         <div className="px-4 overflow-y-auto max-h-[calc(100vh-26rem)] min-h-[calc(100vh-26rem)] flex bg-gradient-to-t from-[#ffffff] to-[#eaf3fa]">
                             <div>
-
                                 {
                                     state?.currentObjects && state.currentObjects.map((item, index) => (
                                         <div className="flex items-start space-x-2 p-1 text-sm font-sans" key={index}>
@@ -73,7 +75,7 @@ const RightDeleteContainer = ({ headerContent, children, state, setState, callba
                             </div>
                         </div>
                     </>
-                } />
+                </RightChildrenBox>
             </div>
 
             <div className="flex justify-end items-start shadow-sm sticky bottom-0 bg-[#eaf3fa] py-3 pr-2 gap-3 ">

@@ -1,6 +1,6 @@
 
 import { AiFillEye } from "react-icons/ai";
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from "next-intl";
 import { useRouter } from 'next/navigation';
 
 /**
@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
  * @returns 
  */
 const ViewOrderButton = ({ id, state, dispatch}) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const router = useRouter();
 
     const onClick = () => {

@@ -3,7 +3,7 @@ import { MdHistoryEdu } from "react-icons/md";
 import { MdProductionQuantityLimits } from "react-icons/md";
 import PanelButton from "../../common/PanelButton";
 import HeaderDisplay from "../../common/HeaderDisplay";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import { useCallback } from "react";
 import { debounce } from "lodash";
 import { useRouter } from 'next/navigation';
@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation';
  * @returns 
  */
 const RFQHistory = () => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const router = useRouter();
 
     const createQuotation = useCallback(debounce(() => {

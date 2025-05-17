@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import fs, { cp } from 'fs';
-import emitLog, { level } from '../fluentd-connection/fluentd-jack.js'
+import { showMessage } from '../fluentd-connection/fluentd-jack.js'
 import 'dotenv/config.js'
 
 const PRIVATE_DIR = './private.pem';
@@ -22,13 +22,13 @@ await (async () => {
   try {
     privateKey = fs.readFileSync(PRIVATE_DIR, 'utf8');
   } catch (err) {
-    await emitLog(level.ERROR, requestId, err.message, 'src/services/register.token-auths | readPrivateKey', { model, payload });
+    await showMessage(err.message, 'src/services/register.token-auths | readPrivateKey', { model, payload });
   }
 
   try {
     publicKey = fs.readFileSync(PUBLIC_DIR, 'utf8');
   } catch (err) {
-    await emitLog(level.ERROR, requestId, err.message, 'src/services/register.token-auths | readPublishKey', { model, payload });
+    await showMessage(err.message, 'src/services/register.token-auths | readPublishKey', { model, payload });
   }
 }).call();
 

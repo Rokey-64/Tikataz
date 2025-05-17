@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const { REACT_APP_HOST: host,
-    REACT_APP_PORT: port,
-    REACT_APP_PROTOCOL: protocol,
-    REACT_APP_ROOT_PATH: root_path } = process.env;
+const { VITE_API_HOST: host,
+    VITE_API_PORT: port,
+    VITE_PROTOCOL: protocol,
+    VITE_ROOT_PATH: root_path } = import.meta.env;
     
 
 /**
@@ -12,7 +12,7 @@ const { REACT_APP_HOST: host,
  */
 const loginVerify = async () => {
     try {
-        const res = await axios.get(`${protocol}://${host}:${port}${root_path}/auths/verify`,
+        const res = await axios.get(`${protocol}://${host}${root_path}/auths/verify`,
             {
                 headers: {
                     'Content-Type': 'application/json',

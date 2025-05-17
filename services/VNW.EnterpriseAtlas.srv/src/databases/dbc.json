@@ -39,17 +39,17 @@
             "port": "3306",
             "read": {
                 "node1": {
-                    "host": "103.218.122.181",
-                    "username": "admin"
+                    "host": "10.88.0.1",
+                    "username": "atlas"
                 },
                 "node2": {
-                    "host": "103.218.122.181",
-                    "username": "admin"
+                    "host": "10.88.0.1",
+                    "username": "atlas"
                 }
             },
             "write": {
-                "host": "103.218.122.181",
-                "username": "admin"
+                "host": "10.88.0.1",
+                "username": "atlas"
             }
         }
     },
@@ -65,9 +65,9 @@
             ,"node3": "redis://103.218.122.181:7005"
         },
         "production": {
-            "node1": "redis://103.218.122.181:7001"
-            ,"node2": "redis://103.218.122.181:7003"
-            ,"node3": "redis://103.218.122.181:7005"
+            "node1": "redis://10.88.0.1:6380"
+            ,"node2": "redis://10.88.0.1:6382"
+            ,"node3": "redis://10.88.0.1:6384"
         }
     }
 }

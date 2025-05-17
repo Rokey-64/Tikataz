@@ -19,7 +19,7 @@ const verifyRefreshToken = async (req, res, next) => {
     const refreshCookiesToken = req.cookies.refreshToken;
 
     if (!refreshCookiesToken) {
-        return res.status(400).end();
+        return res.status(400).json("No refresh token");
     }
 
     /**
@@ -34,31 +34,34 @@ const verifyRefreshToken = async (req, res, next) => {
      *  issuedAt: <string> - The time that the token was issued
      * }
      */
-    const refreshCookiesPayload = await verifyJWT(refreshCookiesToken).catch((err) => {
-        return res.status(400).end();
-    });
-
+    let refreshCookiesPayload;
+    try {
+        refreshCookiesPayload = await verifyJWT(refreshCookiesToken);
+        if (!refreshCookiesPayload) {
+            throw new Error("Invalid refresh token");
+        }
+    }
+    catch (err) {
+        return res.status(400).json("Invalid refresh token");
+    }
 
     const key = genRFKey(refreshCookiesPayload.userID, refreshCookiesPayload.did);
-    
+
     /**
      * Get the token from the redis
      * 
      * return the token if the token is valid
      */
-    const refreshServerToken = await getRedisKey(key).catch((err) => {
-        return res.status(400).json(
-            setFeedback(
-                req.feedback, 
-                false,
-                err.message,
-                { 
-                    prevID: req.id, 
-                    userNotification: req.t('token_not_found')
-                }
-            )  
-        );
-    });
+    let refreshServerToken;
+    try {
+        refreshServerToken = await getRedisKey(key);
+        if (!refreshServerToken) {
+            throw new Error("Invalid refresh token");
+        }
+    }
+    catch (err) {
+        return res.status(400).json("Invalid refresh token");
+    }
 
 
     /**
@@ -73,14 +76,17 @@ const verifyRefreshToken = async (req, res, next) => {
      *  issuedAt: <string> - The time that the token was issued
      * }
      */
-    await verifyJWT(refreshServerToken).catch((err) => {
+    try {
+        await verifyJWT(refreshServerToken)
+    }
+    catch (err) {
         if (err instanceof jwt.TokenExpiredError) {
             return res.status(401).json(
                 setFeedback(
-                    req.feedback, 
-                    false, 
-                    'Access token expired', 
-                    { 
+                    req.feedback,
+                    false,
+                    'Access token expired',
+                    {
                         prevID: req.id,
                         userNotification: req.t('token_expired')
                     }
@@ -89,16 +95,16 @@ const verifyRefreshToken = async (req, res, next) => {
         }
         return res.status(400).json(
             setFeedback(
-                req.feedback, 
+                req.feedback,
                 false,
                 err.message,
-                { 
-                    prevID: req.id, 
+                {
+                    prevID: req.id,
                     userNotification: req.t('token_invalid')
                 }
             )
         );
-    });
+    }
 
 
     model.user = {

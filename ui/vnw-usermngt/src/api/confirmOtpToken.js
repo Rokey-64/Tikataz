@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const { REACT_APP_HOST: host,
-    REACT_APP_PORT: port,
-    REACT_APP_PROTOCOL: protocol,
-    REACT_APP_ROOT_PATH: root_path } = process.env;
+const { VITE_API_HOST: host,
+    VITE_API_PORT: port,
+    VITE_PROTOCOL: protocol,
+    VITE_ROOT_PATH: root_path } = import.meta.env;
 
 /**
  * Before redirecting to the next page to verify OTP code, the user must confirm the OTP token
@@ -12,7 +12,7 @@ const { REACT_APP_HOST: host,
  */
 export const confirmOtpToken = async (token, lang = "vi") => {
     try {
-        const res = await axios.get(`${protocol}://${host}:${port}${root_path}/confirm-token?token=${token}&lang=${lang}`,
+        const res = await axios.get(`${protocol}://${host}${root_path}/confirm-token?token=${token}&lang=${lang}`,
             {
                 headers: {
                     'Content-Type': 'application/json',

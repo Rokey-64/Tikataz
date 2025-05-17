@@ -1,7 +1,9 @@
 import { useRef, useEffect} from "react";
 import { nanoid } from "nanoid";
+import { useTranslations } from "next-intl";
 
 const ProductUploadImage = ({ path, callback }) => {
+    const t = useTranslations("trans");
     const index = useRef();
 
     useEffect(() => {
@@ -25,7 +27,7 @@ const ProductUploadImage = ({ path, callback }) => {
                 id={`prod-upload-${index.current}`}
             />
             <label htmlFor={`prod-upload-${index.current}`} className="cursor-pointer text-sm text-blue-500 underline mt-2">
-                Chọn sản phẩm
+                {t("studio.card.product.sel")}
             </label>
         </>
     );

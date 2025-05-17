@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 
 /**
  * Display certificate provider
@@ -5,9 +6,11 @@
  * @returns 
  */
 const CertificatesProvider = ({ cert }) => {
+    const t = useTranslations('trans'); 
+
     return (
         <div className="mb-2">
-            <span className="font-medium">Tổ chức cấp: </span> {cert.certProvider || "(Chưa có thông tin)"}
+            <span className="font-medium">{t("studio.card.cert.providedby")}: </span> {cert.certProvider || t("unknown")}
         </div>
     );
 };

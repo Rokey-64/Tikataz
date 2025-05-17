@@ -2,8 +2,6 @@ import express from 'express'
 import setFeedback from '#@/services/setFeedback.js'
 import getModelService from '#@/services/getModelService.js'
 import searchThumbnail from '#@/services/searchThumbnail.js';
-import { findTopTag } from '../middlewares/findTag.js'
-import { findTagByMajor } from '../middlewares/findTagByMajor.js'
 import loadBasicCardInfo from '../middlewares/loadBasicCardInfo.js'
 import generatePictureUrl from '../middlewares/generatePictureUrl.js'
 import generatePayload from '../middlewares/generatePayload.js'
@@ -11,10 +9,11 @@ import generateURLByIndex from '../middlewares/generateURLByIndex.js'
 import generateProdURLs from '../middlewares/generateProdURLs.js'
 import repareOrgzProfile from '../middlewares/prepareOrgzProfile.js'
 import prepareOrgzPolicy from '../middlewares/prepareOrgzPolicy.js'
+import meiliSearch from '../middlewares/meiliSearch.js'
 
 const router = express.Router()
 
-router.get("/general", loadBasicCardInfo, generatePictureUrl, generatePayload, async (req, res) => {
+router.get("/search", meiliSearch, loadBasicCardInfo, generatePictureUrl, generatePayload, async (req, res) => {
     /**
      * This route handler expects a GET request with the following query parameters:
      * 

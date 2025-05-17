@@ -45,15 +45,12 @@ class AutomationCardService extends StandardCardService {
         return this;
     }
 
-    async run(cid, limit) {
+    async run(cid, limit, predicts, searchCIDs) {
         const cardTemplate = new CommonCardTemplate();
-        const queryCondition = {};
-        if (cid) {
-            queryCondition._id = { $gt: new mongoose.Types.ObjectId(String(cid)) };
-        }
-        const result = await tagModel.find(queryCondition, this.queryString).lean().limit(limit).exec();
-        if (result == null) return null;
-        if (result.length === 0) return null;
+        this.createFilter(cid, predicts, searchCIDs);
+
+        const result = await tagModel.find(this.queryCondition, this.queryString).lean().limit(limit).exec();
+        if (!result && result.length === 0) return null;
 
         /**
          * Convert working time to the format of card
@@ -88,7 +85,6 @@ class AutomationCardService extends StandardCardService {
             });
         }
 
-        
 
         for (let i = 0; i < result.length; i++) {
             const card = result[i];

@@ -1,14 +1,14 @@
 // import from 'axios' and 'config' here
 import axios from 'axios';
 
-const { REACT_APP_HOST: host,
-    REACT_APP_PORT: port,
-    REACT_APP_PROTOCOL: protocol,
-    REACT_APP_ROOT_PATH: root_path } = process.env;
+const { VITE_API_HOST: host,
+    VITE_API_PORT: port,
+    VITE_PROTOCOL: protocol,
+    VITE_ROOT_PATH: root_path } = import.meta.env;
 
 export const requireForSignup = async (data) => {
     try {
-        const res = await axios.post(`${protocol}://${host}:${port}${root_path}/signup`, data,
+        const res = await axios.post(`${protocol}://${host}${root_path}/signup`, data,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -26,7 +26,7 @@ export const requireForSignup = async (data) => {
 
 // export const confirmTokenAndCreateAccount = async (data) => {
 //     try {
-//         const response = await axios.post(`${protocol}://${host}:${port}/signup/confirm`, data,
+//         const response = await axios.post(`${protocol}://${host}/signup/confirm`, data,
 //             {
 //                 timeout: 5000,
 //             }

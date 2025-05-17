@@ -1,12 +1,12 @@
 import { createPortal } from "react-dom";
 import ConfirmButton from '../../common/SubmitButton';
 import CloseButton from '../../common/CloseButton';
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import { FaTrashRestoreAlt } from "react-icons/fa";
 import deleteRFQAPI from "../../../../api/deleteRFQ";
 
 const QuotationRestoreDisplay = ({ open, onClose, onConfirm, orderName }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     if (!open) return null;
 
     const confirmButtonClicked = async () => {

@@ -1,11 +1,11 @@
 import React from "react";
 import Image from 'next/image';
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import certsTemplate from "@/services/certTemplate";
 import _ from "lodash";
 
 const BasicCardCerts = ({ card }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
 
     const getCertInfo = (cert) => {
         const certInfo = certsTemplate.find(item => item.name === cert.certype);
@@ -21,7 +21,7 @@ const BasicCardCerts = ({ card }) => {
                         <div className="w-7 h-7 sm:w-8 sm:h-8 relative flex-shrink-0">
                             <Image
                                 src={`cert/${getCertInfo(cert)?.path}`}
-                                alt={cert.name}
+                                alt={cert?.name || "invalid"}
                                 width={32}
                                 height={32}
                                 className="object-contain"

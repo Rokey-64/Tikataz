@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from "next-intl";
 import { useRFQSupliersContext } from '@/contexts/RFQSuppliersContext';
 import CustomerIntro from './CustomerIntro';
 import CustomerItem from './CustomerItem';
@@ -9,7 +9,7 @@ import ConfirmSubmitDialog from './ConfirmSubmitDialog';
 
 
 const SupplierPricingForm = ({ quoteData, isLoggedIn }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const { state, dispatch } = useRFQSupliersContext();
     const [open, setOpen] = useState(false);
 

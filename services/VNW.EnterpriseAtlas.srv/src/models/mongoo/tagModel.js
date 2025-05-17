@@ -34,6 +34,10 @@ const mongo_schema = new mongoose.Schema({
     productions: {type: [String], default: []},
     metadata:{
         timestamp: {type: String, default: ""},
+    },
+    prediction:{
+        group_predict: [],
+        weighted_predict: []
     }
 })
 

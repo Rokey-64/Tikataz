@@ -1,11 +1,11 @@
 import { createPortal } from "react-dom";
 import ConfirmButton from '../../common/SubmitButton';
 import CloseButton from '../../common/CloseButton';
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import { FaDeleteLeft } from "react-icons/fa6";
 
 const QuotationDiscardDisplay = ({ open, onClose, onConfirm, orderName }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
 
     if (!open) return null;
 

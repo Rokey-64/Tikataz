@@ -4,7 +4,7 @@ import HashtagCloseButton from '../CloseButton';
 import HashtagSubmitButton from '../SubmitButton';
 import HashtagDisplayHeader from './HashtagDisplayHeader';
 import DisplayHashtagSuggestion from './DisplayHashtagSuggestion';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from "next-intl";
 import { set } from 'lodash';
 
 /**
@@ -15,7 +15,7 @@ import { set } from 'lodash';
 const AddHashtagDialog = ({ open, onClose, onAdd, initialHashtag}) => {
     const [hashtag, setHashtag] = useState('');
     const [autoload, setAutoload] = useState(false);
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const MAX_HASHTAG_LENGTH = 5; // Maximum number of hashtags
 
     useEffect(() => {

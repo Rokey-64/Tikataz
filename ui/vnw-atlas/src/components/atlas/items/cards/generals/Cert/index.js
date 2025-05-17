@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { LuAward, LuCalendar, LuClock, LuGlobe, LuHash, LuFocus } from 'react-icons/lu';
 import certsTemplate from "@/services/certTemplate";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 const Cert = ({ cert}) => {
     const [isHovered, setIsHovered] = useState(false);
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
 
     const formatDate = (dateString) => {
         if (!dateString) return null;

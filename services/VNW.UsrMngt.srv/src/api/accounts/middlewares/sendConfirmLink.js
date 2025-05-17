@@ -1,5 +1,5 @@
 
-import emitLog, { level, showMessage } from '#@/services/fluentd-connection/fluentd-jack.js';
+import { showMessage } from '#@/services/fluentd-connection/fluentd-jack.js';
 import mailSender from "#@/services/api-caller/index.js";
 import createMailTemplate, { templateType, sendType } from '#@/services/emailTemplate/createEmailTemplate.js';
 import { nanoid } from 'nanoid';
@@ -59,7 +59,7 @@ const sendConfirmLink = async (req, res, next) => {
      */
     try {
         if (process.env.NODE_ENV === 'development') {
-            console.log('Confirm link: ', confirmKink);
+            showMessage('Confirm link: ', confirmKink);
         }
         else {
             const mailConfig = await createMailTemplate(templateType.link, req.id, model.email, confirmKink, model.lang);
@@ -67,7 +67,7 @@ const sendConfirmLink = async (req, res, next) => {
         }
 
     } catch (error) {
-        emitLog(level.ERROR, req.id, error.message, 'Middleware|sendOTP|sendMail', { prevReqID: model.id, userID: model.userID });
+        showMessage(error.message, 'Middleware|sendOTP|sendMail', { prevReqID: model.id, userID: model.userID });
         return res.status(500).json(
             setFeedback(
                 req.feedback,

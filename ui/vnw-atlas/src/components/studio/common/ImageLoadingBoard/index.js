@@ -1,5 +1,5 @@
 import { useState } from "react";
-import CompressImage from "../../../../services/compressImage";
+import CompressImage from "@/services/compressImage";
 
 /**
  * Use for loading a local image

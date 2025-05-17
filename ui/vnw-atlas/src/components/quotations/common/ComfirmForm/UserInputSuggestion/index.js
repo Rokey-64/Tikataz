@@ -1,11 +1,11 @@
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 /**
  * Enter your opinion
  * @returns 
  */
 const UserInputSuggestion = ({val, event}) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
 
     return (
         <div>

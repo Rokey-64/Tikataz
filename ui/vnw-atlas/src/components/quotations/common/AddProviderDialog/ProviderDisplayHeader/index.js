@@ -1,9 +1,9 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from "next-intl";
 /**
  * Display the header of the provider display
  */
 const ProviderDisplayHeader = () => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     return (
         <div className="mb-2">
             <h2 className="text-base font-semibold text-gray-900">{t("add_provider")}</h2>

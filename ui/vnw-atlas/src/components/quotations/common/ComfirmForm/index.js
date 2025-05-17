@@ -7,7 +7,7 @@ import OrderCancelButton from "./OrderCancelButton";
 import OrderConfirmButton from "./OrderConfirmButton";
 import DisplayCorpInfo from "./DisplayCorpInfo";
 import saveQuoteAPI from '../../../../api/saveQuote';
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import { useRouter } from 'next/navigation';
 import createBlobFromUrl from "../../../../services/createBlobFromUrl";
 import { useAppContext } from '../../../../contexts/RFQItemOrder';
@@ -22,7 +22,7 @@ import _ from "lodash";
  * @returns {JSX.Element}
  */
 const ConfirmDialog = ({ open, onClose }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const { state, dispatch } = useAppContext();
     // const navigate = useNavigate();
     const router = useRouter();

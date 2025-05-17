@@ -36,14 +36,13 @@ const countRatingService = async (cids) => {
     }
 
     // update new count to redis
-    try{
-        const tasks = [];
+    try {
         for (const cid of nonEXRedisCIDs) {
-            tasks.push(cluster.set(GEN_CARD_RATING_KEY(cid), payload[cid], "EX", TTL_IN_SECONDS, "NX"));
+            await cluster.set(GEN_CARD_RATING_KEY(cid), payload[cid], "EX", TTL_IN_SECONDS, "NX")
         }
-        await Promise.all(tasks);
     }
     catch (error) {
+        console.error("countRatingService error");
         throw error;
     }
 
@@ -55,11 +54,18 @@ export default countRatingService;
 const getRatingFromRedis = async (cids, payload, keys, nonEXRedisCIDs) => {
     // Try to get the count of ratings from Redis
     try {
-        const redisCount = await Promise.all(
-            keys.map((key) => {
-                return cluster.get(key);
-            })
-        );
+        // const redisCount = await Promise.all(
+        //     keys.map((key) => {
+        //         return cluster.get(key);
+        //     })
+        // );
+        const redisCount = [];
+        for (const item of keys) {
+            const count = await cluster.get(item);
+            if (count) {
+                redisCount.push(count);
+            }
+        }
 
         // Update the result object with the counts from Redis
         redisCount.forEach((count, index) => {
@@ -74,6 +80,7 @@ const getRatingFromRedis = async (cids, payload, keys, nonEXRedisCIDs) => {
         });
     }
     catch (error) {
+        console.error("getRatingFromRedis error");
         throw error;
     }
 }

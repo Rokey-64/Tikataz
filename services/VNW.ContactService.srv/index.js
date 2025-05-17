@@ -11,8 +11,15 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/v1/contact', v1Router);
+app.use('/', (req, res) => {
+  res.status(200).json({
+    message: 'Welcome to the Email Service API',
+    serviceID: serviceID,
+  });
+});
 
-const port = process.env.EMAIL_SERVICE_PORT || 5052;
-app.listen(port, () => {
+
+const port = process.env.EMAIL_SERVICE_PORT || 49152;
+app.listen(port, '0.0.0.0', () => {
   console.log(`Server running on port http://localhost:${port}/`);
 });

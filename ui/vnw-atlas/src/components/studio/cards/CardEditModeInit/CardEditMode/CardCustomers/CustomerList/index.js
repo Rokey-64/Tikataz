@@ -5,6 +5,7 @@ import CustomerDisplay from "./CustomerDisplay";
 import InsertNoticeText from "../../../../../common/InsertNoticeText";
 import AboveInsertedButton from "../../../../../common/AboveInsertedButton";
 import CustomerDeleteForm from "./CustomerDeleteForm";
+import { useTranslations } from "next-intl";
 
 /**
  * Display the list of customers
@@ -12,6 +13,7 @@ import CustomerDeleteForm from "./CustomerDeleteForm";
  * @returns 
  */
 const CustomerList = ({ callback }) => {
+    const t = useTranslations('trans');
     const customers = useSelector(state => state.cards.customers);
     const [state, setState] = useState({
         status: false,
@@ -34,9 +36,9 @@ const CustomerList = ({ callback }) => {
     }
 
     return (
-        <div className="my-6  space-y-2">
-            <AboveInsertedButton callback={addCustomerOnClick} content="Thêm khách hàng" options={{ icon: MdAddToPhotos }} />
-            <InsertNoticeText header="Khách hàng của chúng tôi" content="Danh sách khách hàng của chúng tôi" />
+        <div className="my-6 space-y-2 ml-5">
+            <AboveInsertedButton callback={addCustomerOnClick} content={t("studio.card.edit.addcust")} options={{ icon: MdAddToPhotos }} />
+            <InsertNoticeText header={t("studio.card.edit.ourcust")} content={t("studio.card.edit.ourcustlist")}/>
             <div>
                 {customers.map((customer, index) => (
                     <div key={index}>

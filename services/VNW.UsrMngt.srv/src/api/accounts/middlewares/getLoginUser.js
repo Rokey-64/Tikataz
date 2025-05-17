@@ -1,5 +1,5 @@
 
-import emitLog, { level, showMessage } from '#@/services/fluentd-connection/fluentd-jack.js';
+import { showMessage } from '#@/services/fluentd-connection/fluentd-jack.js';
 import getModelService from '#@/services/getModelService.js';
 import setFeedback from '#@/services/setFeedback.js';
 import checkRequiredFields from "../validators/checkRequiredFields.js";
@@ -71,7 +71,7 @@ const getLoginUser = async (req, res, next) => {
         model.user = await lookingUserBeforeLogin(model.loginName);
     }
     catch (err) {
-        emitLog(level.ERROR, req.id, err.message, 'middleware/verifyUserAccount | lookingUserBeforeLogin', { prevReqID: model.id, loginName: model.loginName });
+        showMessage(err.message, 'middleware/verifyUserAccount | lookingUserBeforeLogin');
         return res.status(500).json(
             setFeedback(
                 req.feedback,

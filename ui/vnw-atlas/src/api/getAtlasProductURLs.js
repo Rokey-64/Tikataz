@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosInstance from "./api";
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 
@@ -11,11 +12,17 @@ const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 const getAtlasProductURLs = async ({cid, keys}) => {
     let apiUrl = `${API_HOST}public/atlas/products`;
     try {
-        const response = await axios.post(apiUrl, {cid, keys},
+        // const response = await axios.post(apiUrl, {cid, keys},
+        //     {
+        //         headers: { "Content-Type": "application/json" },
+        //         timeout: 10000,
+        //         withCredentials: true,
+        //     }
+        // );
+        const response = await axiosInstance.post(apiUrl, {cid, keys},
             {
                 headers: { "Content-Type": "application/json" },
                 timeout: 10000,
-                withCredentials: true,
             }
         );
         if (response.status === 200) {

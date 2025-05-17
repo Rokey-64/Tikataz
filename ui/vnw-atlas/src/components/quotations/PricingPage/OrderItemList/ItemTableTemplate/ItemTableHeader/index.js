@@ -1,8 +1,8 @@
 import ItemTableCell from "../ItemTableCell";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 const ItemTableHeader = () => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     return (
         <div className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-t-lg w-fit">
             <div className="flex text-xs font-semibold ">

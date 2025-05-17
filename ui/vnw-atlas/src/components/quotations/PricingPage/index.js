@@ -1,5 +1,5 @@
-import { useEffect, useState, useReducer } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useRef, useEffect, useState, useReducer, Suspense} from 'react';
+import { useTranslations } from "next-intl";
 import { Tooltip } from 'react-tooltip';
 import RFQItemOrderProvider from '../../../contexts/RFQItemOrder';
 import { ROFReducer, initialOrder, orderItemTemplate } from '../../../reducers/ROFReducer';
@@ -10,20 +10,22 @@ import CreateOrderButton from './CreateOrderButton';
 import CancelOrderButton from './CancelOrderButton';
 import ConfirmDialog from '../common/ComfirmForm';
 import { useSearchParams, useRouter } from 'next/navigation';
-import checkRFQValidIDAPI from '../../../api/checkRFQValidID';
+import checkRFQValidIDAPI from '@/api/checkRFQValidID';
 
 
 /**
  * Quotations/PricingPage
  */
 const PricingPage = () => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const [orderState, dispatch] = useReducer(ROFReducer, initialOrder);
     const [confirmDialog, setConfirmDialog] = useState(false);
     const router = useRouter();
+    const didFetchRef = useRef(false);
     const searchParams = useSearchParams();
 
     useEffect(() => {
+        // alert("check order id");
         /**
          * Get the order ID from the URL query parameters
          */
@@ -32,6 +34,11 @@ const PricingPage = () => {
             router.push(`/rfq/dashboard`);
             return;
         }
+
+        if (didFetchRef.current) {
+            return;
+        }
+        didFetchRef.current = true;
 
         /**
          * This function wil Check whether the order ID is valid or not
@@ -194,4 +201,10 @@ const PricingPage = () => {
 }
 
 
-export default PricingPage;
+const PricingPagelSuspense = () => (
+    <Suspense fallback={<div className="w-screen h-screen flex justify-center items-center"><h1 className="text-2xl font-bold">Loading...</h1></div>}>
+        <PricingPage />
+    </Suspense>
+);
+
+export default PricingPagelSuspense;

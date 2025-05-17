@@ -1,7 +1,7 @@
 
 import ReadOnlyText from "../../../common/ReadOnlyText";
 import InsertNoticeText from "../../../common/InsertNoticeText";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 /**
  * Display the company information
@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
  * @returns 
  */
 const CompanyInfoDisplay = ({ profile}) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
 
     return (
         <div className="min-w-[600px]">
@@ -22,7 +22,7 @@ const CompanyInfoDisplay = ({ profile}) => {
                     />
                 </div>
                 <div className="space-y-2 ">
-                    <InsertNoticeText header="Thông tin công ty" content="Thông tin cơ bản về công ty" />
+                    <InsertNoticeText header={t('studio.profiles.conpany.header_01')} content={t('studio.profiles.conpany.content_01')} />
                     <ReadOnlyText label={`${t("company_name")}`} value={profile.name} />
                     <ReadOnlyText label={`${t("tax_code")}`} value={profile.taxCode} />
                     <ReadOnlyText label={`${t("business_licence_date")}`} value={profile.date} />
@@ -30,18 +30,18 @@ const CompanyInfoDisplay = ({ profile}) => {
                 </div>
             </div>
             <div className="space-y-2 mt-5">
-                <InsertNoticeText header="Thông tin công ty" content="Thông tin cơ bản về công ty" />
+                <InsertNoticeText header={t('studio.profiles.conpany.header_02')} content={t('studio.profiles.conpany.content_02')} />
                 <ReadOnlyText label={`${t("phone")}`} value={profile.phone} />
                 <ReadOnlyText label={`${t("fax")}`} value={profile.fax} />
                 <ReadOnlyText label={`${t("email")}`} value={profile.email} />
             </div>
             <div className="space-y-2 mt-5">
-                <InsertNoticeText header="Thông tin công ty" content="Thông tin cơ bản về công ty" />
+                <InsertNoticeText header={t('studio.profiles.conpany.header_03')} content={t('studio.profiles.conpany.content_03')} />
                 <ReadOnlyText label={`${t("address")}`} value={profile.address} />
                 <ReadOnlyText label={`${t("country")}`} value={profile.nation.value} />
             </div>
             <div className="space-y-2 mt-5">
-                <InsertNoticeText header="Thông tin công ty" content="Thông tin cơ bản về công ty" />
+                <InsertNoticeText header={t('studio.profiles.conpany.header_04')} content={t('studio.profiles.conpany.content_04')} />
                 <ReadOnlyText label={`${t("bussiness_type")}`} value={profile.businessField} />
                 <ReadOnlyText label={`${t("vision")}`} value={profile.vision} />
                 <ReadOnlyText label={`${t("mission")}`} value={profile.mission} />

@@ -1,8 +1,8 @@
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 
 const DisplayRFQItems = ({ items }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     return (
         <div className="mt-6 bg-white rounded-lg border border-blue-100 overflow-hidden shadow-sm">
             <div className="px-6 py-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-100">

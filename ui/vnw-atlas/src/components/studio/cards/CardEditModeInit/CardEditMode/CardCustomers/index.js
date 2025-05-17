@@ -4,8 +4,10 @@ import { setCustomers } from "../../../../../../redux/cardsSlice";
 import CustomerList from './CustomerList';
 import RightInputContainer from "../../../../common/RightInputContainer";
 import CustomerInsertForm from './CustomerInsertForm'
+import { useTranslations } from "next-intl";
 
 const CardCustomers = () => {
+    const t = useTranslations("trans");
     const dispatch = useDispatch();
     const customers = useSelector(state => state.cards.customers);
     const [cust, setCust] = useState({});
@@ -43,7 +45,7 @@ const CardCustomers = () => {
             }
 
             if (newCustID === -1) {
-                alert("Chỉ có thể thêm tối đa 9 khách hàng ");
+                alert(t('studio.card.edit.maxcust'));
                 return;
             }
             setCust({ ...cust, id: newCustID });
@@ -55,8 +57,13 @@ const CardCustomers = () => {
         <div>
             <CustomerList callback={setIsDisplayInsertBox} />
             {isDisplayInsertBox && (
-                <RightInputContainer closeCallback={setIsDisplayInsertBox} saveCallback={saveButtonClick}
-                    children={<CustomerInsertForm object={cust} callback={setCust} />} />
+                <div className="fixed top-11 md:top-11 right-0 md:right-[-10px] h-full z-50 w-[400px] bg-white shadow-lg">
+                    <div>
+                        <RightInputContainer closeCallback={setIsDisplayInsertBox} saveCallback={saveButtonClick}>
+                            <CustomerInsertForm object={cust} callback={setCust} />
+                        </RightInputContainer>
+                    </div>
+                </div>
             )}
         </div>
     );

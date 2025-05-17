@@ -1,6 +1,5 @@
-'use client'
-import Layout from "@/components/atlas/groups/Layout"
 
+import Layout from "@/components/atlas/groups/Layout"
 
 export default function Home() {
     return (

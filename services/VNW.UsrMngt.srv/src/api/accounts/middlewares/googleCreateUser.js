@@ -4,6 +4,7 @@ import createAccount from "../resositories/createAccount.js";
 import { nanoid } from "nanoid";
 import setFeedback from "#@/services/setFeedback.js";
 import lookingUserBeforeLogin from "../resositories/lookingUserBeforeLogin.js";
+import { showMessage } from '#@/services/fluentd-connection/fluentd-jack.js';
 
 /**
  * create or get a user account in the database with google authentication
@@ -20,14 +21,15 @@ const googleCreateUser  = async (req, res, next) => {
         /**
          * If the user has an account, get it from the database
          */
-        try {
-            const result = await lookingUserBeforeLogin(user.emails[0].value);
-            model.user = result;
-        }
-        catch (err) {
-            return res.status(500).json(setFeedback(req.feedback, false));
-        }
+        // try {
+        //     const result = await lookingUserBeforeLogin(user.emails[0].value);
+        //     model.user = result;
+        // }
+        // catch (err) {
+        //     return res.status(500).json(setFeedback(req.feedback, false));
+        // }
         return next();
+        
     }
 
     /**
@@ -52,7 +54,8 @@ const googleCreateUser  = async (req, res, next) => {
         };
     }
     catch (err) {
-        return res.status(500).json(setFeedback(req.feedback, false));
+        showMessage(`Google login error: ${err.message}`, 'googleCreateUser.js');
+        return res.redirect(process.env.USER_CLIENT_DOMAIN);
     }
 
     return next();

@@ -1,16 +1,95 @@
-import React, { useState } from 'react';
-import { FaBell, FaEnvelope, FaUserCircle, FaCaretDown, FaBars } from 'react-icons/fa';
+import React, { useState, useRef, useEffect } from 'react';
+import {
+  FaBell,
+  FaEnvelope,
+  FaUserCircle,
+  FaBars
+} from 'react-icons/fa';
+
+import MobileMenuItem from './MobileMenuItem';
+import MessageIcon from './MessageIcon';
+import NotificationIcon from './NotificationIcon';
+import UserDropdownMenu from './UserDropdownMenu';
+import UserDropdown from './UserDropdown';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const unreadNotifications = 3;
-  const unreadMessages = 2;
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
+  const [language, setLanguage] = useState('English');
+  const [restrictedMode, setRestrictedMode] = useState(false);
+  const unreadNotifications = 0;
+  const unreadMessages = 0;
+
+  // Thông tin người dùng
+  const user = {
+    name: "Nguyễn Văn A",
+    email: "nguyenvana@example.com",
+    avatar: null
+  };
+
+  // Refs để xử lý click outside
+  const mobileMenuRef = useRef(null);
+  const dropdownRef = useRef(null);
+  const dropdownMenuRef = useRef(null);
+
+  // Xử lý click outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+
+      // Đóng mobile menu nếu click bên ngoài
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target) &&
+        !event.target.closest('button[aria-label="Toggle menu"]')) {
+        setIsMobileMenuOpen(false);
+      }
+
+      // Đóng user dropdown nếu click bên ngoài
+      if (
+        (dropdownRef.current && !dropdownRef.current.contains(event.target)) &&
+        (dropdownMenuRef.current && !dropdownMenuRef.current.contains(event.target))
+      ) {
+        setIsUserDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [dropdownRef.current]);
+
+  const handleLogout = () => {
+    setIsUserDropdownOpen(false);
+  };
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    document.documentElement.classList.toggle('dark', !darkMode);
+  };
+
+  const changeLanguage = (lang) => {
+    setLanguage(lang);
+  };
+
+  const toggleRestrictedMode = () => {
+    setRestrictedMode(!restrictedMode);
+  };
+
+  // Đóng mobile menu khi mở user dropdown trên mobile
+  const handleUserDropdownToggle = () => {
+    setIsUserDropdownOpen(!isUserDropdownOpen);
+    if (window.innerWidth < 768) {
+      setIsMobileMenuOpen(false);
+    }
+  };
 
   return (
-    <nav className="flex items-center justify-between px-4 py-3 bg-white shadow-sm md:px-6 md:py-4">
-      {/* Mobile Menu Button (Hamburger) */}
-      <button 
-        className="md:hidden p-2 text-gray-600 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    <nav className="flex items-center justify-between px-4 py-3 dark:bg-gray-800 shadow-sm md:px-6 md:py-4 ">
+      {/* Logo/Brand có thể thêm vào đây */}
+
+      {/* Mobile Menu Button */}
+      <button
+        className="md:hidden p-2 text-gray-600 dark:text-gray-300 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         aria-label="Toggle menu"
       >
@@ -21,72 +100,63 @@ const Navbar = () => {
       <div className="hidden md:flex items-center space-x-6">
         <NotificationIcon count={unreadNotifications} />
         <MessageIcon count={unreadMessages} />
-        <UserDropdown />
+        <div ref={dropdownMenuRef}>
+          <UserDropdown
+            isOpen={isUserDropdownOpen}
+            onToggle={handleUserDropdownToggle}
+            user={user}
+          />
+        </div>
+      </div>
+
+      {/* User Dropdown Menu - Hiển thị trên cả mobile và desktop */}
+      <div ref={dropdownRef}
+        className={`absolute ${isUserDropdownOpen ? 'block' : 'hidden'}
+         top-full right-0 mt-0 md:top-15 bg-white dark:bg-gray-800 shadow-xl rounded-lg z-50`}
+      >
+        <UserDropdownMenu
+          user={user}
+          darkMode={darkMode}
+          language={language}
+          restrictedMode={restrictedMode}
+          onToggleDarkMode={toggleDarkMode}
+          onChangeLanguage={changeLanguage}
+          onToggleRestrictedMode={toggleRestrictedMode}
+          onLogout={handleLogout}
+        />
       </div>
 
       {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="absolute top-16 left-0 right-0 bg-white shadow-lg py-2 z-50 md:hidden">
-          <div className="flex flex-col space-y-4 px-4">
-            <MobileMenuItem icon={<FaBell />} count={unreadNotifications} label="Notifications" />
-            <MobileMenuItem icon={<FaEnvelope />} count={unreadMessages} label="Messages" />
-            <MobileMenuItem icon={<FaUserCircle />} label="Account" hasDropdown />
+      {
+        isMobileMenuOpen && (
+          <div
+            className={`absolute md:hidden top-full right-0 left-0 bg-white dark:bg-gray-800 shadow-lg py-2 z-50`}
+          >
+            <div className="flex flex-col space-y-4 px-4">
+              <MobileMenuItem
+                icon={<FaBell />}
+                count={unreadNotifications}
+                label="Notifications"
+              />
+              <MobileMenuItem
+                icon={<FaEnvelope />}
+                count={unreadMessages}
+                label="Messages"
+              />
+              <MobileMenuItem
+                icon={<FaUserCircle />}
+                label="Account"
+                hasDropdown
+                onClick={handleUserDropdownToggle}
+              />
+            </div>
           </div>
-        </div>
-      )}
+        )
+      }
+
+
     </nav>
   );
 };
-
-// Reusable Notification Icon Component
-const NotificationIcon = ({ count }) => (
-  <div className="relative">
-    <FaBell className="text-gray-600 text-xl cursor-pointer hover:text-blue-500 transition-colors" />
-    {count > 0 && (
-      <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-        {count}
-      </span>
-    )}
-  </div>
-);
-
-// Reusable Message Icon Component
-const MessageIcon = ({ count }) => (
-  <div className="relative">
-    <FaEnvelope className="text-gray-600 text-xl cursor-pointer hover:text-blue-500 transition-colors" />
-    {count > 0 && (
-      <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-        {count}
-      </span>
-    )}
-  </div>
-);
-
-// Reusable User Dropdown Component
-const UserDropdown = () => (
-  <div className="flex items-center space-x-2 cursor-pointer group">
-    <FaUserCircle className="text-gray-600 text-2xl" />
-    <FaCaretDown className="text-gray-500 group-hover:text-blue-500 transition-colors" />
-  </div>
-);
-
-// Mobile Menu Item Component
-const MobileMenuItem = ({ icon, count, label, hasDropdown = false }) => (
-  <div className="flex items-center justify-between py-2 px-3 hover:bg-gray-50 rounded-md">
-    <div className="flex items-center space-x-3">
-      <span className="text-gray-600">{icon}</span>
-      <span className="text-gray-700">{label}</span>
-    </div>
-    <div className="flex items-center space-x-2">
-      {count > 0 && (
-        <span className={`text-xs rounded-full h-5 w-5 flex items-center justify-center 
-          ${label === 'Notifications' ? 'bg-red-500' : 'bg-blue-500'} text-white`}>
-          {count}
-        </span>
-      )}
-      {hasDropdown && <FaCaretDown className="text-gray-500" />}
-    </div>
-  </div>
-);
 
 export default Navbar;

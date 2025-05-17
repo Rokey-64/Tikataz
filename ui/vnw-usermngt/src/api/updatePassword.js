@@ -2,14 +2,14 @@
 import axios from 'axios';
 import 'dotenv/config';
 
-const { REACT_APP_HOST: host,
-    REACT_APP_PORT: port,
-    REACT_APP_PROTOCOL: protocol,
-    REACT_APP_ROOT_PATH: root_path } = process.env;
+const { VITE_API_HOST: host,
+    VITE_API_PORT: port,
+    VITE_PROTOCOL: protocol,
+    VITE_ROOT_PATH: root_path } = import.meta.env;
 
 export const updatePassword = async (data) => {
     try {
-        const response = await axios.post(`${protocol}://${host}:${port}${root_path}/update-password`, data,
+        const response = await axios.post(`${protocol}://${host}${root_path}/update-password`, data,
             {
                 timeout: 30000,
                 withCredentials: true,

@@ -17,7 +17,7 @@ const checkFieldRequestMiddleware = (req, res, next) => {
         profile = JSON.parse(rawProfile);
     }
     catch(err){
-        return res.status(400).json(setFeedback(req.feedback));
+        return res.status(400).json(setFeedback(req.feedback), false, "Invalid JSON format");
     }
 
     /**
@@ -29,7 +29,7 @@ const checkFieldRequestMiddleware = (req, res, next) => {
         || !profile?.address
         || !profile?.phone
         || !profile?.email) {
-        return res.status(400).json(setFeedback(req.feedback));
+        return res.status(400).json(setFeedback(req.feedback. false,  "Missing required fields"));
     };
 
     model.profile = profile;

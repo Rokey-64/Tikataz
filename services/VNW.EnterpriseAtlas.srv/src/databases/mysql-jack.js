@@ -3,8 +3,7 @@
 import 'dotenv/config'
 import Sequelize from 'sequelize'
 import dbc from './dbc.json' assert {type: 'json'}
-import emitLog, { level, showMessage } from './fluentd-jack.js'
-import { connect } from 'mongoose';
+import {emitLog, level, showMessage } from './http_fluentd.js';
 
 const env = process.env.NODE_ENV || 'development';
 const dialect = 'mysql';

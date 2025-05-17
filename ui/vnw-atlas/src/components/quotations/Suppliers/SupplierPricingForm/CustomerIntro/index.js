@@ -1,8 +1,8 @@
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import formatDate from "@/services/formatDate";
 
 const CustomerIntro = ({ quoteData }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
 
     return (
         <div className="mb-8 border-b pb-6">

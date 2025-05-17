@@ -4,12 +4,16 @@ import redis from 'ioredis'
 import 'dotenv/config'
 import url from 'url'
 import dbc from '../../../dbc.json' assert {type: 'json'}
-import emitLog, { level, showMessage } from '../fluentd-connection/fluentd-jack.js'
+import { showMessage } from '../fluentd-connection/fluentd-jack.js'
 
 const TIME_OUT = 15000;
 const env = process.env.NODE_ENV || 'development';
 const dialect = 'redis';
-const conf = [];
+const conf = [
+    // { port: '6380', host: '160.22.123.128' },
+    // { port: '6382', host: '160.22.123.128' },
+    // { port: '6384', host: '160.22.123.128' }
+];
 let setReconnectTimeout = null;
 
 /**
@@ -20,7 +24,7 @@ let setReconnectTimeout = null;
 await (
     async () => {
         if (!dbc || !dbc[dialect] || !dbc[dialect][env]) {
-            await emitLog(level.DB_ERROR, null, 'No redis configuration found | 01', 'src/database/redis-jack', null);
+            showMessage('No redis configuration found | 01', 'src/database/redis-jack');
             return;
         }
 
@@ -28,7 +32,7 @@ await (
         for (let key in rdc) {
             let item = rdc[key];
             if (!item) {
-                await emitLog(level.DB_ERROR, null, 'No redis configuration found | 02', 'src/database/redis-jack', null);
+                showMessage('No redis configuration found | 02', 'src/database/redis-jack');
                 continue;
             }
 
@@ -44,17 +48,25 @@ await (
     }
 ).call();
 
+
+
+
 /**
 |--------------------------------------------------
 | Create a Redis cluster with user name is root and pass is ********
 |--------------------------------------------------
 */
-export const cluster = new redis.Cluster(conf, {
+let cluster;
+
+cluster = new redis.Cluster(conf, {
     redisOptions: {
         password: process.env.REDIS_CLUSTER_PASSWORD,
         connectTimeout: TIME_OUT
     }
 });
+
+export { cluster };
+
 
 /**
 |--------------------------------------------------
@@ -63,21 +75,27 @@ export const cluster = new redis.Cluster(conf, {
 */
 (() => {
     cluster.on('error', async (err) => {
-        await emitLog(level.DB_ERROR, null, `Redis | An error occured | ${err}`, 'src/database/redis-jack', null);
+
+        showMessage(`Redis | An error occured | ${err}`, 'src/database/redis-jack');
     })
 
     cluster.on('ready', () => {
-        showMessage('Redis::: Ready');
+        // showMessage('Redis::: Connected');
+        console.log('Redis::: Connected');
     })
 
     cluster.on('reconnecting', async () => {
         if (!setReconnectTimeout) {
             setReconnectTimeout = setTimeout(async () => {
-                await emitLog(level.DB_ERROR, null, `Redis::: Disconnected | TIME_OUT`, 'src/database/redis-jack', null);
+                showMessage(`Redis::: Disconnected | TIME_OUT`, 'src/database/redis-jack');
                 cluster.quit();
             }, TIME_OUT);
-        } 
+        }
     })
+
+    cluster.on('node error', (error, node) => {
+        console.error(`Redis::: Node error on`, error);
+    });
 }).call();
 
 /**
@@ -88,7 +106,7 @@ export const cluster = new redis.Cluster(conf, {
  */
 const setRedisKey = async (key, value, expiresIn) => {
     try {
-        const result = await cluster.set(key, value,'NX', 'EX', expiresIn);
+        const result = await cluster.set(key, value, 'NX', 'EX', expiresIn);
     } catch (error) {
         throw error;
     }
@@ -105,8 +123,8 @@ const setRedisKey = async (key, value, expiresIn) => {
 const setRedisKeyOveride = async (key, value, expiresIn) => {
     try {
         let result;
-        if(expiresIn) {
-            result = await cluster.set(key, value,'EX', expiresIn);
+        if (expiresIn) {
+            result = await cluster.set(key, value, 'EX', expiresIn);
         }
         else {
             result = await cluster.set(key, value);
@@ -171,7 +189,7 @@ const scanRedisKeys = async (pattern) => {
     try {
         let keys = [];
         const nodes = cluster.nodes('master');  // Lấy tất cả các master node trong cluster
-        
+
         for (const node of nodes) {
             let cursor = '0';
             do {

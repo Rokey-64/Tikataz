@@ -1,23 +1,32 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setGeneral } from "../../../../../../../../redux/cardsSlice";
-import InsertNoticeText from "../../../../../../common/InsertNoticeText";
+import { setGeneral } from "@/redux/cardsSlice";
+import InsertNoticeText from "@/components/studio/common/InsertNoticeText";
 import debounce from "lodash.debounce";
+import { useTranslations } from "next-intl";
 
 /**
  * Display a timetable from Monday to Sunday and allow the user to set the working time
  * @returns 
  */
 const TimetableSelector = () => {
-    const general  = useSelector(state => state.cards.general);
+    const t = useTranslations("trans");
+    const general = useSelector(state => state.cards.general);
     const dispatch = useDispatch();
-    const daysOfWeek = ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ Nhật"];
+    const daysOfWeek = [
+        t("studio.card.gen.mon"),
+        t("studio.card.gen.tue"),
+        t("studio.card.gen.wed"),
+        t("studio.card.gen.thu"),
+        t("studio.card.gen.fri"),
+        t("studio.card.gen.sat"),
+        t("studio.card.gen.sun")
+    ];
     const [timeData, setTimeData] = useState(
         daysOfWeek.map(
-            (day, index) => ({ start: index === 6 ? "" : "08:00", end: index === 6 ? "" : "17:00", active: index === 6 ? false : true , index: index })
+            (day, index) => ({ start: index === 6 ? "" : "08:00", end: index === 6 ? "" : "17:00", active: index === 6 ? false : true, index: index })
         )
     );
-    const [readOnly, setReadOnly] = useState(false);
 
     useEffect(() => {
         // Set the time for sunday to empty
@@ -44,7 +53,8 @@ const TimetableSelector = () => {
      * @param {*} value
      * @returns
      *  */
-    const handleTimeChange = (dayIndex, type, value) => {;
+    const handleTimeChange = (dayIndex, type, value) => {
+        ;
         const updatedTimeData = [...timeData];
         const sundayIndex = 6;
         const mondayIndex = 0;
@@ -101,10 +111,10 @@ const TimetableSelector = () => {
                 <table className="w-full border-collapse border border-gray-300 text-[12px]">
                     <thead>
                         <tr>
-                            <th className="border border-gray-300 px-4 py-2 text-center">Ngày</th>
-                            <th className="border border-gray-300 px-4 py-2 text-center">Bắt đầu</th>
-                            <th className="border border-gray-300 px-4 py-2 text-center">Kết thúc</th>
-                            <th className="border border-gray-300 px-4 py-2 text-center">Hoạt động</th>
+                            <th className="border border-gray-300 px-4 py-2 text-center">{t("studio.card.gen.day")}</th>
+                            <th className="border border-gray-300 px-4 py-2 text-center">{t("studio.card.gen.start")}</th>
+                            <th className="border border-gray-300 px-4 py-2 text-center">{t("studio.card.gen.end")}</th>
+                            <th className="border border-gray-300 px-4 py-2 text-center">{t("studio.card.gen.active")}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -149,18 +159,13 @@ const TimetableSelector = () => {
 
             <div className="col-span-2 mt-6 max-w-[700px]">
                 <InsertNoticeText
-                    header="Quy tắc về thiết lập thời gian làm việc?"
+                    header={t("studio.card.gen.timerule")}
                     content={
-                        <>
-                            * Thời gian làm việc, là thời gian để Tikataz tham chiếu, từ đó căn cứ gửi báo giá hoặc đơn hàng đến với bạn.
-                            Bảng thời gian thể hiện từ thứ 2 đến chủ nhật, mặc định thời gian làm việc là từ 8 giờ sáng đến 5 giờ chiều<br /><br />
-
-                            * <strong>Lưu ý</strong>: <i>
-                                Nếu bạn điều chỉnh thời gian ở thứ 2, hệ thống sẽ áp dụng cho các ngày khác trong tuần trừ chủ nhật và ngày nghỉ.<br /><br />
-                                Nếu ngày hôm đó không làm việc, vui lòng bỏ tích ở ô hoạt động.<br /><br />
-                                Các ngày lễ, ngày nghĩ theo quy định của quốc gia đăng ký sẽ không được tính vào thời gian làm việc.
-                            </i>
-                        </>
+                        t.rich("studio.card.gen.timemess", {
+                            strong: (chunks) => <strong>{chunks}</strong>,
+                            br: () => <br />,
+                            i: (chunks) => <i>{chunks}</i>
+                        })
                     }
                 />
             </div>

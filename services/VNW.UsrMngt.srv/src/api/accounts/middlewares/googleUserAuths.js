@@ -11,15 +11,18 @@ const googleUserAuths = async (req, res, next) => {
     const model = getModelService(req);
     const user = req?.user;
 
-    try{
+    try {
         const result = await lookingUserBeforeLogin(user.emails[0].value);
+
+        model.user = result;
         model.hasAccount = true;
+
     }
     catch (err) {
         model.hasAccount = false;
     }
 
     return next();
-}   
+}
 
 export default googleUserAuths;

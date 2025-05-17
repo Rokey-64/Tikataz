@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { hashPassword, verifyPassword, hashOTP } from '#@/services/password-hashing/index.js'
 import setFeedback from '#@/services/setFeedback.js';
-import emitLog from '#@/services/fluentd-connection/fluentd-jack.js';
+import {showMessage} from '#@/services/fluentd-connection/fluentd-jack.js';
 import getModelService from '#@/services/getModelService.js';
 import lookingCurrentPassword from '../resositories/lookingCurrentPassword.js';
 import checkRequiredFields from '../validators/checkRequiredFields.js';
@@ -54,7 +54,7 @@ const inspector = async (req, res, next) => {
      * * model.id - The user id
      */
     const user = await lookingCurrentPassword(payload.userID).catch((err) => {
-        emitLog(level.ERROR, req.id, err.message, 'update-password/inspector | lookingCurrentPassword', { userID: payload.userID })
+        showMessage(err.message, 'update-password/inspector | lookingCurrentPassword')
         return res.status(500).json(
             setFeedback(
                 req.feedback,

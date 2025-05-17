@@ -19,6 +19,7 @@ export const emitLog = async (level, tag, message, file, line) => {
 };
 
 
+
 export const level = {
     INFO: 'info',
     ERROR: 'error',
@@ -29,5 +30,8 @@ export const level = {
 export const showMessage = (...messages) => {
     if (env === 'development') {
         console.log("⛔⛔", messages);
+    }
+    if (env === 'production') {
+        emitLog(level.ERROR, env, messages, undefined, undefined);
     }
 };

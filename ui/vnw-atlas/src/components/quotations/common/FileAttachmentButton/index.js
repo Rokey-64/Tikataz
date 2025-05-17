@@ -2,7 +2,7 @@ import { useRef, useEffect } from "react";
 import { IoDocumentAttach } from "react-icons/io5";
 import { TiAttachmentOutline } from "react-icons/ti";
 import { nanoid } from "nanoid";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 
 /**
@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
  * @returns 
  */
 const FileAttachmentButton = ({ fileName, onChange }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const fileInputRef = useRef(null);
 
     useEffect(() => {

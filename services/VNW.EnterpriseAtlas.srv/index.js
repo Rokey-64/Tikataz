@@ -12,13 +12,12 @@ import xssClean from 'xss-clean';
 import hpp from 'hpp';
 import rateLimit from 'express-rate-limit';
 import cookieParser from 'cookie-parser';
-import axios from "axios";
 
 import "./src/databases/mongo.js"
 import v1Router from "./src/routers/v1/root.js";
 
 const app = express();
-app.set('trust proxy', ['loopback', '127.0.0.1']); // trust first proxy
+app.set('trust proxy', "loopback"); // trust first proxy
 const serviceID = process.env.SERVICE_ID;
 
 // Initialize the CORS middleware for handling cross-origin requests
@@ -28,6 +27,11 @@ app.use(cors(
             'http://localhost:3000',
             'http://tikataz.vn',
             'http://atlas.tikataz.vn',
+            'https://accounts-apis.tikataz.vn',
+
+            'http://tikataz.com',
+            'http://atlas.tikataz.com',
+            'https://accounts-api.tikataz.com',
         ],
         methods: ['GET', 'POST', 'DELETE', 'PUT'],
         allowedHeaders: ['Content-Type', 'Authorization', 'cross-origin-embedder-policy'],
@@ -72,7 +76,7 @@ app.use(session(sessionOptions));
 
 app.use((req, res, next) => {
     req.id = uuidv4();
-    req.userID = "dkebsheu1sed55a8wwd5+";
+    req.userID = "";
     req.isUserLoggedIn = false;
 
     next();
@@ -91,51 +95,6 @@ app.use((req, res, next) => {
     next();
 });
 
-/**
- * * Check login status of user
- */
-app.use(async (req, res, next) => {
-    const cookies = req.cookies;
-    const refreshToken = cookies.refreshToken;
-    const accessToken = cookies.accessToken;
-
-    const generateNewAC = async () => {
-        // Generate new access token
-        try {
-            const response = await axios.post(`http://accounts-api.tikataz.vn/api/v1/accounts/auths/refresh`, {}, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'cookie': req.headers.cookie
-                },
-                withCredentials: true
-            })
-
-            /**
-             * Forward cookies from the response to the client
-             * This is important to ensure that the client receives the new cookies set by the server.
-             */
-            const setCookieHeader = response.headers['set-cookie'];
-            if (setCookieHeader) {
-                res.setHeader('Set-Cookie', setCookieHeader);
-            }
-
-            req.isUserLoggedIn = true;
-        }
-        catch (err) {
-            console.log("Error when generating new access token: ", err);
-            req.isUserLoggedIn = false;
-        }
-    }
-
-    if (!refreshToken && !accessToken) {
-        req.isUserLoggedIn = false;
-    }
-    else {
-        await generateNewAC();
-    }
-
-    next();
-});
 
 
 
@@ -151,11 +110,11 @@ app.use(async (req, res, next) => {
  */
 app.use('/api/v1/home', v1Router);
 
-app.use('/', (req, res) => {
-    res.status(200).json({ message: "Test route is working!" });
-});
+// app.use('/', (req, res) => {
+//     res.status(200).json({ message: "Test route is working!" });
+// });
 
-const PORT = 3160;
-app.listen(PORT, () => {
+const PORT = process.env.SERVICE_PORT;
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });

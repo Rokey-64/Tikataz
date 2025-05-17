@@ -11,29 +11,37 @@ const { EMAIL_SERVER, EMAIL_PORT, EMAIL_USER, EMAIL_LOGIN, EMAIL_PASS } = proces
  * @param {*} next 
  */
 const sendEmail = async (req, res, next) => {
-    const clientOptions = req.body?.options;
-    if (!clientOptions) {
-        return res.status(400).json({ error: 'Email options are required' });
-    }
+    // const clientOptions = req.body?.options;
+    // if (!clientOptions) {
+    //     return res.status(400).json({ error: 'Email options are required' });
+    // }
 
-    if (!clientOptions?.to) {
-        return res.status(400).json({ error: 'Recipient email address is required' });
-    }
+    // if (!clientOptions?.to) {
+    //     return res.status(400).json({ error: 'Recipient email address is required' });
+    // }
 
-    if (!clientOptions?.subject) {
-        return res.status(400).json({ error: 'Email subject is required' });
-    }
+    // if (!clientOptions?.subject) {
+    //     return res.status(400).json({ error: 'Email subject is required' });
+    // }
 
-    if (!clientOptions?.content) {
-        return res.status(400).json({ error: 'Email content is required' });
-    }
-    
+    // if (!clientOptions?.content) {
+    //     return res.status(400).json({ error: 'Email content is required' });
+    // }
+
+    // const mailOptions = {
+    //     from: EMAIL_USER,
+    //     to: clientOptions?.to,
+    //     subject: clientOptions?.subject,
+    //     // text: clientOptions?.text,
+    //     html: clientOptions?.content
+    // };
+
     const mailOptions = {
         from: EMAIL_USER,
-        to: clientOptions?.to,
-        subject: clientOptions?.subject,
+        to: "goldtime604@gmail.com",
+        subject: "Mail kiểm thử",
         // text: clientOptions?.text,
-        html: clientOptions?.content
+        html: "<h1>Mail kiểm thử</h1><p>Đây là mail kiểm thử</p>"
     };
 
 

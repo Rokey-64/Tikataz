@@ -1,6 +1,6 @@
 import { now } from "sequelize/lib/utils";
 import { nanoid } from 'nanoid';
-import emitLog, { level } from '#@/services/fluentd-connection/fluentd-jack.js';
+import { showMessage } from '#@/services/fluentd-connection/fluentd-jack.js';
 import { setRedisKeyOveride } from "#@/services/db-connection/redis-jack.js";
 import generateJWT from '#@/services/token-auths/index.js';
 import { genRFKey} from '#@/services/redis-template-key/index.js';
@@ -64,7 +64,7 @@ const createRefreshToken = async (req, res, next) => {
     try {
         await setRedisKeyOveride(key, token, 60*60*24*60);
     } catch (error) {
-        emitLog(level.ERROR, req.id, err.message, 'MiddleWare/createLoginRefreshToken | setRedisKey', { userID: user.userID});
+        showMessage(err.message, 'MiddleWare/createLoginRefreshToken | setRedisKey');
         return res.status(500).json(
             setFeedback(
                 req.feedback,

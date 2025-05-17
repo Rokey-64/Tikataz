@@ -3,7 +3,7 @@ import generateJWT, { verifyJWT } from '#@/services/token-auths/index.js'
 import { nanoid } from "nanoid";
 import getModelService from "#@/services/getModelService.js";
 import {setRedisKeyOveride} from "#@/services/db-connection/redis-jack.js";
-import emitLog from "#@/services/fluentd-connection/fluentd-jack.js";
+import {showMessage} from "#@/services/fluentd-connection/fluentd-jack.js";
 import setFeedback from "#@/services/setFeedback.js";
 
 /**
@@ -62,7 +62,7 @@ export const createConfirmToken = (uKey) => async (req, res, next) => {
     const confirmToken = await generateJWT(confirmTokenPayload, '15 minutes');
 
     await setRedisKeyOveride(`confirm-token:${userID}:${did}`, confirmToken, 60*15).catch(err => {
-        emitLog(level.ERROR, req.id, err.message, 'MiddleWare/createConfirmToken | setRedisKey', { userID });
+        showMessage(err.message, 'MiddleWare/createConfirmToken | setRedisKey');
         return res.status(500).json(
             setFeedback(
                 req.feedback,

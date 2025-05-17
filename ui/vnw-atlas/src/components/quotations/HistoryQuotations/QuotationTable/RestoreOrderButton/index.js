@@ -1,5 +1,5 @@
 import { FaTrashRestoreAlt } from "react-icons/fa";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 /**
  * Display the restore button
@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
  * @returns 
  */
 const RestoreOrderButton = ({ row , stateRef, state, dispatch}) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     
     if (row.state !== stateRef.rejected) {
         return null;

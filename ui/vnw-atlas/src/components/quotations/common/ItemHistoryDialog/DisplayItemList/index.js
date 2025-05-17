@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import FilterSelectButton from "../../../common/FilterSelectButton";
 
 /**
@@ -8,7 +8,7 @@ import FilterSelectButton from "../../../common/FilterSelectButton";
  * @param {Function} onSelect - Hàm xử lý khi chọn mặt hàng
  */
 const DisplayItemList = ({ items,  onSelect }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
 
 
     return (

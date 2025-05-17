@@ -1,5 +1,6 @@
 import { IoClose } from "react-icons/io5";
 import RightChildrenBox from "../RightChidrenBox";
+import RightInputContainer from "../RightInputContainer";
 
 /**
  * This container contains a form that can be used to delete selected data.
@@ -13,7 +14,7 @@ const RightDisplayContainer = ({ headerContent, children, state, setState }) => 
     };
 
     return (
-        <div className="absolute top-3 right-2 w-fit shadow-xl z-50 bg-[#eaf3fa]">
+        <div className="absolute top-14 md:top-5 right-0 md:right-3 w-fit shadow-xl z-[100] bg-[#eaf3fa]">
             <div >
                 <div className="grid grid-cols-2 gap-3 pl-3 " >
                     <div className='flex justify-start pt-5 h-[58px] '>
@@ -29,9 +30,15 @@ const RightDisplayContainer = ({ headerContent, children, state, setState }) => 
             <div className="mt-0 mb-2">
                 <hr />
             </div>
-            <div className="px-4 overflow-y-auto max-h-[calc(100vh-10rem)] min-h-[calc(100vh-10rem)] flex bg-gradient-to-t from-[#ffffff] to-[#eaf3fa]">
-                <div className="sm:min-w-[480px] sm:max-w-[480px] mx-2 mt-6">
-                    <RightChildrenBox children={<>{headerContent}{children}</>}/>
+            <div className="p-6 overflow-y-auto flex  shadow-xl bg-gradient-to-t from-[#ffffff] to-[#cbe1f1] 
+                            max-h-[calc(100vh-15rem)] min-h-[calc(100vh-15rem)]
+                            md:max-h-[calc(100vh-8rem)] md:min-h-[calc(100vh-8rem)]">
+                                
+                <div className="sm:min-w-[480px] sm:max-w-[480px] md:min-w-[480px] md:max-w-[480px] w-full mx-2 mt-6">
+                    <RightChildrenBox>
+                        <>{headerContent}{children}</>
+                    </RightChildrenBox>
+                    <div className="h-40" />
                 </div>
             </div>
 

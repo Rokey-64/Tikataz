@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { MdCenterFocusWeak, MdPerson, MdLocationOn, MdBusiness } from 'react-icons/md';
 import feedThumbnailAPI from "@/api/feedThumbnail";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 
 const Partner = ({ cust}) => {
@@ -90,7 +90,7 @@ const Partner = ({ cust}) => {
 };
 
 const CustomerDetails = ({ cust, isHovered }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     if (!isHovered || !cust) return null;
 
     return (

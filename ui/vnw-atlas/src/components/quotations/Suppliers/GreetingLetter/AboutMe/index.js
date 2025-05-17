@@ -1,9 +1,8 @@
-import { useTranslation, Trans } from "react-i18next";
-import { useRFQSupliersContext } from "../../../../../contexts/RFQSuppliersContext";
-import { SiPandora } from "react-icons/si";
+import { useTranslations } from "next-intl";
+import { useRFQSupliersContext } from "@/contexts/RFQSuppliersContext";
 
 const AboutMe = () => {
-    const { t, i18n } = useTranslation();
+    const t = useTranslations('trans');
     const { state } = useRFQSupliersContext();
 
     return (
@@ -18,13 +17,13 @@ const AboutMe = () => {
                 <div>
                     <h2 className="text-xl font-bold text-gray-800 mb-1">{t("suppliers.aboutme.title")}</h2>
                     <p className="text-gray-600">
-                        <Trans
-                            i18nKey="suppliers.aboutme.description"
-                            components={{
-                                1: <span>{i18n.language === "vi" ? "5,000" : "5.000"}</span>,
-                                2: <span>{i18n.language === "vi" ? "20,000+" : "20.000+"}</span>
-                            }}
-                        />
+                        {
+                            t.rich("suppliers.aboutme.description", {
+                                supplierCount: () => <span>5.000</span>,
+                                customerCount: () => <span>20.000+</span>
+                            }
+                        )}
+                        
                     </p>
                 </div>
             </div>
@@ -53,28 +52,25 @@ const AboutMe = () => {
                     </h4>
                     <ul className="mt-2 space-y-2 text-sm pl-6">
                         <li className="relative pl-5 before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:content-['•'] before:text-green-500 before:font-bold">
-                            <Trans
-                                i18nKey="suppliers.aboutme.your_statistics_list.1"
-                                components={{
-                                    1: <span>{state.statistics.sum || 0}</span>
-                                }}
-                            />
+                            {
+                                t.rich("suppliers.aboutme.your_statistics_list.1", {
+                                    first: () => <span>{state.statistics.sum || 0}</span>
+                                })
+                            }
                         </li>
                         <li className="relative pl-5 before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:content-['•'] before:text-green-500 before:font-bold">
-                            <Trans
-                                i18nKey="suppliers.aboutme.your_statistics_list.2"
-                                components={{
-                                    1: <span>{state.statistics.win || 0}</span>
-                                }}
-                            />
+                            {
+                                t.rich("suppliers.aboutme.your_statistics_list.2", {
+                                    first: () => <span>{state.statistics.win || 0}</span>
+                                })
+                            }
                         </li>
                         <li className="relative pl-5 before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:content-['•'] before:text-green-500 before:font-bold">
-                            <Trans
-                                i18nKey="suppliers.aboutme.your_statistics_list.3"
-                                components={{
-                                    1: <span>{state.statistics.rate}</span>
-                                }}
-                            />
+                            {
+                                t.rich("suppliers.aboutme.your_statistics_list.3", {
+                                    first: () => <span>{state.statistics.rate}</span>
+                                })
+                            }
                         </li>
                     </ul>
                 </div>

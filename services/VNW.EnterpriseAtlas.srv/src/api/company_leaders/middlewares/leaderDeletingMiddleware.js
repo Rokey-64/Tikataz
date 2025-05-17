@@ -17,7 +17,7 @@ const LeaderDeletingMiddleware = async (req, res, next) => {
     }
 
     try {
-        const result = await deleteLeaderService(model.userID, model.id);
+        const result = await deleteLeaderService(req.userID, model.id);
 
         if (result[0].status === 0) {
             return res.status(400).json(setFeedback(req.feedback, false));

@@ -1,9 +1,9 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from "next-intl";
 /**
  * Display the header of the items display
  */
 const ItemDialogHeader = () => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     return (
         <div className="mb-2">
             <h2 className="text-base font-semibold text-gray-900">{t("your_item_list")}</h2>

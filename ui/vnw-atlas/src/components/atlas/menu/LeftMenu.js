@@ -1,24 +1,28 @@
+'use client'
 import React, { useRef, useState } from "react";
 import './leftMenu.css';
-import ExpandLeftMenu from "./ExpandLeftMenu";
+import ExpandLeftMenu from "./ExpandLeftMenu.cjs";
+
 
 import { CgMenuGridR } from "react-icons/cg";
 import { IoCloseCircleSharp } from "react-icons/io5";
 
-const LeftMenu = () => {
+const LeftMenu = ({setLoading}) => {
     const [isOpen, setIsOpen] = useState(false);
     const onClick = () => setIsOpen(!isOpen);
     const devOnClick = () => setIsOpen(false);
+
+
     return (
         <>
             <div className="hidden lg:block">
-                <ExpandLeftMenu />
+                <ExpandLeftMenu setLoading={setLoading}/>
             </div>
 
             {
                 isOpen ?
                     <div className="flex -mt-2">
-                        <ExpandLeftMenu />
+                        <ExpandLeftMenu setLoading={setLoading}/>
                         <div className="w-svw h-svw opacity-65 bg-[#181717cc]" onClick={devOnClick}>
                             <div className="fixed top-16 right-0 block lg:hidden">
                                 <button onClick={onClick} className="p-2">

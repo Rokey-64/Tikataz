@@ -1,7 +1,8 @@
-import certsTemplate from "../../../../../../../../../../services/certTemplate";
+import { useTranslations } from "next-intl";
+import certsTemplate from "@/services/certTemplate";
 
 const CertificatesLogo = ({ cert }) => {
-
+    const t = useTranslations('trans');
     // Get certificate path by name
     const getCertPath = (name) => {
         const obj = certsTemplate.find((cert) => {
@@ -21,7 +22,7 @@ const CertificatesLogo = ({ cert }) => {
                 alt=""
                 className="w-8 h-8 object-contain"
             />
-            <span className="font-semibold text-base">{cert.certype || "Tên chứng chỉ"}</span>
+            <span className="font-semibold text-base">{cert.certype || t("studio.card.cert.certname")}</span>
         </div>
     );
 

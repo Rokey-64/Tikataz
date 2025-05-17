@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useEffect } from "react";
 import AboveFixedContainer from "../../common/AboveFixedContainer/index";
 import { MdPrivacyTip } from "react-icons/md";
@@ -7,8 +9,11 @@ import loadQuestionSettings from "@/api/loadQuestionSettings";
 import ApplyButton from "../ApplyButton";
 import UpdateQuestionSettings from "@/api/updateQuestionSettings";
 import DelayedRoute from "@/services/routeDelay";
+import Messages from "../../common/Messages";
+import { useTranslations } from "next-intl";
 
 const PrivacySetting = () => {
+    const t = useTranslations('trans');
 
     const [changedAnswers, setChangedAnswers] = useState([
         /**
@@ -76,39 +81,19 @@ const PrivacySetting = () => {
     return (
         <DelayedRoute>
             <div className="flex flex-col ">
-                <AboveFixedContainer
-                    children={
-                        <div className="flex my-4 space-x-3">
-                            <MdPrivacyTip className="text-xl text-blue-400" />
-                            <h1 className="font-semibold ">Thiết lập quyền riêng tư</h1>
+                <AboveFixedContainer>
+                    <div className="flex my-4 space-x-3">
+                        <MdPrivacyTip className="text-xl text-blue-400" />
+                        <h1 className="font-semibold ">{t('studio.profiles.settings.privacy.header')}</h1>
+                    </div>
+                </AboveFixedContainer>
 
-
-                        </div>
-                    } />
-
-                <div className="overflow-y-auto min-h-[calc(100vh-180px)] max-h-[calc(100vh-180px)] min-w-[calc(100vw-9px)] max-w-[calc(100vw-9px)]
-                            md:min-w-[calc(100vw-268px)] md:max-w-[calc(100vw-268px)]"
-                >
-                    <InsertNoticeText
-                        header={<strong className="text-[14px]">Thiết lập quyền riêng tư hộ trợ bạn điều gì?</strong>}
-                        content={
-                            <div className="text-[13px] font-sans text-justify leading-5 space-y-3 text-wrap max-w-[800px]">
-                                <p>✔ Giúp bạn quản lý quyền truy cập và chia sẽ thông tin của bạn đối với hồ sơ của mình</p>
-                                <p>✔ Đảm bảo quyền bảo vệ thông tin cá nhân của bạn, và cung cấp cho chung tôi biết về cách thức bạn triển
-                                    khai thông tin của mình
-                                </p>
-                                <p>
-                                    ✔ Các thông tin nhạy cảm như email, số điện thoại, địa chỉ sẽ được bảo vệ chặt chẽ và không được chia sẻ
-                                    nếu bạn không muốn
-                                </p>
-                                <h2 ><strong>⚠ Lưu ý:</strong></h2>
-                                <p>Quyền truy cập thông tin có thể trách sự lợi dụng của các đối tượng, tuy nhiên điều này cũng có thể gây ảnh hưởng
-                                    đến việc kết nối với đối tác tiềm năng. Chúng tôi khuyến khích bạn cân nhắc kỹ trước khi thay đổi quyền riêng tư,
-                                    đồng thời cũng sẽ hỗ trợ để các đối tác kết nối với bạn là đối tác tiềm năng nhất có thể.
-                                </p>
-                            </div>
-                        }
-                    />
+                <div className="overflow-y-auto 
+                            min-w-[calc(100vw-20px)] max-w-[calc(100vw-20px)]
+                            md:min-w-[calc(100vw-280px)] md:max-w-[calc(100vw-280px)]
+                            max-h-[calc(100vh-215px)] min-h-[calc(100vh-215px)]"
+                            >
+                    <Messages type="PrivacySettingMessage" />
                     <div className="flex flex-wrap">
                         {privacySettings.map((item, index) => (
                             <RadioOptionButton data={item} key={index} callback={radioOnChange} />

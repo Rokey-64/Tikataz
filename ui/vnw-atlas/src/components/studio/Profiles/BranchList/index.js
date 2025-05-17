@@ -1,5 +1,6 @@
+
 import BranchInfo from "./BranchInfo";
-import DelayedRoute from "../../../../services/routeDelay";
+import DelayedRoute from "@/services/routeDelay";
 
 const BranchList = () => {
   return (

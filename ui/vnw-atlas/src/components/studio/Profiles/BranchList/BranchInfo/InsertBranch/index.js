@@ -4,7 +4,7 @@ import RightInputContainer from '../../../../common/RightInputContainer';
 import { useDispatch } from "react-redux";
 import { insertBranch, updateBranch } from "../../../../../../redux/branchesSlice";
 import UpdateBranchesAPI from "../../../../../../api/updateBranch";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 /**
  * This component provides a form for adding or editing a branch
@@ -13,8 +13,8 @@ import { useTranslation } from "react-i18next";
  */
 const InsertBranch = ({ state, setState }) => {
     const dispatch = useDispatch();
-    const { t } = useTranslation();
-    const branch = {...state.currentObjects[0]};
+    const t = useTranslations('trans');
+    const branch = { ...state.currentObjects[0] };
 
     /**
      * This function is called when the user clicks the save button
@@ -27,15 +27,17 @@ const InsertBranch = ({ state, setState }) => {
         UpdateBranchesAPI(branch).then((res) => {
             if (res) {
                 if (state.state === "add") {
-                    dispatch(insertBranch({...branch}));
+                    dispatch(insertBranch({ ...branch }));
                     setState({ ...state, state: "" });;
                 }
                 else if (state.state === "edit") {
-                    dispatch(updateBranch({...branch}));
-                    setState({ ...state, currentObjects: [{...branch}] });
+                    dispatch(updateBranch({ ...branch }));
+                    setState({ ...state, state: "", currentObjects: [{ ...branch }] });
                 }
+
+                alert(t("note_save_success"));
             }
-            else{
+            else {
                 alert(t("note_save_failed"));
             }
         });
@@ -56,8 +58,8 @@ const InsertBranch = ({ state, setState }) => {
     };
 
     return (
-        <RightInputContainer closeCallback={closeHandleClick} saveCallback={saveCallback}
-            children={<div>
+        <RightInputContainer closeCallback={closeHandleClick} saveCallback={saveCallback}>
+            <div>
                 <form className="grid grid-cols-2 gap-3 ">
                     <div className="col-span-2">
                         <ElementSingleText options={{ text: `${t("branch_name")}`, holder: "Chi nhánh 1", isRequired: true }}
@@ -84,12 +86,12 @@ const InsertBranch = ({ state, setState }) => {
 
 
                     <div className="col-span-2 mt-3">
-                        <ElementSingleText options={{ text: `${t("branch_address")}`, holder: "Việt Nam",  isRequired: true}}
+                        <ElementSingleText options={{ text: `${t("branch_address")}`, holder: "Việt Nam", isRequired: true }}
                             callback={inputCallback.bind(this, "address")} defaultValue={branch.address} />
                     </div>
                 </form>
-            </div>}
-        />
+            </div>
+        </RightInputContainer>
     );
 };
 

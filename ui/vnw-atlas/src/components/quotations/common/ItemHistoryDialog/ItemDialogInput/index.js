@@ -1,10 +1,10 @@
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 /**
  * This is a ItemDialogInput component
  * @returns 
  */
 const ItemDialogInput = ({provider, event}) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     
     return (
         <input

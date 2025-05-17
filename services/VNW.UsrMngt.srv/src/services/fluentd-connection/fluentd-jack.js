@@ -1,7 +1,9 @@
 import axios from 'axios';
-import e from 'express';
-const env = process.env.NODE_ENV || 'development';
-const FLUENTD_HOST = 'http://103.218.122.181:24230/vnw.users'; 
+// const env = process.env.NODE_ENV || 'development';
+// const env = 'production';
+// console.log(env);
+const FLUENTD_HOST = process.env.FLUENTD_HOST;
+
 
 const emitLog = async (level, tag, message, file, line) => {
     try {
@@ -13,7 +15,7 @@ const emitLog = async (level, tag, message, file, line) => {
             line: line,
         };
 
-        await axios.post(`${FLUENTD_HOST}`, payload);
+        await axios.post(`${FLUENTD_HOST}`, payload, { timeout: 3000 });
     } catch (error) {
         console.error('Error sending log:', error.message);
     }
@@ -28,9 +30,14 @@ export const level = {
 };
 
 export const showMessage = (...messages) => {
-    if (env === 'development') {
-        console.log(messages);
+    if (process.env.NODE_ENV === 'development') {
+        console.log(...messages);
+    }
+
+    if (process.env.NODE_ENV === 'production') {
+        emitLog(level.ERROR, env, messages, undefined, undefined);
     }
 };
 
-export default emitLog;
+
+// export default emitLog;

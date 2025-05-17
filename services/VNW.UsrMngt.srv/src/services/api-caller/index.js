@@ -3,7 +3,6 @@ import 'dotenv/config';
 
 const host = process.env.EMAIL_SERVER_IP || "localhost";
 const mailServicePort = process.env.EMAIL_SERVER_PORT || 5052;
-const environment = process.env.NODE_ENV || 'development';
 
 /**
  * Call the mail service to send the mail

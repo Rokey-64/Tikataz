@@ -1,9 +1,9 @@
 import { useState, useEffect} from "react";
 import { CiEdit } from "react-icons/ci";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 const CellInputBox = ({ value, title, type, onChange,  maxLength}) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const [isEditing, setIsEditing] = useState(false);
     const [inputValue, setInputValue] = useState(value);
 

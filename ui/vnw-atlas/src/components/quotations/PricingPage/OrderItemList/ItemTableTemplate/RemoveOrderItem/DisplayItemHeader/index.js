@@ -1,8 +1,8 @@
 import React from "react";
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from "next-intl";
 
 const DisplayItemHeader = ({ itemName }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
 
     return (
         <div className="mb-2">

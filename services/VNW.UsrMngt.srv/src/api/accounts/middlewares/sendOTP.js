@@ -1,5 +1,5 @@
 
-import emitLog, { level, showMessage } from '#@/services/fluentd-connection/fluentd-jack.js';
+import { showMessage } from '#@/services/fluentd-connection/fluentd-jack.js';
 import mailSender from "#@/services/api-caller/index.js";
 import createMailTemplate, { templateType, sendType } from '#@/services/emailTemplate/createEmailTemplate.js';
 import getModelService from '#@/services/getModelService.js';
@@ -38,7 +38,7 @@ const sendOTP = async (req, res, next) => {
         await mailSender(mailConfig);
         
     } catch (error) {
-        emitLog(level.ERROR, req.id, error.message || 'send mail faild', 'Login/createOTP | sendMail', { prevReqID: model.id, userID: user.userID });
+        showMessage(error.message || 'send mail faild', 'Login/createOTP | sendMail', { prevReqID: model.id, userID: user.userID });
         return res.status(500).json(
             setFeedback(
                 req.feedback,

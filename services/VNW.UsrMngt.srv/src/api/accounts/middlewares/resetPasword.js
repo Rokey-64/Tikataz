@@ -1,4 +1,4 @@
-import emitLog, { level, showMessage } from '#@/services/fluentd-connection/fluentd-jack.js';
+import { showMessage } from '#@/services/fluentd-connection/fluentd-jack.js';
 import updatePassword from '../resositories/updatePassword.js';
 import getModelService from '#@/services/getModelService.js';
 import setFeedback from '#@/services/setFeedback.js';
@@ -34,7 +34,7 @@ const resetPassword = async (req, res, next) => {
      * 
      */
     await updatePassword(payload.userID, model.password).catch((err) => {
-        emitLog(level.ERROR, req.id, err.message, 'reset-pw/resetPassword | SPUserUpdatePassword', { userID: payload.userID });
+        showMessage(err.message, 'reset-pw/resetPassword | SPUserUpdatePassword', { userID: payload.userID });
         return res.status(500).json(
             setFeedback(
                 req.feedback,

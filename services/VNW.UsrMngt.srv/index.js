@@ -3,12 +3,13 @@ import session from "express-session";
 import RedisStore from "connect-redis";
 import passport from 'passport';
 import 'dotenv/config';
-import {v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { now } from "sequelize/lib/utils";
 import i18nextMiddleware from 'i18next-express-middleware';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import {cluster} from './src/services/db-connection/redis-jack.js';
+import { showMessage } from "#@/services/fluentd-connection/fluentd-jack.js";
+import { cluster } from './src/services/db-connection/redis-jack.js';
 import i18nInit from './src/locales/i18n.js';
 import v1Router from './src/routes/v1root.js';
 import './src/services/db-connection/mysql-jack.js';
@@ -19,6 +20,8 @@ import xssClean from 'xss-clean';
 //import mongoSanitize from 'express-mongo-sanitize';
 import hpp from 'hpp';
 import rateLimit from 'express-rate-limit';
+import { verifyJWT } from '#@/services/token-auths/index.js';
+import jwt from "jsonwebtoken";
 
 
 const app = express();
@@ -29,8 +32,8 @@ app.use(express.json());
 // app.set('trust proxy', ['loopback', '127.0.0.1']); // trust first proxy
 app.set('trust proxy', 'loopback');
 app.use(cookieParser());
-app.use(express.json({limit: '0.1mb'}));
-app.use(express.urlencoded({extended: true}));
+app.use(express.json({ limit: '0.1mb' }));
+app.use(express.urlencoded({ extended: true }));
 
 app.use(helmet());
 app.use(xssClean());
@@ -38,8 +41,8 @@ app.use(xssClean());
 app.use(hpp());
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100 // limit each IP to 100 requests per windowMs
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 200 // limit each IP to 100 requests per windowMs
 });
 
 app.use(limiter);
@@ -48,11 +51,16 @@ app.use(limiter);
 app.use(cors(
     {
         origin: [
-            'http://localhost:3001', 
-            'http://accounts.tikataz.vn', 
+            'http://localhost:3001',
+            'http://accounts.tikataz.vn',
             'http://atlas.tikataz.vn',
             'https://tikataz.vn',
-            'http://atlas-api.tikataz.vn'
+            'http://atlas-api.tikataz.vn',
+
+            'https://accounts.tikataz.com',
+            'https://atlas.tikataz.com',
+            'https://tikataz.com',
+            'https://atlas-api.tikataz.com',
         ],
         methods: ['GET', 'POST'],
         allowedHeaders: ['Content-Type', 'Authorization', 'cross-origin-embedder-policy'],
@@ -80,7 +88,6 @@ app.use((req, res, next) => {
     next();
 });
 
-
 app.use((req, res, next) => {
     req.feedback = {
         requestID: req.id,
@@ -95,9 +102,13 @@ app.use((req, res, next) => {
 
 app.use("/api/v1/accounts", v1Router);
 
+app.use("/", (req, res) => {
 
-const port =  process.env.USER_PORT;
-const listener = app.listen(port, ()=>{
-    console.log('server is running on the port '+ listener.address().port)
+    return res.status(200).json("Connected to the server");
+});
+
+const port = process.env.USER_PORT;
+const listener = app.listen(port, '0.0.0.0', () => {
+    console.log('server is running on the port ' + listener.address().port)
 });
 

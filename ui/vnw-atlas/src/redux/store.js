@@ -10,6 +10,7 @@ import cardsReducer from "./cardsSlice";
 import inlineCardsReducer from "./inlineCardSlice";
 import pricingReducer from "./pricingSlice";
 import atlasReducer from "./atlasSlice";
+import searchReducer from "./searchSlice";
 
 
 const store = configureStore({ 
@@ -25,6 +26,7 @@ const store = configureStore({
         inlineCards: inlineCardsReducer,
         pricing: pricingReducer,
         atlas: atlasReducer,
+        search: searchReducer,
     } 
 });
 export default store;

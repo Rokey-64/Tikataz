@@ -5,14 +5,14 @@ import HeaderDisplay from "../../common/HeaderDisplay";
 import OrderTextArea from "../../common/OrderTextArea";
 import Messages from "../../common/Messages";
 import _ from 'lodash';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from "next-intl";
 
 /**
  * Display the order information panel
  * @param {*} param0 
  */
 const OrderInformation = () => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const {state, dispatch} = useAppContext();
     const [orderGeneral, setOrderGeneral] = useState(state.general);
 

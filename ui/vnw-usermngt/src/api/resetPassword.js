@@ -1,10 +1,10 @@
 // import from 'axios' and 'config' here
 import axios from 'axios';
 
-const { REACT_APP_HOST: host,
-    REACT_APP_PORT: port,
-    REACT_APP_PROTOCOL: protocol,
-    REACT_APP_ROOT_PATH: root_path } = process.env;
+const { VITE_API_HOST: host,
+    VITE_API_PORT: port,
+    VITE_PROTOCOL: protocol,
+    VITE_ROOT_PATH: root_path } = import.meta.env;
 
 /**
  * When user forget password, this function will be called to send OTP to user's email
@@ -21,7 +21,7 @@ const { REACT_APP_HOST: host,
  */
 export const requireOTPForChangePassword = async (body) => {
     try {
-        const response = await axios.post(`${protocol}://${host}:${port}${root_path}/rs/new-otp`, body,
+        const response = await axios.post(`${protocol}://${host}${root_path}/rs/new-otp`, body,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export const requireOTPForChangePassword = async (body) => {
  */
 export const resendOTPForChangePassword = async (token, lang='vi') => {
     try {
-        const response = await axios.get(`${protocol}://${host}:${port}${root_path}/rs/resend-otp?token=${token}&lang=${lang}`,
+        const response = await axios.get(`${protocol}://${host}${root_path}/rs/resend-otp?token=${token}&lang=${lang}`,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ export const resendOTPForChangePassword = async (token, lang='vi') => {
  */
 export const verifyOTPBeforeChangePassword = async (body) => {
     try {
-        const response = await axios.post(`${protocol}://${host}:${port}${root_path}/rs/verify-otp`, body,
+        const response = await axios.post(`${protocol}://${host}${root_path}/rs/verify-otp`, body,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ export const verifyOTPBeforeChangePassword = async (body) => {
  */
 export const changePassword = async (body) => {
     try {
-        const response = await axios.post(`${protocol}://${host}:${port}${root_path}/rs/recover`, body,
+        const response = await axios.post(`${protocol}://${host}${root_path}/rs/recover`, body,
             {
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,15 +1,17 @@
 import { useState, useEffect, useCallback} from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setGeneral } from "../../../../../../../redux/cardsSlice";
-import InsertNoticeText from "../../../../../common/InsertNoticeText";
-import TextSingleInput from "../../../../../common/TextSingleInput";
+import { setGeneral } from "@/redux/cardsSlice";
+import InsertNoticeText from "@/components/studio/common/InsertNoticeText";
+import TextSingleInput from "@/components/studio/common/TextSingleInput";
 import debounce from "lodash.debounce";
+import { useTranslations } from "next-intl";
 
 /**
  * This component is used to get the social network information of a company
  * @returns 
  */
 const SocialWebsite = () => {
+    const t = useTranslations("trans");
     const dispatch = useDispatch();
     const general = useSelector(state => state.cards.general);
     const [social, setSocial] = useState({
@@ -51,9 +53,8 @@ const SocialWebsite = () => {
         <>
             <div className="col-span-2 mt-2 max-w-[700px]">
                 <InsertNoticeText
-                    header="Mạng xã hội"
-                    content="* Thông tin cơ bản về bạn thể hiện mức độ phổ biến và danh tiếng của doanh nghiệp bạn trên thị trường,
-                    làm tăng độ uy tín của thẻ của bạn."
+                    header={t("studio.card.gen.socical")}
+                    content={t("studio.card.gen.m7")}
                 />
             </div>
             

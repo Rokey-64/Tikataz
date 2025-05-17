@@ -2,7 +2,7 @@ import { t } from 'i18next';
 import {scanRedisKeys, deleteRedisKeys} from '#@/services/db-connection/redis-jack.js';
 import { genRFKey, genLoginOTPKey } from '#@/services/redis-template-key/index.js';
 import getModelService from '#@/services/getModelService.js';
-import emitLog from "#@/services/fluentd-connection/fluentd-jack.js";
+import {showMessage} from "#@/services/fluentd-connection/fluentd-jack.js";
 import setFeedback from "#@/services/setFeedback.js";
 
 /**
@@ -23,7 +23,7 @@ const removeRefreshTokens = async (req, res, next) => {
 
     // Scan the Redis keys
     const keys = await scanRedisKeys(patterm).catch(error => {
-        emitLog(level.ERROR, req.id, error.message, 'MiddleWare/removeRefreshTokens | scanRedisKeys', { userID });
+        showMessage(error.message, 'MiddleWare/removeRefreshTokens | scanRedisKeys');
         return res.status(500).json(
             setFeedback(
                 req.feedback,
@@ -39,7 +39,7 @@ const removeRefreshTokens = async (req, res, next) => {
 
     // Delete the Redis keys
     await deleteRedisKeys(keys).catch(error => {
-        emitLog(level.ERROR, req.id, error.message, 'MiddleWare/removeRefreshTokens | deleteRedisKeys', { userID });
+        showMessage(error.message, 'MiddleWare/removeRefreshTokens | deleteRedisKeys');
         return res.status(500).json(
             setFeedback(
                 req.feedback,

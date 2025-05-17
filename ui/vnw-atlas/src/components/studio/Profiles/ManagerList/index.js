@@ -1,9 +1,10 @@
+'use client'
 
 import React, { useState, useEffect } from "react";
 import { IoAdd } from "react-icons/io5";
 import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
-import { setLeaders, deleteLeaders } from "../../../../redux/leadersSlice";
+import { setLeaders, deleteLeaders } from "@/redux/leadersSlice";
 import AboveFixedContainer from "../../common/AboveFixedContainer";
 import AboveInsertedButton from "../../common/AboveInsertedButton";
 import ManagerEditor from "./ManagerEditor";
@@ -11,15 +12,16 @@ import ManagerShortDisplay from "./ManagerShortDisplay";
 import InsertNoticeText from "../../common/InsertNoticeText";
 import RightDeleteContainer from "../../common/RightDeleteContainer";
 import ManagerDetailDisplay from "./ManagerDetailDisplay";
-import loadLeadersAPI from "../../../../api/loadLeaders";
-import DeleteLeadersAPI from "../../../../api/deleteLeader";
-import DelayedRoute from "../../../../services/routeDelay";
-import { useTranslation } from "react-i18next";
+import loadLeadersAPI from "@/api/loadLeaders";
+import DeleteLeadersAPI from "@/api/deleteLeader";
+import DelayedRoute from "@/services/routeDelay";
+import { useTranslations } from "next-intl";
+import Messages from "../../common/Messages";
 
 /** */
 const ManagerList = () => {
     const dispatch = useDispatch();
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const leaders = useSelector((state) => state.leaders);
     const [leadersInspector, setLeadersInspector] = useState({
         referenceState: ["add", "edit", "delete", "display"],
@@ -124,10 +126,15 @@ const ManagerList = () => {
     return (
         <DelayedRoute>
             <div>
-                <AboveFixedContainer children={<AboveInsertedButton callback={addHandleClick} content={`${t("add_member")}`} options={{ icon: IoAdd }} />} />
+                <AboveFixedContainer>
+                    <AboveInsertedButton callback={addHandleClick} content={`${t("add_member")}`} options={{ icon: IoAdd }} />
+                </AboveFixedContainer>
                 <div className="flex">
-                    <div className="overflow-y-auto overflow-x-auto max-h-[calc(100vh-8.5rem)] min-h-[calc(100vh-7.2rem)] w-[calc(100vw-10px)] md:w-[calc(100vw-270px)] p-2 
-                    flex justify-start">
+                    <div className="overflow-y-auto overflow-x-auto flex justify-start py-2
+                        md:max-h-[calc(100vh-120px)] md:min-h-[calc(100vh-120px)] 
+                        max-h-[calc(100vh-150px)] min-h-[calc(100vh-150px)] 
+                        w-[calc(100vw-18px)] md:w-[calc(100vw-280px)]">
+
                         <div className="flex flex-wrap gap-4 items-start justify-start sm:justify-start">
                             {
                                 leaders && leaders.map((item, index) =>
@@ -141,19 +148,7 @@ const ManagerList = () => {
                         {
                             leaders.length === 0 && (
                                 <div className="mt-3">
-                                    <InsertNoticeText header={<strong>Hãy cập nhật thông tin ban lãnh đạo của doanh nghiệp bạn</strong>}
-                                        content={
-                                            <div className="w-[35rem] space-y-1 space-x-1">
-                                                <h2><strong>🔰 Điều này giúp bạn</strong></h2>
-                                                <p>✔ Hoàn thiện hồ sơ năng lực của doanh nghiệp</p>
-                                                <p>✔ Tăng mức độ uy tính doanh nghiệp bạn</p>
-                                                <p>✔ Hệ thống sẽ đánh giá điểm số thông tin mà bạn cung cấp, từ đó tăng đề xuất với khách hàng tiềm năng</p>
-                                                <br />
-                                                <h2 ><strong>⚠ Lưu ý:</strong></h2>
-                                                <p>Chúng tôi kiểm duyệt trước khi chấp thuận nó như một phần của hồ sơ doanh nghiệp của bạn.</p>
-                                            </div>
-                                        }
-                                    />
+                                    <Messages type="ManagerListMessage" />
                                 </div>
                             )
                         }
@@ -162,24 +157,13 @@ const ManagerList = () => {
                 {["add"].includes(leadersInspector.state) && <ManagerEditor state={leadersInspector} setState={setLeadersInspector} />}
                 {["edit"].includes(leadersInspector.state) && <ManagerEditor state={leadersInspector} setState={setLeadersInspector} />}
                 {["display"].includes(leadersInspector.state) && <ManagerDetailDisplay state={leadersInspector} setState={setLeadersInspector} />}
+                
                 {
                     ["delete"].includes(leadersInspector.state) &&
                     <RightDeleteContainer headerContent={<h2 className="text-lg font-semibold text-gray-800">{t("delete_member")}</h2>}
                         state={leadersInspector} setState={setLeadersInspector}
-                        callback={deleteCallback}
-                        children={
-                            <InsertNoticeText header={<strong className="text-[14px] text-black ">Việc xóa thành viên tác động như thế nào đến quy trình của bạn?</strong>}
-                                content={
-                                    <div className="text-[13px] text-black font-sans text-justify leading-5 space-y-2">
-                                        <p>Thành viên bị xóa sẽ không thể tiếp tục hiện thị trên hồ sơ doanh nghiệp của bạn.
-                                            Thông tin thành viên sẽ được lưu trữ 30 ngày và bạn có thể khôi phục lại sau khi xóa.
-                                        </p>
-                                        <p>Mặc dù thông tin sẽ được xóa, nhưng những tác động đến uy tính doanh nghiệp của bạn tạo bởi thành viên vẫn sẽ được lưu trữ
-                                            dùng cho mục đích đánh giá mức độ uy tính doanh nghiệp bạn</p>
-                                        <p>Việc bạn thêm mới thành viên sẽ được chúng tôi kiểm duyệt và đánh giá trước khi cập nhật tới hồ sơ doanh nghiệp của bạn.</p>
-                                    </div>
-                                }
-                            />}>
+                        callback={deleteCallback}>
+                        <Messages type="ManagerListMessage2" />
                     </RightDeleteContainer>
                 }
             </div>

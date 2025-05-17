@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { MdOutlineFilterList } from "react-icons/md";
 import { IoSearch } from "react-icons/io5";
 
@@ -11,6 +11,19 @@ import { IoSearch } from "react-icons/io5";
  * @returns {JSX.Element} Search component
  */
 const InsideSearch = ({ searchClick, value, onChange }) => {
+  const [searchValue, setSearchValue] = useState(value);
+
+  const inputOnchange = (e) => {
+    setSearchValue(e.target.value);
+    onChange&&onChange(e);
+  }
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      searchClick&&searchClick();
+    }
+  };
+
   return (
     <div className="mx-2 sm:mx-4 lg:mx-6">
       {/* Desktop Search */}
@@ -23,17 +36,24 @@ const InsideSearch = ({ searchClick, value, onChange }) => {
           <div className="relative flex items-center">
             {/* Search Icon */}
             <div className="absolute left-3 text-gray-400">
-              <IoSearch className="w-5 h-5" />
+              <button
+                onClick={searchClick}
+                className="py-2 text-gray-500 hover:text-blue-600 transition-colors"
+                aria-label="Search"
+              >
+                <IoSearch className="w-6 h-6" />
+              </button>
             </div>
 
             {/* Search Input */}
             <input
               type="search"
-              value={value}
-              onChange={(event)=> onChange(event.target.value)}
+              value={searchValue}
+              onChange={inputOnchange}
               placeholder="Search for anything..."
               className="w-96 py-2.5 pl-10 pr-12  rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition-all duration-200 shadow-sm hover:border-gray-300"
               aria-label="Search"
+              onKeyDown={(e) => {handleKeyDown(e)}}
             />
 
             {/* Filter Button */}

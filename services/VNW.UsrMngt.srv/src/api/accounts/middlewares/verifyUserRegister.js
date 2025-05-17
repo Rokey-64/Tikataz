@@ -1,5 +1,5 @@
 
-import emitLog, { level, showMessage } from '#@/services/fluentd-connection/fluentd-jack.js'
+import { showMessage } from '#@/services/fluentd-connection/fluentd-jack.js'
 import TkzRegException from "../exception/registerException.js";
 import checkUserBeforeCreateAccount from "../validators/checkUserBeforeCreateAccount.js"
 import checkRequiredFields from "../validators/checkRequiredFields.js";
@@ -53,7 +53,7 @@ const verifyUserRegister = async (req, res, next) => {
             )
         );
 
-        emitLog(level.ERROR, req.id, error.message, 'signup/register | inspector', { prevReqID: model.id, mail: model.email });
+        showMessage(error.message, 'signup/register | inspector', { prevReqID: model.id, mail: model.email });
         return res.status(500).json(
             setFeedback(
                 req.feedback,

@@ -19,6 +19,7 @@ const Breadcrumb = () => {
   };
 
   const notIncludes = ["RFQ", "Me"];
+  const freezeIncludes = ["general", "setting"];
 
   return (
     <nav className="flex" aria-label="Breadcrumb">
@@ -49,7 +50,7 @@ const Breadcrumb = () => {
                   className="h-4 w-4 flex-shrink-0 text-gray-400 mx-1"
                   aria-hidden="true"
                 />
-                {isLast ? (
+                {(isLast || freezeIncludes.includes(name)) ? (
                   <span
                     className="text-sm font-medium text-gray-700"
                     aria-current="page"

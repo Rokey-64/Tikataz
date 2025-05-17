@@ -1,10 +1,11 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setCerts } from "../../../../../../../../../../redux/cardsSlice";
-import RightDeleteContainer from "../../../../../../../../common/RightDeleteContainer";
-import Messages from "../../../../../../../../common/Messages";
+import { setCerts } from "@/redux/cardsSlice";
+import RightDeleteContainer from "@/components/studio/common/RightDeleteContainer";
+import Messages from "@/components/studio/common/Messages";
 
-const CertificatesRemoveMode = ({ cert, callback}) => {
+const CertificatesRemoveMode = ({ cert, callback }) => {
+    const t = useTranslations('trans'); 
     const dispatch = useDispatch();
     const certs = useSelector(state => state.cards.certificates);
     const [state, setState] = useState({
@@ -17,7 +18,7 @@ const CertificatesRemoveMode = ({ cert, callback}) => {
         if (cert) {
             setState({
                 status: true,
-                currentObjects: [{name: cert.certype, id: cert.id}]
+                currentObjects: [{ name: cert.certype, id: cert.id }]
             });
         }
     }, [cert]);
@@ -25,8 +26,8 @@ const CertificatesRemoveMode = ({ cert, callback}) => {
 
     // Hide the delete dialog
     const setStateHandler = (status) => {
-        setState({...state, status: status});
-        callback&&callback(false);
+        setState({ ...state, status: status });
+        callback && callback(false);
     };
 
     // call when the user confirm to delete
@@ -35,14 +36,13 @@ const CertificatesRemoveMode = ({ cert, callback}) => {
         dispatch(setCerts(newCerts));
     }
 
-    return(
+    return (
         <RightDeleteContainer state={state} setState={setStateHandler} callback={deleteCallback}
-            headerContent={<h1 className="text-[18px]"><strong>Xóa sản phẩm, hìn ảnh minh họa</strong></h1>}
-            children={
-                <div>
-                    <Messages type="CertRemoveMessage" />
-                </div>
-            } />
+            headerContent={<h1 className="text-[18px]"><strong>{t("studio.card.cert.delprod")}</strong></h1>}>
+            <div>
+                <Messages type="CertRemoveMessage" />
+            </div>
+        </RightDeleteContainer>
     );
 }
 

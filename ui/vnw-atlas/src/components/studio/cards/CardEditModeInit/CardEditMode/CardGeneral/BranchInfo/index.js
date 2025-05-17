@@ -1,16 +1,18 @@
 import { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setGeneral } from "../../../../../../../redux/cardsSlice";
-import InsertLogo from "../../../../../common/InsertLogo";
-import TextSingleInput from "../../../../../common/TextSingleInput";
-import TextAreaInput from "../../../../../common/TextAreaInput/index";
+import { setGeneral } from "@/redux/cardsSlice";
+import InsertLogo from "@/components/studio/common/InsertLogo";
+import TextSingleInput from "@/components/studio/common/TextSingleInput";
+import TextAreaInput from "@/components/studio/common/TextAreaInput/index";
 import debounce from "lodash.debounce";
+import { useTranslations } from "next-intl";
 
 /**
  * This component contains the name and introduction of the company
  * @returns 
  */
 const BranchInfo = () => {
+    const t = useTranslations("trans");
     const dispatch = useDispatch();
     const general = useSelector(state => state.cards.general);
     const [header, setHeader] = useState({
@@ -49,7 +51,7 @@ const BranchInfo = () => {
             <InsertLogo logoPath={header.logo} callback={callback.bind(this, general, 'logo')} />
             <div className="w-full">
                 <div>
-                    <TextSingleInput title="Tên thương hiệu"
+                    <TextSingleInput title={t("studio.card.gen.brandname")}
                         type="text"
                         maxlength={40}
                         content={header.branchName}
@@ -57,7 +59,7 @@ const BranchInfo = () => {
                         isRequire={true}/>
                 </div>
                 <div className="mt-4 min-w-[500px]">
-                    <TextAreaInput title="Lời giới thiệu" 
+                    <TextAreaInput title={t("studio.card.gen.intro")}
                     type="text" 
                     maxlength={200} 
                     content={header.description} 

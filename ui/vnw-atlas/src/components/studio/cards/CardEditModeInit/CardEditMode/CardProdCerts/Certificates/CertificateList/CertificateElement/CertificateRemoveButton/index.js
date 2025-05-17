@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { MdDeleteSweep } from "react-icons/md";
 
 /**
@@ -5,6 +6,7 @@ import { MdDeleteSweep } from "react-icons/md";
  * @param {*} param0
  */
 const CertificateRemoveButton = ({ callback }) => {
+    const t = useTranslations('trans'); 
     const deleteCertHandler = () => {
         callback&&callback();
     }
@@ -13,7 +15,7 @@ const CertificateRemoveButton = ({ callback }) => {
         <div className="flex justify-end">
         <button className="flex items-center gap-2 mt-4 text-red-500 hover:text-red-600" onClick={deleteCertHandler}>
             <MdDeleteSweep className="text-2xl" />
-            Xóa chứng chỉ
+            {t("studio.card.cert.delcert")}
         </button>
     </div>
     );

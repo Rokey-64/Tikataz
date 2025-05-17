@@ -1,4 +1,4 @@
-import emitLog, { level, showMessage } from '#@/services/fluentd-connection/fluentd-jack.js';
+import { showMessage } from '#@/services/fluentd-connection/fluentd-jack.js';
 import getModelService from '#@/services/getModelService.js';
 import setFeedback from '#@/services/setFeedback.js';
 import checkPasswordBeforeUpdate from '../validators/checkPasswordBeforeUpdate.js';
@@ -83,8 +83,7 @@ const checkNewPassword = async (req, res, next) => {
      * * false - The password is not the same as the previous.
      */
     const check = await checkPasswordBeforeUpdate(model.payload.userID, model.password).catch((err) => {
-        console.log(err);
-        emitLog(level.ERROR, req.id, err.message, 'reset-pw/resetPassword | checkPasswordBeforeUpdate', { userID: model.payload.userID });
+        showMessage(err.message, 'reset-pw/resetPassword | checkPasswordBeforeUpdate');
         return res.status(500).json(
             setFeedback(
                 req.feedback,

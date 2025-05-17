@@ -3,10 +3,10 @@ import ElementMultipText from '../../../common/textInputs/ElementMultipText';
 import RightInputContainer from '../../../common/RightInputContainer/index';
 import ImageLoadingBoard from '../../../common/ImageLoadingBoard/index';
 import { useDispatch } from 'react-redux';
-import { insertLeaders, updateLeaders} from "../../../../../redux/leadersSlice";
+import { insertLeaders, updateLeaders } from "../../../../../redux/leadersSlice";
 import SaveLeadersAPI from "../../../../../api/updateLeader";
 import createBlobFromUrl from '../../../../../services/createBlobFromUrl';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from "next-intl";
 
 /**
  * Edit the information of a selected manager member
@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next';
  */
 const ManagerEditor = ({ state, setState }) => {
     const dispatch = useDispatch();
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const manager = { ...state.currentObjects[0] };
 
     /**
@@ -26,6 +26,7 @@ const ManagerEditor = ({ state, setState }) => {
             alert(t("field_required"));
             return;
         }
+        
 
         const formData = new FormData();
 
@@ -39,7 +40,7 @@ const ManagerEditor = ({ state, setState }) => {
 
         // Push the rest of the data to the form data
         const dataConvert = JSON.stringify(manager);
-        if(dataConvert) formData.append("data", dataConvert);
+        if (dataConvert) formData.append("data", dataConvert);
 
         // Add state to the form data
         formData.append("state", state.state);
@@ -47,7 +48,6 @@ const ManagerEditor = ({ state, setState }) => {
         SaveLeadersAPI(formData).then((res) => {
             if (res) {
                 if (state.state === "add") {
-                    alert(t(res.id));
                     dispatch(insertLeaders({ ...manager, id: res.id }));
                     setState({ ...state, state: "" });;
                 }
@@ -80,49 +80,48 @@ const ManagerEditor = ({ state, setState }) => {
     }
 
     return (
-        <RightInputContainer saveCallback={saveHandleClick} closeCallback={setshowBranch}
-            children={
-                <div>
+        <RightInputContainer saveCallback={saveHandleClick} closeCallback={setshowBranch}>
+            <div>
 
-                    <form className="grid grid-cols-2 gap-3 ">
-                        <div className="flex items-center mb-6 col-span-2 space-x-4">
-                            <ImageLoadingBoard
-                                label="Select logo"
-                                aditionalClasses='h-20 w-24'
-                                callback={inputCallback.bind(this, "logo")}
-                                defaultValue={manager.logo}
-                            />
-                            <div>
-                                <ElementSingleText callback={textInputChange.bind(this, "name")} defaultValue={manager.name}
-                                    options={{ text: `${t("person_name")}`, holder: "Nguyễn Văn A", isRequired: true}} />
-
-                            </div>
-                        </div>
-
+                <form className="grid grid-cols-2 gap-3 ">
+                    <div className="flex items-center mb-6 col-span-2 space-x-4">
+                        <ImageLoadingBoard
+                            label="Select logo"
+                            aditionalClasses='h-20 w-24'
+                            callback={inputCallback.bind(this, "logo")}
+                            defaultValue={manager.logo}
+                        />
                         <div>
-                            <ElementSingleText callback={textInputChange.bind(this, "position")} defaultValue={manager.position}
-                                options={{ text: `${t("position")}`, holder: "Giám đốc", isRequired: true}} />
-                        </div>
-                        <div>
-                            <ElementSingleText callback={textInputChange.bind(this, "date")} defaultValue={manager.date}
-                                options={{ text: `${t("assign_date")}`, type: "date" }} />
-                        </div>
-                        <div className="mt-3">
-                            <ElementSingleText callback={textInputChange.bind(this, "phone")} defaultValue={manager.phone}
-                                options={{ text: `${t("phone")}`, holder: "0123456789", type: "tel" }} />
-                        </div>
+                            <ElementSingleText callback={textInputChange.bind(this, "name")} defaultValue={manager.name}
+                                options={{ text: `${t("person_name")}`, holder: "Nguyễn Văn A", isRequired: true }} />
 
-                        <div className="mt-3">
-                            <ElementSingleText callback={textInputChange.bind(this, "email")} defaultValue={manager.email}
-                                options={{ text: `${t("email")}`, holder: "...@example.com", type: "mail" }} />
                         </div>
-                        <div className="col-span-2 mt-3">
-                            <ElementMultipText callback={textInputChange.bind(this, "slogan")}
-                                defaultValue={manager.slogan} options={{ text: `${t("slogan")}`, holder: "" }} />
-                        </div>
-                    </form>
-                </div>
-            } />
+                    </div>
+
+                    <div>
+                        <ElementSingleText callback={textInputChange.bind(this, "position")} defaultValue={manager.position}
+                            options={{ text: `${t("position")}`, holder: "Giám đốc", isRequired: true }} />
+                    </div>
+                    <div>
+                        <ElementSingleText callback={textInputChange.bind(this, "date")} defaultValue={manager.date}
+                            options={{ text: `${t("assign_date")}`, type: "date" }} />
+                    </div>
+                    <div className="mt-3">
+                        <ElementSingleText callback={textInputChange.bind(this, "phone")} defaultValue={manager.phone}
+                            options={{ text: `${t("phone")}`, holder: "0123456789", type: "tel" }} />
+                    </div>
+
+                    <div className="mt-3">
+                        <ElementSingleText callback={textInputChange.bind(this, "email")} defaultValue={manager.email}
+                            options={{ text: `${t("email")}`, holder: "...@example.com", type: "mail" }} />
+                    </div>
+                    <div className="col-span-2 mt-3">
+                        <ElementMultipText callback={textInputChange.bind(this, "slogan")}
+                            defaultValue={manager.slogan} options={{ text: `${t("slogan")}`, holder: "" }} />
+                    </div>
+                </form>
+            </div>
+        </RightInputContainer>
     )
 };
 

@@ -1,5 +1,5 @@
 import { IoRemoveCircle } from "react-icons/io5";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 /**
  * Remove item button component
@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
  * @returns 
  */
 const RemoveItemButton = ({ onClick, addClass}) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     return (
         <button
             onClick={onClick}

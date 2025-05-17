@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosInstance from "./api";
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 
@@ -13,9 +14,10 @@ const loadQuestionSettings = async (key) => {
 
     const apiUrl = `${API_HOST}auths/settings/${key}`;
     try {
-        const response = await axios.get(apiUrl, {
-            withCredentials: true
-        });
+        // const response = await axios.get(apiUrl, {
+        //     withCredentials: true
+        // });
+        const response = await axiosInstance.get(apiUrl);
         if (response.status === 200) {
             return response.data.data;
         }

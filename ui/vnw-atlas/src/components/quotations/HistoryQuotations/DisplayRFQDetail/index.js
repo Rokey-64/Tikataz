@@ -1,7 +1,7 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, Suspense} from 'react';
 import DisplayRFQHeader from './DisplayRFQHeader';
 import DisplayRFQItems from './DisplayRFQItems';
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import { useSearchParams, useRouter } from 'next/navigation';
 import getRFQOrderAPI from '../../../../api/getRFQOrder';
 import { initialState, quotationDataReducer } from '../../../../reducers/quotationDataReducer';
@@ -13,7 +13,7 @@ import { initialState, quotationDataReducer } from '../../../../reducers/quotati
  * @returns 
  */
 const DisplayRFQDetail = () => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const router = useRouter();
     const searchParams = useSearchParams();
     const id = searchParams.get("id");
@@ -82,4 +82,10 @@ const DisplayRFQDetail = () => {
 
 
 
-export default DisplayRFQDetail;
+const DisplayRFQDetailSuspense = () => (
+    <Suspense fallback={<div className="w-screen h-screen flex justify-center items-center"><h1 className="text-2xl font-bold">Loading...</h1></div>}>
+        <DisplayRFQDetail />
+    </Suspense>
+);
+
+export default DisplayRFQDetailSuspense;

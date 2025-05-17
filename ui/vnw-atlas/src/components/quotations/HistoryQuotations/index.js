@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Tooltip } from "react-tooltip";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import QuotationHeader from "./QuotationHeader";
 import QuotationBody from "./QuotationBody";
 
@@ -9,7 +9,7 @@ import QuotationBody from "./QuotationBody";
  * @returns 1
  */
 const HistoryQuotations = () => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const [quotationType, setQuotationType] = useState("all");
 
     return (

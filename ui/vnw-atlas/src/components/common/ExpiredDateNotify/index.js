@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from "next-intl";
 
 /**
  * This component is used to notify the user that the link they are trying to access has expired.
  * @returns 
  */
 const ExpiredDateNotify = () => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const [isContactFormOpen, setIsContactFormOpen] = useState(false);
     const router = useRouter();
 

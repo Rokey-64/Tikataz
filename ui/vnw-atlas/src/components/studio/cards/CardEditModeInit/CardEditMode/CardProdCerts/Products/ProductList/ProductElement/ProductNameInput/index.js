@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 
 /**
  * This component is a text input for product name
@@ -5,6 +6,7 @@
  * @returns 
  */
 const ProductNameInput = ({ displayStatus, setDisplayStatus, prodName, callback}) => {
+    const t = useTranslations("trans");
     if (!displayStatus) return <></>;
 
     const inputHandler = (e) => {
@@ -13,9 +15,9 @@ const ProductNameInput = ({ displayStatus, setDisplayStatus, prodName, callback}
 
     return <input
         type="text"
-        value={prodName === "Chưa nhập" ? "" : prodName}
+        value={prodName === t("studio.card.product.noinput") ? "" : prodName}
         onChange={inputHandler}
-        placeholder="Nhập tên sản phẩm"
+        placeholder={t("studio.card.product.name")}
         className="border rounded w-full mt-2 p-2 text-sm"
         onBlur={() => setDisplayStatus(false)}
     />

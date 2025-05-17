@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from "next-intl";
 import { useRFQSupliersContext } from '@/contexts/RFQSuppliersContext';
 import ItemHeader from './ItemHeader';
 import PriceInput from './PriceInput';
@@ -111,7 +111,7 @@ const CustomerItem = ({ item }) => {
 
 
 const SkipButton = ({ onClick, skip }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
 
     const bgColor = skip ? "bg-blue-500 hover:bg-blue-600 border-blue-600" : "bg-yellow-500 hover:bg-yellow-600 border-yellow-600";
     const textColor = "text-white";

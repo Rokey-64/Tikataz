@@ -1,4 +1,4 @@
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 /**
  * A button to confirm the order
  * @param {Object} props 
@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
  * @returns {JSX.Element}
  */
 const CreateOrderButton = ({ onClick }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
 
     return (
         <button

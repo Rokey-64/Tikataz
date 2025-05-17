@@ -12,13 +12,13 @@ import UploadCardImagesAPI from "../../../../../api/uploadCardImages";
 import UploadCardDataAPI from "../../../../../api/uploadCardData";
 import updateCardHistory from "../../../../../services/updateCardHistory";
 import cloneDeep from "lodash/cloneDeep";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 
 const CardEditMode = () => {
     const [companyInfo, setCompanyInfo] = useState(1)
     const card = useSelector((state) => state.cards)
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
 
     const dispatch = useDispatch();
 
@@ -120,8 +120,16 @@ const CardEditMode = () => {
             <CardLeftMenu setCompanyInfo={setCompanyInfo} companyInfo={companyInfo} />
 
             {/* Content */}
-            <div className="max-h-[calc(100vh-110px)] min-h-[calc(100vh-110px)] min-w-[100vw] max-w-[100vw] md:min-w-[calc(100vw-220px)] md:max-w-[calc(100vw-220px)]">
-                <div className="flex items-start pl-1 overflow-y-auto max-h-[calc(100vh-115px)] min-h-[calc(100vh-115px)] ">
+            <div className="
+                            md:max-h-[calc(100vh-110px)] md:min-h-[calc(100vh-110px)] 
+                            max-h-[calc(100vh-160px)] min-h-[calc(100vh-160px)]
+                            min-w-[100vw] max-w-[100vw] 
+                            md:min-w-[calc(100vw-220px)] md:max-w-[calc(100vw-220px)]"
+            >
+                <div className="flex items-start pl-1 overflow-y-auto mt-6 md:mt-0
+                                md:max-h-[calc(100vh-120px)] md:min-h-[calc(100vh-120px)]
+                                max-h-[calc(100vh-160px)] min-h-[calc(100vh-160px)]
+                ">
                     {setActiveTab()}
                 </div>
 

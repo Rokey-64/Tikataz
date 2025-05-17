@@ -2,7 +2,7 @@ import Partner from "../generals/Partner";
 import { MdCenterFocusWeak } from 'react-icons/md';
 import Cert from "../generals/Cert";
 import Badge from "../generals/Badge";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 
 /**
@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
  * @returns 
  */
 const LeftBar = ({ card }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
 
     return (
         <div className="h-full mt-1 ml-1">

@@ -1,5 +1,5 @@
 import React, { useState, useCallback} from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import InlineCardEditButton from "./InlineCardEditButton";
 import InlineCardViewButton from "./InlineCardViewButton";
 import InlineCardTrendButton from "./InlineCardTrendButton";
@@ -15,7 +15,7 @@ import { resetDefault} from "../../../../../redux/cardsSlice";
  */
 const InlineCardElement = ({ cardData }) => {
     const [isHover, setIsHover] = useState(false);
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const router = useRouter();
     const dispatch = useDispatch();
 
@@ -34,7 +34,7 @@ const InlineCardElement = ({ cardData }) => {
         throttle(
             async (cardData) => {
                 dispatch(resetDefault());
-                router.push(`/edit/card?id=${cardData._id}&st=u`);
+                router.push(`/card?id=${cardData._id}&st=u`);
             },
             3000, { trailing: false }),
         [router]

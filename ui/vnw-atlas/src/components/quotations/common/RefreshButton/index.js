@@ -1,5 +1,5 @@
 import { FiRefreshCcw } from "react-icons/fi";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 /**
  * Minimal RefreshButton without border and background
@@ -15,7 +15,7 @@ const RefreshButton = ({
   iconSize = 16, 
   textClassName = "text-gray-600 hover:text-gray-900" 
 }) => {
-  const { t } = useTranslation();
+  const t = useTranslations('trans');
 
   return (
     <button

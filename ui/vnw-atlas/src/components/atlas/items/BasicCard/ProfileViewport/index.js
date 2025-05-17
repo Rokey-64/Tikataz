@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import getAtlasCardProfileAPI from "@/api/getAtlasCardProfile";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 const ProfileViewport = ({ card, visible }) => {
     const [profile, setProfile] = useState(null);
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
 
     function formatDateToDDMMYYYY(dateString) {
         if (!dateString) return "";

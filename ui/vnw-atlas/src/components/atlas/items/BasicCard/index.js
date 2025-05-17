@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Image from 'next/image';
 import { nanoid } from 'nanoid';
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import checkOnlineStatus from "@/services/checkOnlineStatus";
 
 import _ from "lodash";
@@ -31,9 +31,15 @@ export default function BusinessProfileCard({ card }) {
 }
 
 const BasicCardHeader = ({ card }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const [status, setStatus] = useState("online");
     const [verified, setVerified] = useState(false);
+
+    const [imgSrc, setImgSrc] = useState(card.data.general.logo);
+
+    const handleError = () => {
+        setImgSrc('/placeholder.jpg');
+    };
 
     useEffect(() => {
         const result = checkOnlineStatus(card.data.general.workingTime);
@@ -42,7 +48,7 @@ const BasicCardHeader = ({ card }) => {
         const interval = setInterval(() => {
             const updateStatus = checkOnlineStatus(card.data.general.workingTime);
             setStatus(updateStatus ? "online" : "offline");
-        }, 60000 * 5);
+        }, 60 * 1000 * 5);
 
         return () => clearInterval(interval);
     }, [card.data.general.workingTime]);
@@ -59,12 +65,13 @@ const BasicCardHeader = ({ card }) => {
                 <div className="flex items-start gap-3">
                     <div className="w-12 h-12 flex-shrink-0 rounded-md overflow-hidden bg-white shadow-sm">
                         <Image
-                            src={card.data.general.logo}
+                            src={imgSrc || '/placeholder.jpg'}
                             alt="Company Logo"
                             width={48}
                             height={48}
                             className="object-cover w-full h-full"
                             unoptimized
+                            onError={handleError}
                         />
                     </div>
                     <div className="flex flex-col">
@@ -134,7 +141,7 @@ const BasicCardBody = ({ card }) => {
 
 
 const BasicCardMenu = ({ menuIndex, setMenuIndex }) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const menuItems = [
         { id: 1, name: t("atlas.tags.overall") },
         { id: 2, name: t("atlas.tags.profile") },
@@ -145,7 +152,7 @@ const BasicCardMenu = ({ menuIndex, setMenuIndex }) => {
     ];
 
     const menuChangeHandler = (index) => {
-        setMenuIndex(index);
+        setMenuIndex(Number(index));
     }
 
     return (
@@ -174,9 +181,9 @@ const BasicCardMenu = ({ menuIndex, setMenuIndex }) => {
 
             {/* Mobile menu button - shown only on mobile */}
             <div className="md:hidden mb-3">
-                <select className="w-full p-2 border border-gray-300 rounded-lg text-xs font-medium">
+                <select className="w-full p-2 border border-gray-300 rounded-lg text-xs font-medium" onChange={(e) => menuChangeHandler(e.target.value)}>
                     {menuItems.map((item) => (
-                        <option key={item.id} value={item.id} onChange={() => menuChangeHandler(item.id)}>
+                        <option key={item.id} value={item.id}>
                             {item.name}
                         </option>
                     ))}

@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, Suspense } from "react";
 import CardEditMode from "./CardEditMode";
 import { throttle } from "lodash";
 import _ from "lodash";
-import { useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setDefault, initialState } from "../../../../redux/cardsSlice";
 
 import loadCardAPI from "../../../../api/loadCard";
@@ -109,4 +109,13 @@ const CardEditModeInit = () => {
     );
 };
 
-export default CardEditModeInit;
+const CardEditModeInitSuspense = () => {
+
+    return (
+        <Suspense fallback={<div className="w-screen h-screen flex justify-center items-center"><h1 className="text-2xl font-bold">Loading...</h1></div>}>
+            <CardEditModeInit />
+        </Suspense>
+    )
+}
+
+export default CardEditModeInitSuspense;

@@ -39,17 +39,17 @@
             "port": "3306",
             "read": {
                 "node1": {
-                    "host": "103.218.122.181",
-                    "username": "admin"
+                    "host": "160.22.123.128",
+                    "username": "accounts"
                 },
                 "node2": {
-                    "host": "103.218.122.181",
-                    "username": "admin"
+                    "host": "160.22.123.128",
+                    "username": "accounts"
                 }
             },
             "write": {
-                "host": "103.218.122.181",
-                "username": "admin"
+                "host": "160.22.123.128",
+                "username": "accounts"
             }
         }
     },
@@ -65,9 +65,9 @@
             ,"node3": "redis://103.218.122.181:7005"
         },
         "production": {
-            "node1": "redis://103.218.122.181:7001"
-            ,"node2": "redis://103.218.122.181:7003"
-            ,"node3": "redis://103.218.122.181:7005"
+            "node1": "redis://160.22.123.128:6380"
+            ,"node2": "redis://160.22.123.128:6382"
+            ,"node3": "redis://160.22.123.128:6384"
         }
     }
 }

@@ -1,6 +1,6 @@
 
 import { hashPassword, verifyPassword, hashOTP } from '#@/services/password-hashing/index.js'
-import emitLog, { level, showMessage } from '#@/services/fluentd-connection/fluentd-jack.js';
+import { showMessage } from '#@/services/fluentd-connection/fluentd-jack.js';
 import checkRequiredFields from "../validators/checkRequiredFields.js";
 import getModelService from '#@/services/getModelService.js';
 import setFeedback from '#@/services/setFeedback.js';
@@ -67,7 +67,7 @@ const verifyLoginUser = async (req, res, next) => {
         return next();
     }
     catch(err){
-        emitLog(level.ERROR, req.id, err.message, 'middleware/verifyUserAccount  | verifyPassword', { prevReqID: model.id, loginName: model.loginName });
+        showMessage(err.message, 'middleware/verifyUserAccount  | verifyPassword', { prevReqID: model.id, loginName: model.loginName });
         return res.status(500).json(
             setFeedback(
                 req.feedback,

@@ -7,7 +7,7 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: "vi",
-    debug: true, // bật để xem log lỗi
+    debug: false, // bật để xem log lỗi
     ns: ["translation"], // hoặc thêm captions nếu cần
     defaultNS: "translation",
     backend: {

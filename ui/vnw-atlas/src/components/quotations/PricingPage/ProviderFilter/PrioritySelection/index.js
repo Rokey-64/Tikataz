@@ -2,7 +2,7 @@ import { useReducer, useEffect} from "react";
 import FilterSelectButton from "../../../common/FilterSelectButton";
 import FilterOptionButton from "../../../common/FilterOptionButton";
 import FilterStarBar from "../../../common/FilterStarBar";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import { useAppContext } from '../../../../../contexts/RFQItemOrder';
 import { use } from "react";
 
@@ -11,7 +11,7 @@ import { use } from "react";
  * @returns 
  */
 const PrioritySelection = () => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const {state, dispatch} = useAppContext();
     const options = ["Việt nam", "Trung quốc", "Hoa kỳ", "Mỹ"];
 

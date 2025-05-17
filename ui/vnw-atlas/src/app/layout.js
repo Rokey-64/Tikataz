@@ -1,22 +1,27 @@
 
 
-// app/layout.tsx
-import React from 'react';
 import AppProvider from '@/app/AppProvider';
-// import '@/location/index.scss';
 import '@/location/globals.css';
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale } from 'next-intl/server';
+
 
 export const metadata = {
   title: 'Tikataz - Atlas',
   description: 'Web site created using Next.js App Router',
 };
 
-export default function RootLayout({ children }) {
+
+export default async function RootLayout({ children }) {
+  const locale = await getLocale();
+
   return (
-    <html lang="vi" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body>
         <AppProvider>
-          {children}
+          <NextIntlClientProvider>
+            {children}
+          </NextIntlClientProvider>
         </AppProvider>
       </body>
     </html>

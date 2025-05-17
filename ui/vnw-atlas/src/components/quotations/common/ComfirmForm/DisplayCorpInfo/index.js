@@ -1,5 +1,5 @@
 import { useAppContext } from '../../../../../contexts/RFQItemOrder';
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import DisplayElement from "./DisplayElement";
 /**
  * DisplayCorpInfo component
@@ -7,7 +7,7 @@ import DisplayElement from "./DisplayElement";
  * @returns 
  */
 const DisplayCorpInfo = () => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     const { state } = useAppContext();
 
     return (

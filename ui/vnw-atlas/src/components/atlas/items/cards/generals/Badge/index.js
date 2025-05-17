@@ -1,10 +1,10 @@
 import { useState, useEffect} from 'react';
 import { LuAward, LuCalendar, LuClock } from 'react-icons/lu';
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 const Badge = ({ badge}) => {
     const [isHovered, setIsHovered] = useState(false);
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
 
     if (!badge) return null;
     const formatDate = (dateString) => {

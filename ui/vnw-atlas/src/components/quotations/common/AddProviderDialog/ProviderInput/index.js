@@ -1,10 +1,10 @@
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 /**
  * This is a ProviderInput component
  * @returns 
  */
 const ProviderInput = ({provider, event}) => {
-    const { t } = useTranslation();
+    const t = useTranslations('trans');
     
     return (
         <input

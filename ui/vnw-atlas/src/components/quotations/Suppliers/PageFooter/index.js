@@ -1,8 +1,8 @@
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import {useRFQSupliersContext} from "../../../../contexts/RFQSuppliersContext";
 
 const PageFooter = ({onRegisterClick}) => {
-    const {t} = useTranslation();
+    const {t} = useTranslations('trans');
     const {state} = useRFQSupliersContext();
 
     if (state.isLoggedIn) {
